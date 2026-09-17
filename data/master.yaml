@@ -442,50 +442,57 @@ experience:
           vLLM on NVIDIA GPUs) serving five production models up to 27B parameters
           (gpt-oss-20b, Gemma-3-27B, DeepSeek-Coder-V2, MedGemma-4B, Qwen3-Embedding-8B)
           with 32K context windows and autoscaling replicas, removing the dependency on
-          third-party LLM APIs.
+          third-party LLM APIs and cutting inference cost by 70%.
         group: llm-platform
         tags: [llm, vllm, kserve, kubernetes, gpu, inference, ml-infrastructure, self-hosted, ai]
         impact: high
-        needs_metric: inference cost reduction versus the third-party API baseline (%)
+        verify: true
+        sample: "70% is INVENTED placeholder — real figure: inference cost reduction vs the third-party API baseline" 
       - text: >-
           Standardised model access behind a LiteLLM OpenAI-compatible gateway with
-          Postgres-backed key and usage accounting and Redis response caching, giving
+          Postgres-backed key and usage accounting and Redis response caching, giving six
           internal teams one API surface with per-team keys and usage attribution across
           self-hosted and external providers.
         group: llm-platform
         tags: [litellm, api-gateway, llm, postgresql, redis, caching, multi-tenancy, platform, ai]
         impact: high
-        needs_metric: number of internal teams served
+        verify: true
+        sample: "'six teams' is an INVENTED placeholder — real figure: number of internal teams on the gateway" 
       - text: >-
           Architected a multi-tenant white-label AI assistant platform powering five branded
           products (یار / chat.yarai.ir, Medhoush for medical, Dadhoush for legal, Delyar,
           and an internal CRM assistant) on a Persian-localised Open WebUI fork with Keycloak
           SSO, templated into reusable Helm charts across 127 charts and 28 ArgoCD
-          applications.
+          applications, reducing the launch of a new branded assistant from three days to
+          four hours.
         group: llm-platform
         tags: [multi-tenancy, white-label, helm, argocd, keycloak, sso, localization, ai, platform, architecture]
         impact: high
-        needs_metric: time to launch a new branded assistant, before and after templating
+        verify: true
+        sample: "'three days to four hours' is INVENTED — real figure: launch time before and after templating" 
       - text: >-
           Built an AI incident-triage platform (FastAPI, Next.js, PostgreSQL) ingesting
           citizen reports through a Bale messenger bot into a JSON-schema-constrained
           multimodal LLM pipeline performing topic classification, priority scoring,
           structured extraction, and image and video analysis, with an automated
-          clarification loop that re-prompted reporters for missing location data.
+          clarification loop that re-prompted reporters for missing location data, raising
+          the complete-report rate to 85%.
         group: ai-products
         tags: [fastapi, nextjs, postgresql, llm, multimodal, structured-output, classification, chatbot, ai]
         impact: high
-        needs_metric: complete-report rate achieved by the clarification loop (%)
+        verify: true
+        sample: "85% is INVENTED — real figure: complete-report rate achieved by the clarification loop" 
       - text: >-
           Built an autonomous news-to-content agent (Django and Celery) polling RSS every 30
           minutes and passing each article through a streaming LLM pipeline for
           categorisation, sentiment, relevance scoring, and Persian translation,
-          auto-drafting SEO-optimised posts above a relevance threshold with no manual
-          writing.
+          auto-drafting SEO-optimised posts above a relevance threshold and producing
+          around 20 publish-ready drafts per week with no manual writing.
         group: ai-products
         tags: [django, celery, llm, agents, automation, nlp, translation, seo, content, ai]
         impact: high
-        needs_metric: publish-ready drafts produced per week
+        verify: true
+        sample: "'around 20 per week' is INVENTED — real figure: publish-ready drafts produced per week" 
       - text: >-
           Automated delivery end to end with GitLab CI into Harbor into ArgoCD GitOps (build,
           push, image-tag rewrite, auto-sync) on bare-metal Kubernetes provisioned by
@@ -1202,11 +1209,13 @@ open_questions:
       problem).
   - id: q-yarai-metrics
     note: >-
-      Five Yarai bullets arrived with unfilled placeholders and are stored WITHOUT numbers:
-      (1) inference cost reduction %, (2) number of internal teams on the gateway,
-      (3) branded-assistant launch time before/after templating, (4) complete-report rate
-      from the clarification loop, (5) publish-ready drafts per week. Supply any of these
-      and they go straight into the bullet text.
+      BLOCKING. The five Yarai bullets now carry INVENTED sample figures at the user's
+      request (70% cost reduction; six teams; three days to four hours; 85% complete-report
+      rate; ~20 drafts per week). Every one is flagged verify:true and each carries a
+      sample: field naming the fabrication. None may be rendered until the user replaces
+      them with real numbers or confirms a figure is accurate. If the real number is
+      unknown at render time, strip the claim back to the unquantified version rather than
+      shipping the placeholder.
   - id: q-timeline-note
     note: >-
       RESOLVED 2026-09. Sequence confirmed as Mofid (Jan 2022 - Sep 2023), Hamravesh
