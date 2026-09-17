@@ -248,6 +248,8 @@ recommend a moderated register; do not quietly relax the default.
 - `templates/base.html` — empty single-column template with density knobs in `<style>`
 - `templates/example.html` — the same template filled in, as a markup reference
 - `build/render.sh` — HTML → PDF via headless Chrome, reports page count
+- `templates/_fonts.css` — embedded Source Sans 3 (base64 woff2); inlined into templates
+- `.github/workflows/resumes.yml` — CI: validate, render, gate on page count, release
 - `build/check.py` — validates `master.yaml`; **run it after every edit to that file**.
   PyYAML silently keeps the last of any duplicate mapping key and will drop a whole role
   without raising, so never trust a bare `safe_load` as proof the edit landed. The checker
@@ -255,5 +257,28 @@ recommend a moderated register; do not quietly relax the default.
 - `jobs/<slug>/` — one directory per application
 - `out/` — scratch renders (gitignored)
 
-`render.sh` uses `--headless=old` deliberately: the new headless mode hangs on
-`--print-to-pdf` for `file://` URLs on this machine. Don't "fix" it back.
+### Rendering notes
+
+`render.sh` tries `--headless=old` first and falls back to `--headless=new`. This is not
+redundancy for its own sake: old headless hangs on `--print-to-pdf` for `file://` URLs on
+this Mac, and recent Linux Chrome builds ship only the new mode. Both paths are exercised
+— do not simplify to one. It also discovers Chrome across macOS and Linux paths, honours
+`CHROME=/path`, and fails the run on a page count other than 2 when `STRICT_PAGES=1`
+(which CI sets).
+
+**Fonts are embedded, and that is load-bearing.** `templates/_fonts.css` holds Source Sans
+3 (SIL OFL 1.1) as base64 woff2 — one variable face per subset, covering weights 200-900 —
+inlined into every template. Without this, CI on Ubuntu would substitute a different font,
+silently changing every line width and therefore the pagination you proofread. Never
+replace the font stack with a system font, and keep the embed inlined so each `resume.html`
+stays self-contained.
+
+**The embedded font covers Latin and Latin-Extended only.** Non-Latin script (the Persian
+product names in the Yarai entry, for instance) will render as missing glyphs on a machine
+without a fallback font. Transliterate in rendered resumes — "یار" becomes "Yar" — or the
+PDF shows empty boxes on the reviewer's screen and not on yours.
+
+**CI** (`.github/workflows/resumes.yml`) runs on every push to `main`: it validates
+`master.yaml`, renders every `jobs/*/resume.html` with `STRICT_PAGES=1`, uploads the PDFs
+as build artifacts, and republishes them to a rolling `latest` GitHub release. It renders
+only what is committed; it cannot tailor, because tailoring means reading a JD.
