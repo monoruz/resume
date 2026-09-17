@@ -71,7 +71,9 @@ body{
 .ltr{
   direction: ltr;
   unicode-bidi: isolate;
-  display: inline-block;
+  /* Deliberately NOT display:inline-block. Isolation works on a plain inline
+     element, and keeping it inline lets a long multi-word term such as
+     "deterministic post-processor" wrap across lines rather than overflow. */
 }
 
 .name{

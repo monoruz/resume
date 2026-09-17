@@ -234,11 +234,30 @@ Latin-Extended, one variable face per subset). Vazirmatn carries Latin as well a
 so English technical terms sit inside Persian prose in the same typeface instead of
 switching mid-sentence.
 
+**Keep technical terms in English.** Persian translations of engineering jargon read as
+academic and wrong to an Iranian engineer: write `multi-tenant`, `cluster`, `node`,
+`race condition`, `endpoint`, `query`, `pipeline`, `microservice`, `data warehouse`,
+`online DDL`, `GPU`, `SRE` — not چندمستأجری، خوشه، گره، شرایط رقابتی، نقاط پایانی،
+پرس‌وجو، خط‌لوله، ریزسرویس، انبار داده، تغییر ساختار برخط، پردازندهٔ گرافیکی،
+مهندس قابلیت اطمینان. Persian suffixes attach directly to the Latin stem:
+`<span class="ltr">endpoint</span>ها`.
+
+**The exception is domain vocabulary, and it matters.** Where Persian has a real
+established term in the employer's own field, use it: **مغایرت‌گیری** (reconciliation) and
+**تسویه** (settlement) are standard Iranian banking and accounting words, and using them
+signals domain fluency to a bank in a way the English would not. Same for پایگاه‌داده and
+احراز هویت. The test is whether a professional in that industry would say the Persian word
+out loud; engineers say "cluster", accountants say "مغایرت‌گیری".
+
 **Bidirectional text is the thing that breaks.** The Unicode bidi algorithm handles plain
 Latin words inside Persian correctly, but reorders strings that mix Latin with digits,
 slashes, brackets or operators — `SQLAlchemy 2.0`, `p95`, `2.1s`, `ALGORITHM=INSTANT`,
 `select_related`. Wrap each of those in `<span class="ltr">`, which isolates the run. Plain
-words such as `Django` or `Kubernetes` need no wrapper. After rendering a Persian resume,
+words such as `Django` or `Kubernetes` need no wrapper.
+
+**Verify bidi at readable size.** A full-page screenshot at ~800px is too small to judge
+whether a space survived an LTR/RTL boundary; it will look broken when it is fine. Render
+the suspect lines alone at ~26px before concluding anything is wrong. After rendering a Persian resume,
 read the PDF and confirm no mixed-script string has been visually reversed; this is not
 something the page count or a lint check will catch.
 

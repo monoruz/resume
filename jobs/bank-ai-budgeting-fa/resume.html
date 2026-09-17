@@ -66,7 +66,9 @@ body{
 .ltr{
   direction: ltr;
   unicode-bidi: isolate;
-  display: inline-block;
+  /* Deliberately NOT display:inline-block. Isolation works on a plain inline
+     element, and keeping it inline lets a long multi-word term such as
+     "deterministic post-processor" wrap across lines rather than overflow. */
 }
 .name{
   font-size: var(--fs-name);
@@ -145,73 +147,81 @@ h2{ break-after: avoid; }
     تهران، ایران<span class="sep">|</span><span class="ltr">mm.74noroozi@gmail.com</span><span class="sep">|</span><span class="ltr">+98 914 784 7410</span><span class="sep">|</span><span class="ltr">linkedin.com/in/mohammad-noroozi</span><span class="sep">|</span><span class="ltr">github.com/monoruzi</span>
   </p>
 </header>
+
 <section>
   <h2>خلاصه</h2>
-  <p class="summary">مهندس نرم‌افزار با هشت سال سابقه در سامانه‌های مالی پرتراکنش و زیرساخت هوش مصنوعی. سکوی استنتاج مدل‌های زبانی را بر بستر داخلی و بدون وابستگی به سرویس‌های بیرونی پیاده‌سازی کرده و سامانه‌ای ساخته است که خروجی مدل را به مجموعه‌ای مصوب و قابل ممیزی محدود می‌کند؛ ویژگی‌ای که در کاربردهای مقرراتی و مالی تعیین‌کننده است. سابقهٔ کار بر پایگاه‌دادهٔ مالی در مقیاس ترابایت و سامانه‌های تسویه با گردش ماهانهٔ ۲۵۰ میلیون دلار.</p>
+  <p class="summary">مهندس نرم‌افزار با هشت سال سابقه در سامانه‌های مالی پرتراکنش و زیرساخت هوش مصنوعی. یک <span class="ltr">platform</span> داخلی برای <span class="ltr">inference</span> مدل‌های <span class="ltr">LLM</span> بدون وابستگی به سرویس‌های بیرونی پیاده‌سازی کرده و سامانه‌ای ساخته است که خروجی مدل را به مجموعه‌ای مصوب و قابل ممیزی محدود می‌کند؛ ویژگی‌ای که در کاربردهای مقرراتی و مالی تعیین‌کننده است. سابقهٔ کار بر پایگاه‌دادهٔ مالی در مقیاس ترابایت و سامانه‌های تسویه با گردش ماهانهٔ ۲۵۰ میلیون دلار.</p>
 </section>
+
 <section>
   <h2>سوابق شغلی</h2>
+
   <div class="item">
     <div class="item-head">
       <p class="role"><span class="company ltr">Finestel</span> — مهندس ارشد بک‌اند</p>
       <span class="dates">خرداد ۱۴۰۳ – اکنون</span>
     </div>
-    <p class="item-sub">دورکاری · سکوی معاملات خودکار دارایی‌های دیجیتال</p>
+    <p class="item-sub">دورکاری · <span class="ltr">platform</span> معاملات خودکار دارایی‌های دیجیتال</p>
     <ul>
       <li>مالکیت موتور اجرای سفارش در سامانه‌ای که معاملات خودکار بیش از <strong>۴۰٬۰۰۰ حساب</strong> متصل را روی هشت صرافی و با گردش ماهانهٔ <strong>۲۵۰ میلیون دلار</strong> اجرا می‌کند.</li>
-      <li>دسته‌ای از شرایط رقابتی در تسویهٔ هم‌زمان سفارش‌ها با به‌کارگیری قفل توزیع‌شده بر بستر <span class="ltr">Redis</span> حذف شد؛ رخداد سفارش تکراری و با اندازهٔ نادرست به نزدیک صفر رسید.</li>
+      <li>دسته‌ای از <span class="ltr">race condition</span>ها در تسویهٔ هم‌زمان سفارش‌ها با به‌کارگیری <span class="ltr">distributed lock</span> بر بستر <span class="ltr">Redis</span> حذف شد؛ رخداد سفارش تکراری و با اندازهٔ نادرست به نزدیک صفر رسید.</li>
       <li>پیاده‌سازی مغایرت‌گیری خودکار میان وضعیت داخلی و وضعیت صرافی، شامل ترمیم شکاف تسویه و لغو سفارش‌های معلق؛ موارد نیازمند دخالت دستی حدود <strong>۷۵٪</strong> کاهش یافت.</li>
-      <li>کاهش زمان پاسخ <span class="ltr">p95</span> سنگین‌ترین نقاط پایانی از <span class="ltr">۲٫۱</span> ثانیه به <span class="ltr">۳۸۰</span> میلی‌ثانیه، از راه بازطراحی پرس‌وجوها و کش درون‌فرایندی دادهٔ مرجع.</li>
-      <li>استقرار انضباط تغییر ساختار برخط روی جدول معاملات با <strong>۶۰ میلیون رکورد</strong>، به‌گونه‌ای که تغییر ناسازگار پیش از اجرا مردود شود و توقف نوشتن رخ ندهد.</li>
+      <li>کاهش <span class="ltr">p95 latency</span> سنگین‌ترین <span class="ltr">endpoint</span>ها از <span class="ltr">۲٫۱</span> ثانیه به <span class="ltr">۳۸۰</span> میلی‌ثانیه، از راه بازطراحی <span class="ltr">query</span>ها و کش درون‌فرایندی دادهٔ مرجع.</li>
+      <li>استقرار انضباط <span class="ltr">online DDL</span> روی جدول معاملات با <strong>۶۰ میلیون رکورد</strong>، به‌گونه‌ای که تغییر ناسازگار پیش از اجرا مردود شود و توقف نوشتن رخ ندهد.</li>
     </ul>
   </div>
+
   <div class="item">
     <div class="item-head">
-      <p class="role"><span class="company ltr">Dirichlet</span> — مهندس سکوی هوش مصنوعی</p>
+      <p class="role"><span class="company ltr">Dirichlet</span> — مهندس <span class="ltr">AI Platform</span></p>
       <span class="dates">اردیبهشت ۱۴۰۵ – شهریور ۱۴۰۵</span>
     </div>
     <p class="item-sub">استکهلم، سوئد (دورکاری) · پاره‌وقت · سامانهٔ طرح‌ریزی با الزام انطباق مقرراتی</p>
     <ul>
-      <li>تعریف قرارداد خروجی ساخت‌یافته میان مدل و محصول: طرح‌وارهٔ <span class="ltr">JSON</span> سخت‌گیرانه به همراه پس‌پردازندهٔ قطعی، به‌گونه‌ای که مدل نتواند پاسخی بیرون از مجموعهٔ گزینه‌های مصوب تولید کند.</li>
-      <li>طراحی موتور قواعد قطعی در کنار مدل زبانی، شامل حدود <strong>۲۲ قاعده</strong>، برای فراهم‌کردن مبنایی تکرارپذیر و قابل ممیزی که نهاد ناظر بتواند آن را به چالش بکشد.</li>
-      <li>راهبری اتصال مدل به دادهٔ واقعی به‌جای تولید متن محتمل: تجمیع دادهٔ مکانی و ویژگی‌های شبکه در یک زمینهٔ نوع‌دار، با کشی که حدود <strong>۶۰٪</strong> فراخوانی تکراری به سرویس‌های بیرونی را حذف کرد.</li>
-      <li>خط‌لولهٔ تکمیل خودکار مبتنی بر مدل زبانی، فرآیند سه‌ساعتهٔ تکمیل دستی فرم را برای بیش از <strong>۴۰ کارشناس</strong> به کمتر از <strong>۱۵ دقیقه</strong> رساند.</li>
+      <li>تعریف قرارداد <span class="ltr">structured output</span> میان مدل و محصول: یک <span class="ltr">JSON schema</span> سخت‌گیرانه به همراه <span class="ltr">deterministic post-processor</span>، به‌گونه‌ای که مدل نتواند پاسخی بیرون از مجموعهٔ گزینه‌های مصوب تولید کند.</li>
+      <li>طراحی یک <span class="ltr">deterministic rules engine</span> در کنار <span class="ltr">LLM</span>، شامل حدود <strong>۲۲ قاعده</strong>، برای فراهم‌کردن مبنایی تکرارپذیر و قابل ممیزی که نهاد ناظر بتواند آن را به چالش بکشد.</li>
+      <li>راهبری <span class="ltr">grounding</span> مدل بر دادهٔ واقعی به‌جای تولید متن محتمل: تجمیع دادهٔ مکانی و ویژگی‌های شبکه در یک <span class="ltr">typed context</span>، با کشی که حدود <strong>۶۰٪</strong> فراخوانی تکراری به سرویس‌های بیرونی را حذف کرد.</li>
+      <li><span class="ltr">pipeline</span> تکمیل خودکار مبتنی بر <span class="ltr">LLM</span>، فرآیند سه‌ساعتهٔ تکمیل دستی فرم را برای بیش از <strong>۴۰ کارشناس</strong> به کمتر از <strong>۱۵ دقیقه</strong> رساند.</li>
     </ul>
   </div>
+
   <div class="item">
     <div class="item-head">
-      <p class="role"><span class="company ltr">Yarai</span> — مهندس سکوی هوش مصنوعی</p>
+      <p class="role"><span class="company ltr">Yarai</span> — مهندس <span class="ltr">AI Platform</span></p>
       <span class="dates">آذر ۱۴۰۴ – اردیبهشت ۱۴۰۵</span>
     </div>
-    <p class="item-sub">تهران · قراردادی، پاره‌وقت · سکوی مدل‌های زبانی بر بستر داخلی</p>
+    <p class="item-sub">تهران · قراردادی، پاره‌وقت · <span class="ltr">platform</span> داخلی <span class="ltr">LLM</span></p>
     <ul>
-      <li>طراحی و ساخت سکوی استنتاج مدل‌های زبانی بر بستر داخلی روی <span class="ltr">Kubernetes</span> با <span class="ltr">KServe</span> و <span class="ltr">vLLM</span>: <strong>پنج مدل عملیاتی تا ۲۷ میلیارد پارامتر</strong> روی پردازندهٔ گرافیکی داخلی، که وابستگی به سرویس‌های بیرونی مدل زبانی را به‌طور کامل حذف کرد.</li>
-      <li>یکسان‌سازی دسترسی به مدل‌ها پشت یک درگاه سازگار با <span class="ltr">OpenAI</span>، همراه با حسابداری کلید و مصرف بر بستر <span class="ltr">PostgreSQL</span>؛ هر تیم کلید مستقل و سهم مصرف قابل انتساب دارد.</li>
+      <li>طراحی و ساخت <span class="ltr">platform</span> داخلی <span class="ltr">inference</span> روی <span class="ltr">Kubernetes</span> با <span class="ltr">KServe</span> و <span class="ltr">vLLM</span>: <strong>پنج مدل عملیاتی تا ۲۷ میلیارد پارامتر</strong> روی <span class="ltr">GPU</span> داخلی، که وابستگی به سرویس‌های بیرونی <span class="ltr">LLM</span> را به‌طور کامل حذف کرد.</li>
+      <li>یکسان‌سازی دسترسی به مدل‌ها پشت یک <span class="ltr">gateway</span> سازگار با <span class="ltr">OpenAI</span>، همراه با <span class="ltr">key/usage accounting</span> بر بستر <span class="ltr">PostgreSQL</span>؛ هر تیم کلید مستقل و سهم مصرف قابل انتساب دارد.</li>
     </ul>
   </div>
+
   <div class="item">
     <div class="item-head">
       <p class="role">کارگزاری مفید — توسعه‌دهندهٔ بک‌اند</p>
       <span class="dates">دی ۱۴۰۰ – شهریور ۱۴۰۲</span>
     </div>
-    <p class="item-sub">تهران · <span class="ltr">Bourseview</span>، بزرگ‌ترین سکوی دادهٔ بازار سرمایهٔ ایران</p>
+    <p class="item-sub">تهران · <span class="ltr">Bourseview</span>، بزرگ‌ترین <span class="ltr">platform</span> دادهٔ بازار سرمایهٔ ایران</p>
     <ul>
-      <li>مالکیت سامانه‌های قدیمی بر پایگاه‌دادهٔ بازار با حجم نزدیک به <strong>یک ترابایت</strong>: منطق محاسباتی، زمان‌بندی وظایف و خطوط پردازش چندمرحله‌ای داده.</li>
-      <li>ساخت ریزسرویس <span class="ltr">BV-Chart</span> بر بستر <span class="ltr">FastAPI</span> و انبار دادهٔ <span class="ltr">ClickHouse</span> با بازطراحی نقاط پایانی تاریخی معاملات؛ زمان پاسخ پرس‌وجو <strong>۵۰٪</strong> کاهش یافت.</li>
-      <li>نگارش پرس‌وجوهای پیشرفتهٔ <span class="ltr">T-SQL</span> شامل اتصال بیش از پنج جدول، قفل سطری برای به‌روزرسانی و رویه‌های ذخیره‌شدهٔ بیش از هزار خط.</li>
+      <li>مالکیت سامانه‌های قدیمی بر پایگاه‌دادهٔ بازار با حجم نزدیک به <strong>یک ترابایت</strong>: منطق محاسباتی، زمان‌بندی وظایف و <span class="ltr">data pipeline</span>های چندمرحله‌ای.</li>
+      <li>ساخت <span class="ltr">microservice</span> با نام <span class="ltr">BV-Chart</span> بر بستر <span class="ltr">FastAPI</span> و <span class="ltr">data warehouse</span> <span class="ltr">ClickHouse</span> با بازطراحی <span class="ltr">endpoint</span>های تاریخی معاملات؛ <span class="ltr">latency</span> <span class="ltr">query</span>ها <strong>۵۰٪</strong> کاهش یافت.</li>
+      <li>نگارش <span class="ltr">query</span>های پیشرفتهٔ <span class="ltr">T-SQL</span> شامل <span class="ltr">join</span> بیش از پنج جدول، <span class="ltr">row lock</span> برای به‌روزرسانی و <span class="ltr">stored procedure</span>های بیش از هزار خط.</li>
     </ul>
   </div>
+
   <div class="item">
     <div class="item-head">
-      <p class="role">همروش — مهندس قابلیت اطمینان</p>
+      <p class="role">همروش — <span class="ltr">SRE</span></p>
       <span class="dates">شهریور ۱۴۰۲ – خرداد ۱۴۰۳</span>
     </div>
-    <p class="item-sub">تهران · سکوی ابری داخلی</p>
+    <p class="item-sub">تهران · <span class="ltr">platform</span> ابری داخلی</p>
     <ul>
-      <li>ارائهٔ ذخیره‌سازی سازگار با <span class="ltr">S3</span> به‌صورت سرویس چندمستأجری روی خوشه‌ای با بیش از <strong>۱۰۰ گره</strong> و بیش از <strong>۴۰ ترابایت</strong> داده، بر بستر <span class="ltr">SeaweedFS</span>.</li>
+      <li>ارائهٔ ذخیره‌سازی سازگار با <span class="ltr">S3</span> به‌صورت سرویس <span class="ltr">multi-tenant</span> روی <span class="ltr">cluster</span>ی با بیش از <strong>۱۰۰ <span class="ltr">node</span></strong> و بیش از <strong>۴۰ ترابایت</strong> داده، بر بستر <span class="ltr">SeaweedFS</span>.</li>
     </ul>
   </div>
 </section>
+
 <section>
   <h2>پروژه‌ها</h2>
   <div class="item">
@@ -220,10 +230,11 @@ h2{ break-after: avoid; }
       <span class="dates">۱۴۰۲</span>
     </div>
     <ul>
-      <li>سامانهٔ زمان‌بندی توزیع‌شده بر پایهٔ <span class="ltr">Prefect</span>؛ شامل پیاده‌سازی <span class="ltr">CDC</span> روی تراکنش‌های کارت بانکی برای ساخت یک سامانهٔ پرداخت، و پایش موجودی حساب‌ها با هشدار آستانه‌ای.</li>
+      <li>سامانهٔ زمان‌بندی توزیع‌شده بر پایهٔ <span class="ltr">Prefect</span>؛ شامل پیاده‌سازی <span class="ltr">CDC</span> روی تراکنش‌های کارت بانکی برای ساخت یک سامانهٔ پرداخت، و پایش موجودی حساب‌ها با <span class="ltr">threshold alert</span>.</li>
     </ul>
   </div>
 </section>
+
 <section>
   <h2>مهارت‌ها</h2>
   <div class="skills">
@@ -234,6 +245,7 @@ h2{ break-after: avoid; }
     <div class="skill-row"><span class="skill-label">زیرساخت و پایش</span><span class="skill-vals ltr">Kubernetes, Docker, Helm, ArgoCD, GitLab CI, Terraform, Ansible, Prometheus, Grafana, Sentry, ELK</span></div>
   </div>
 </section>
+
 <section>
   <h2>تحصیلات</h2>
   <div class="item">
