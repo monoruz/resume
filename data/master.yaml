@@ -75,7 +75,7 @@ profile:
         - Domain modelling in a hard domain (trading execution)
         - Security and authentication
       lead_evidence:
-        - "$250M monthly volume, 40,000+ accounts, 8 exchanges (finestel)"
+        - "$2M monthly volume, 40,000+ accounts, 8 exchanges (finestel)"
         - "p95 2.1s to 380ms on heaviest endpoints (finestel)"
         - "order-duplication incidents to near zero via Redis locking (finestel)"
         - "25K TradingView signals/day through the execution engine (finestel)"
@@ -108,7 +108,7 @@ profile:
         - Correctness and reconciliation where money is at stake
         - Operating real-time market data at volume
       lead_evidence:
-        - "$250M monthly volume across 8 exchanges (finestel)"
+        - "$2M monthly volume across 8 exchanges (finestel)"
         - "DCA ladder, TWAP slicing, OCO handling (finestel)"
         - "unified OMS over 8 exchange SDKs (finestel)"
         - "20M+ WebSocket events/day at 99.9% uptime (finestel)"
@@ -168,7 +168,7 @@ experience:
     scope: >-
       Core engineer on a two-service Django/DRF system (~148K LOC, 460 REST endpoints,
       132 Celery tasks) driving automated trade execution across 8 exchanges for 40,000+
-      connected trading accounts and $250M in monthly volume. ~4,400 commits; primary
+      connected trading accounts and $2M in monthly volume. ~4,400 commits; primary
       owner of the signal-bot execution engine, the Terminal trading API, and the
       exchange-integration layer, on a team of 6 engineers.
     tech: [Python, Django, DRF, Celery, Redis, MariaDB, gevent, WebSockets, Sentry,
@@ -1225,9 +1225,10 @@ open_questions:
       dates are verified in background checks.
   - id: q-finestel-visibility
     note: >-
-      Is Finestel work publicly attributable, and are the figures ($250M monthly volume,
-      40,000+ accounts, 25K signals/day, 60M-row table) cleared for external use? They are
-      the strongest numbers in the file; confirm none are confidential before rendering.
+      Monthly volume corrected from $250M to $2M by the user on 2026-09-17. Still open:
+      are the remaining figures (40,000+ accounts, 25K signals/day, 60M-row table, ~148K
+      LOC) accurate and cleared for external use? If the $250M correction was driven by
+      confidentiality rather than accuracy, the same concern applies to the account count.
   - id: q-longbio-start
     note: >-
       LongBio now ends Nov 2025 (stated as one month before Yarai began). The start is

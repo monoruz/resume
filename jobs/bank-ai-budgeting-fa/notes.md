@@ -17,7 +17,7 @@ document:
    deterministic engine "که نهاد ناظر بتواند آن را به چالش بکشد" answer the question
    a bank's audit function asks first: when the model produces a number, can you
    defend it? This is the single most transferable thing in the file.
-3. **Financial systems credibility.** Finestel ($250M monthly, reconciliation,
+3. **Financial systems credibility.** Finestel ($2M monthly, reconciliation,
    near-zero duplicate orders) and Mofid (Iran's largest capital-market data
    platform, ~1 TB) establish that the AI work sits on top of real financial
    engineering, not demos.
@@ -69,7 +69,7 @@ numbers and they go in, and these bullets become considerably stronger.
 
 ## Verify before sending
 
-1. **Clearance on the Finestel figures.** $250M monthly volume, 40,000 accounts, the
+1. **Clearance on the Finestel figures.** $2M monthly volume, 40,000 accounts, the
    60M-row table and the 75% reduction are the backbone of page 1, and `q-finestel-visibility`
    is still unanswered. Some employers treat volume and account counts as confidential.
    A bank is exactly the sort of reader who might mention it to someone.
