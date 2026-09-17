@@ -1,0 +1,1306 @@
+# ============================================================================
+# MASTER CAREER DATABASE — the single source of truth.
+#
+# This is a SUPERSET. Every role carries more bullets than any one resume will
+# use; tailoring is selection, not invention. Nothing goes on a rendered resume
+# that is not in here first.
+#
+# Metrics must be real and user-confirmed. If a bullet needs a number and we
+# don't have one, leave it out and raise it as a quantification prompt — never
+# guess a figure into this file.
+#
+# Field notes:
+#   tags:    skills/domains — how JD matching happens
+#   impact:  high | med | low — tie-breaker when trimming to 2 pages
+#   verify:  true = claim not yet confirmed by the user; do not render until it is
+#
+# Source: LaTeX resume supplied 2026-09-17.
+# ============================================================================
+
+contact:
+  name: Mono Ruzi
+  headline: Software Engineer        # default; rewritten per JD
+  location: Gholhak, Tehran, Iran
+  email: mm.74noroozi@gmail.com
+  phone: "+98 914 784 7410"
+  linkedin: linkedin.com/in/mohammad-noroozi
+  github: github.com/monoruzi
+  website:
+
+profile:
+  # Standing framing from the previous resume's objective block. Rewrite per JD.
+  years_experience: 8               # as stated 2026-09; verify the anchor year
+  years_frontend: 4                 # as stated in the frontend objective — see q-frontend-years
+  positioning: >-
+    Python engineer who operates across the full stack of delivery — application
+    code, the infrastructure it runs on, and the observability that keeps it up.
+    Equally credible as a backend developer and as an SRE/DevOps owner.
+  # ------------------------------------------------------------------
+  # SLANTS — which evidence leads, per role family. The summary itself is
+  # written fresh per JD; these are the pools it draws from.
+  #
+  # Banned from every summary (these were in the source resumes and are
+  # pure filler — they consume the highest-value 50 words on the page and
+  # say nothing a reviewer can check):
+  #   "highly skilled" · "demonstrated expertise" · "proficient in"
+  #   "seamless" · "dynamic and demanding position" · "leverage my ...
+  #   skill set" · "contributing to organizational triumph" · any
+  #   sentence about what the candidate is seeking rather than what they
+  #   have done. Also from the frontend objective: "highly skilled and
+  #   adaptable" · "committed to writing high-quality code" · "delivering
+  #   exceptional user experiences" · "proficient in various modern
+  #   technologies" · "seeking a challenging role to leverage technical
+  #   expertise" · "analytical mindset with strong problem-solving
+  #   aptitude" · "excellent communication skills".
+  # ------------------------------------------------------------------
+  slants:
+    devops:
+      emphasize:
+        - CI/CD pipeline design across GitLab CI, GitHub Actions, and Jenkins
+        - Kubernetes platform operation at multi-tenant scale
+        - Infrastructure as code (Terraform, CloudFormation, Ansible, CDK8s)
+        - Observability ownership (Prometheus, Grafana, Loki, ELK, Sentry)
+        - Zero-downtime release engineering
+      lead_evidence:            # concrete, checkable, already in this file
+        - 100+ node cluster, 40+ TB, multi-tenant S3 provisioning (hamravesh)
+        - zero-downtime rolling updates gated on tests (homeca)
+        - full GitLab CI with Kaniko builds and env isolation (homeca)
+        - CI/CD and cluster setup for 10+ companies (consulting)
+        - 10x endpoint load-time improvement (mofid)
+    backend:
+      emphasize:
+        - Python backend engineering at scale (Django, DRF, FastAPI, Pyramid)
+        - Correctness under concurrency; distributed locking and reconciliation
+        - Query and API performance work
+        - Domain modelling in a hard domain (trading execution)
+        - Security and authentication
+      lead_evidence:
+        - "$250M monthly volume, 40,000+ accounts, 8 exchanges (finestel)"
+        - "p95 2.1s to 380ms on heaviest endpoints (finestel)"
+        - "order-duplication incidents to near zero via Redis locking (finestel)"
+        - "25K TradingView signals/day through the execution engine (finestel)"
+        - "50% query response time cut via BV-Chart on ClickHouse (mofid)"
+        - "10x endpoint improvement, N+1 fix (mofid)"
+    ai_platform:
+      emphasize:
+        - Self-hosted LLM inference and serving infrastructure
+        - GPU scheduling and model operations on Kubernetes
+        - Multi-tenant platform architecture behind one API surface
+        - Shipping LLM products, not only serving models
+        - Constraining model output to a validated schema; grounding over prose
+        - Determinism and auditability where a regulator can challenge the answer
+        - LLM application security (prompt injection, BFF hardening)
+        - GitOps delivery on bare metal
+      lead_evidence:
+        - "3-hour manual step to under 15 minutes for 40+ planners (dirichlet)"
+        - "strict JSON schema + deterministic post-processor; no out-of-set answers (dirichlet)"
+        - "geodata grounding with SHA-256 Redis caching, ~60% fewer upstream calls (dirichlet)"
+        - "~22-rule deterministic engine alongside the LLM for auditability (dirichlet)"
+        - "5 production models to 27B params on KServe + vLLM (yarai)"
+        - "LiteLLM gateway with per-team keys and usage accounting (yarai)"
+        - "5 branded assistants from 127 Helm charts, 28 ArgoCD apps (yarai)"
+        - "multimodal triage pipeline with schema-constrained output (yarai)"
+        - "bare-metal k8s via Kubespray, Istio, GitLab CI to Harbor to ArgoCD (yarai)"
+    fintech_trading:
+      emphasize:
+        - Trading execution systems and order management
+        - Exchange integration and API abstraction
+        - Correctness and reconciliation where money is at stake
+        - Operating real-time market data at volume
+      lead_evidence:
+        - "$250M monthly volume across 8 exchanges (finestel)"
+        - "DCA ladder, TWAP slicing, OCO handling (finestel)"
+        - "unified OMS over 8 exchange SDKs (finestel)"
+        - "20M+ WebSocket events/day at 99.9% uptime (finestel)"
+        - "Iran's largest stock market data platform, ~1 TB (mofid)"
+    frontend_fullstack:
+      emphasize:
+        - React / Next.js application development
+        - Test automation (Cypress, unit + E2E)
+        - Performance and SEO engineering
+        - Design-system and component work
+        - Owning the API alongside the UI
+        - Responsive and mobile-first delivery, cross-browser debugging
+        - Senior individual-contributor framing (not management)
+        - "Backend literacy as a differentiator among frontend candidates: SQL/NoSQL, caching layers, proxies, containerized architecture"
+      lead_evidence:
+        - "micro-frontend: 30% faster page load, 20% less dev time (mofid)"
+        - four legacy frontends migrated to typed, tested code (mofid)
+        - 100+ reusable design-system components (homeca)
+        - Next.js SSG CMS, A+ GTmetrix, CDN + caching (homeca)
+        - React/Next frontend on self-built Express APIs (mizan)
+    platform_sre:
+      emphasize:
+        - Distributed storage and stateful systems
+        - Reliability, HA, and incident-driven debugging
+        - Deep runtime debugging (gevent/Celery internals)
+        - Public code corroborating the private work
+      lead_evidence:
+        - "gevent pool soft_time_limit watchdog and hub monitor (finestel)"
+        - "self-healing reconciliation, ~75% fewer manual interventions (finestel)"
+        - "20M+ events/day streamer fleet at 99.9% uptime (finestel)"
+        - SeaweedFS + ScyllaDB production ownership (hamravesh)
+        - async cross-S3 replication with Prometheus status (hamravesh)
+        - cdk8s-seaweed-s3 open-source repo (project)
+        - 1000+ clients, 600 GB/day self-run infrastructure (mn-service)
+
+  themes:
+    - Python backend engineering at scale (Django, DRF, FastAPI, Pyramid)
+    - Kubernetes-native architecture and containerized infrastructure design
+    - Observability: Prometheus stack, Grafana, Sentry, ELK, Loki
+    - CI/CD pipeline design for large-scale applications
+    - Computer networking fundamentals (TCP/IP, TLS, UDP, DNS, SMTP)
+    - Performance work: caching, message latency, query optimization
+
+# ============================================================================
+# EXPERIENCE — reverse-chronological
+# ============================================================================
+experience:
+
+  - id: finestel
+    company: Finestel
+    title: Senior Backend Engineer
+    employment: Full-time
+    location: Remote
+    start: Jun 2024
+    end: Present
+    context: Crypto copy-trading and trading-automation platform
+    scope: >-
+      Core engineer on a two-service Django/DRF system (~148K LOC, 460 REST endpoints,
+      132 Celery tasks) driving automated trade execution across 8 exchanges for 40,000+
+      connected trading accounts and $250M in monthly volume. ~4,400 commits; primary
+      owner of the signal-bot execution engine, the Terminal trading API, and the
+      exchange-integration layer, on a team of 6 engineers.
+    tech: [Python, Django, DRF, Celery, Redis, MariaDB, gevent, WebSockets, Sentry,
+           GitLab CI, ruff, Stripe, Pydantic, React, TradingView, Binance, Bybit, OKX,
+           Hyperliquid]
+    bullets:
+
+      # ---- group: trading engine & execution ----
+      - text: >-
+          Built and owned the signal-bot execution engine processing ~25K TradingView
+          webhook signals per day end to end: order sizing, precondition checks, placement,
+          and post-fill callbacks across spot and futures.
+        group: trading-engine
+        tags: [python, django, celery, trading, execution, webhooks, scale, ownership, fintech]
+        impact: high
+      - text: >-
+          Designed the DCA ladder engine — base entry plus a deviation-triggered limit
+          ladder with minimum-amount-aware take-profit splitting and a shared stop-loss that
+          resizes and ratchets as steps fill, including Binance Spot OCO handling. Also
+          implemented TWAP slicing and meta-actions (close-position, close-all).
+        group: trading-engine
+        tags: [trading, algorithms, dca, twap, order-management, fintech, domain-modelling]
+        impact: high
+      - text: >-
+          Built a unified OMS dispatch layer in front of 8 exchange SDKs (Binance, Bybit v5,
+          Bitget, OKX, KuCoin, Kraken, Gate, Hyperliquid), centralizing rate limiting, error
+          normalization, market-type guards, and broker tagging so exchange-specific quirks
+          remain isolated in per-exchange clients.
+        group: trading-engine
+        tags: [architecture, abstraction, integrations, oms, api-design, fintech, python]
+        impact: high
+      - text: >-
+          Refactored the engine into an enforced views/tasks to services to selectors
+          architecture with a documented, cycle-free dependency graph, replacing business
+          logic embedded in views.
+        group: trading-engine
+        tags: [architecture, refactoring, django, clean-code, maintainability, design-patterns]
+        impact: high
+
+      # ---- group: reliability ----
+      - text: >-
+          Eliminated a class of concurrent-fill race conditions by introducing Redis
+          distributed locking (blocking and non-blocking variants) around trade callbacks,
+          DCA take-profit calculation, and exchange balance updates, which had been producing
+          duplicate and mis-sized orders; order-duplication incidents fell to near zero.
+        group: reliability
+        tags: [redis, distributed-locking, concurrency, race-conditions, reliability, correctness, fintech]
+        impact: high
+      - text: >-
+          Built self-healing reconciliation for exchange and local state divergence:
+          take-profit fill-gap reconciliation, dangling-order cancellation, stuck
+          execution-overview cleanup, and retry logic for OCO leg cancellation, reducing
+          stuck-position incidents requiring manual intervention by ~75%.
+        group: reliability
+        tags: [reliability, reconciliation, self-healing, distributed-systems, operations, fintech]
+        impact: high
+      - text: >-
+          Diagnosed a silent observability gap in Celery's gevent pool, where soft_time_limit
+          is swallowed by TaskPool.on_apply and overrunning tasks died with no stack trace.
+          Built a watchdog that snapshots the running greenlet's stack and in-flight Sentry
+          spans before the hard limit without interrupting the task, plus a gevent hub monitor
+          catching tasks that block the event loop inside non-monkey-patchable C calls
+          (mysqlclient); task-timeout diagnosis moved from a bare "hard time limit exceeded"
+          log line to a traced Sentry issue carrying the blocking stack.
+        group: reliability
+        tags: [celery, gevent, observability, debugging, sentry, concurrency, python, internals]
+        impact: high
+      - text: >-
+          Implemented a Redis sorted-set sliding-window rate limiter throttling order and
+          account actions per account and per action type, deliberately below exchange
+          ceilings, eliminating exchange API bans across the fleet.
+        group: reliability
+        tags: [redis, rate-limiting, algorithms, reliability, api, distributed-systems]
+        impact: high
+      - text: >-
+          Operated the WebSocket streamer fleet: a containerized set of workers holding one
+          private socket per exchange account, feeding a three-stage classify, queue, apply
+          pipeline over dedicated Celery queues at 20M+ events per day, keeping account state
+          current without polling at 99.9% uptime.
+        group: reliability
+        tags: [websockets, streaming, celery, scale, real-time, containers, reliability, operations]
+        impact: high
+
+      # ---- group: data & platform ----
+      - text: >-
+          Recovered four years of Django migration history that had been gitignored since
+          2022 by reconstructing it from production, then introduced a max_migration.txt
+          leaf-tracking convention so parallel migrations surface as git merge conflicts
+          rather than silent divergence.
+        group: data-platform
+        tags: [django, migrations, databases, tooling, recovery, developer-experience, process]
+        impact: high
+      - text: >-
+          Established online-DDL discipline for MariaDB: schema changes on the 60M-row trade
+          table forced through ALGORITHM=INSTANT, LOCK=NONE so ineligible changes fail fast
+          rather than silently triggering a locking table rebuild, eliminating
+          migration-related write downtime.
+        group: data-platform
+        tags: [mariadb, mysql, databases, ddl, zero-downtime, scale, reliability, operations]
+        impact: high
+      - text: >-
+          Cut p95 response time on the heaviest list endpoints from 2.1s to 380ms through
+          select_related and prefetch_related query restructuring, conditional annotations,
+          exact-match filter lookups, and an in-process TTL cache for hot reference data.
+        group: data-platform
+        tags: [performance, django, orm, query-optimization, caching, databases, api]
+        impact: high
+
+      # ---- group: product & platform APIs ----
+      - text: >-
+          Built the Terminal API, a DRF ViewSet surface for manual and programmatic trading
+          (orders, positions, leverage, margin and hedge-mode configuration, balances,
+          permissions) with async Celery fan-out and calculated backoff for bulk actions.
+        group: product-api
+        tags: [drf, django, api-design, rest, celery, async, trading, ownership]
+        impact: high
+      - text: >-
+          Delivered platform features on the main API service: Stripe subscription billing,
+          a Basic-auth whitelabel partner API serving 15 white-label partners, HubSpot CRM
+          sync, Hyperliquid agent-wallet and builder-fee integration, 2FA session management,
+          and backoffice reporting on a selectors and services pattern with Pydantic-typed
+          payloads.
+        group: product-api
+        tags: [stripe, billing, integrations, api-design, authentication, 2fa, pydantic, saas, b2b]
+        impact: high
+      - text: >-
+          Maintained contract compatibility across a three-repo system — two Django services
+          in direct service-to-service communication plus a React dashboard — coordinating
+          request and response changes across all consumers.
+        group: product-api
+        tags: [api-design, versioning, microservices, collaboration, integration, contracts]
+        impact: med
+
+      # ---- group: engineering standards ----
+      - text: >-
+          Authored the codebases' architecture documentation and a path-scoped domain rule
+          set (~20 documents covering migrations, rate limits, the streamer, OMS, DCA and
+          TWAP semantics, and per-exchange quirks), and established ruff, pre-commit, and
+          GitLab CI gating on lint and Django system checks.
+        group: standards
+        tags: [documentation, standards, ci-cd, ruff, code-quality, leadership, process, mentoring]
+        impact: high
+
+  - id: dirichlet
+    company: Dirichlet
+    title: AI Platform Engineer
+    employment: Part-time
+    location: Stockholm, Sweden (Remote)
+    start: May 2026
+    end: Sep 2026
+    context: >-
+      TA-Planner (TAP), a traffic-arrangement planning platform for the Swedish market.
+      Users draw work zones on a map; the system generates road-network analysis,
+      traffic-sign placement, and the regulatory survey and risk assessment that together
+      form a legally submittable TA-plan.
+    tech: [Python 3.12, FastAPI, SQLAlchemy 2.0, PostgreSQL, PostGIS, Supabase, Redis,
+           OpenAI API, OpenRouter, Gemini, GeoPandas, Shapely, NetworkX, osmnx,
+           osm2streets, Nuxt 3, TypeScript, Docker, GitLab CI, Sentry, MinIO]
+    bullets:
+
+      # ---- group: AI systems (design ownership and technical review) ----
+      - text: >-
+          Led the design of the LLM-powered plan autofill pipeline converting a free-text
+          work-order email plus geospatial context into a structured Swedish regulatory
+          survey and a 22-item risk-assessment matrix, reducing a three-hour manual
+          form-filling step to under 15 minutes for 40+ planners across partner
+          contractors.
+        group: ai-systems
+        tags: [llm, ai, design-ownership, structured-output, automation, regtech, geospatial, product]
+        impact: high
+      - text: >-
+          Defined the structured-output contract between model and product: a strict JSON
+          schema over the OpenAI Responses API with a deterministic post-processor mapping
+          model-returned option paths back onto the canonical survey tree, so model output
+          cannot introduce an answer outside the approved regulatory option set.
+        group: ai-systems
+        tags: [llm, structured-output, json-schema, correctness, api-design, compliance, ai, safety]
+        impact: high
+      - text: >-
+          Drove the grounding strategy keeping the model tied to real data rather than
+          plausible prose: concurrent OSM and Overpass proximity detection (schools,
+          hospitals, protected areas, residential classification), Swedish NVDB
+          road-attribute enrichment, and lane and speed-limit analysis assembled into one
+          typed JSON context, with SHA-256-keyed Redis caching that removed ~60% of repeat
+          calls to upstream geodata APIs.
+        group: ai-systems
+        tags: [rag, grounding, llm, geospatial, osm, caching, redis, concurrency, ai, performance]
+        impact: high
+      - text: >-
+          Established the reliability requirements reviewed into the AI path: typed
+          exception mapping across authentication, rate-limit, timeout, connection and
+          malformed-JSON failures, and graceful degradation that completes autofill with an
+          explicit warning flag when the road-network build fails rather than dropping the
+          request.
+        group: ai-systems
+        tags: [reliability, error-handling, graceful-degradation, llm, ai, api-design, resilience]
+        impact: high
+      - text: >-
+          Championed a deterministic rules engine running alongside the LLM — roughly 22
+          codified safety rules over intersected lanes, sign categories and proximity
+          metadata — giving an auditable, reproducible baseline for answers a Swedish
+          regulator can challenge.
+        group: ai-systems
+        tags: [rules-engine, determinism, auditability, compliance, regtech, ai, safety, architecture]
+        impact: high
+      - text: >-
+          Reviewed the AI aerial-image-to-sketch feature (Gemini 2.5 Flash Image via
+          OpenRouter), setting the backend-for-frontend security bar: backend token
+          validation, per-IP and per-token rate limiting, request and image size caps, MIME
+          allowlist, and prompt-injection defence pinning system visibility rules as
+          authoritative over user-supplied instructions.
+        group: ai-systems
+        tags: [security, prompt-injection, multimodal, code-review, rate-limiting, api-security, ai, gemini]
+        impact: high
+
+      # ---- group: platform engineering (hands-on) ----
+      - text: >-
+          Built the RBAC system end to end — roles, permissions, update-time database
+          triggers, user and role listing endpoints, and an immutable super_admin role — on
+          Supabase phone-OTP JWT authentication, with Redis-backed admin impersonation
+          sessions on a configurable TTL for support debugging.
+        group: platform
+        tags: [rbac, authorization, authentication, jwt, supabase, postgresql, redis, security, backend]
+        impact: high
+      - text: >-
+          Designed and optimised the traffic-sign catalogue API: icon and image endpoints
+          with category filtering, batch creation, pagination, and a variants and
+          physical_attributes relational model. Consolidating N+1 joins into joinedload
+          strategies cut per-request queries from ~15 to 2 and list-endpoint latency by
+          ~70%.
+        group: platform
+        tags: [api-design, sqlalchemy, performance, query-optimization, orm, postgresql, backend, rest]
+        impact: high
+      - text: >-
+          Owned CI/CD and containerisation across four repositories: tag-based GitLab
+          pipelines deploying Dockerised services to staging and production, with
+          Dockerfiles and nginx configuration for the backend, admin panel and landing
+          site.
+        group: platform
+        tags: [ci-cd, gitlab, docker, nginx, deployment, devops, ownership]
+        impact: med
+      - text: >-
+          Worked across a ~16K-LOC FastAPI and SQLAlchemy 2.0 geospatial backend built on
+          osm2streets, osmnx, GeoPandas, Shapely and NetworkX, and authored the API
+          documentation covering all endpoint groups.
+        group: platform
+        tags: [fastapi, sqlalchemy, geospatial, gis, python, documentation, networkx, backend]
+        impact: med
+      - text: >-
+          Built the support-ticket subsystem, endpoints and database schema, backing the
+          internal admin panel.
+        group: platform
+        tags: [backend, api-design, postgresql, internal-tools, fastapi]
+        impact: low
+
+  - id: yarai
+    company: Yarai
+    title: AI Platform Engineer
+    employment: Contract, part-time
+    location: Tehran, Iran
+    start: Dec 2025
+    end: May 2026
+    context: Self-hosted LLM platform and AI product studio
+    tech: [Kubernetes, KServe, vLLM, LiteLLM, Open WebUI, Keycloak, Helm, ArgoCD, GitLab CI,
+           Harbor, Istio, Kubespray, Ansible, NVIDIA GPU, FastAPI, Django, Celery, Next.js,
+           PostgreSQL, Redis, Prometheus, Sentry]
+    bullets:
+
+      - text: >-
+          Designed and built a self-hosted LLM inference platform on Kubernetes (KServe and
+          vLLM on NVIDIA GPUs) serving five production models up to 27B parameters
+          (gpt-oss-20b, Gemma-3-27B, DeepSeek-Coder-V2, MedGemma-4B, Qwen3-Embedding-8B)
+          with 32K context windows and autoscaling replicas, removing the dependency on
+          third-party LLM APIs.
+        group: llm-platform
+        tags: [llm, vllm, kserve, kubernetes, gpu, inference, ml-infrastructure, self-hosted, ai]
+        impact: high
+        needs_metric: inference cost reduction versus the third-party API baseline (%)
+      - text: >-
+          Standardised model access behind a LiteLLM OpenAI-compatible gateway with
+          Postgres-backed key and usage accounting and Redis response caching, giving
+          internal teams one API surface with per-team keys and usage attribution across
+          self-hosted and external providers.
+        group: llm-platform
+        tags: [litellm, api-gateway, llm, postgresql, redis, caching, multi-tenancy, platform, ai]
+        impact: high
+        needs_metric: number of internal teams served
+      - text: >-
+          Architected a multi-tenant white-label AI assistant platform powering five branded
+          products (یار / chat.yarai.ir, Medhoush for medical, Dadhoush for legal, Delyar,
+          and an internal CRM assistant) on a Persian-localised Open WebUI fork with Keycloak
+          SSO, templated into reusable Helm charts across 127 charts and 28 ArgoCD
+          applications.
+        group: llm-platform
+        tags: [multi-tenancy, white-label, helm, argocd, keycloak, sso, localization, ai, platform, architecture]
+        impact: high
+        needs_metric: time to launch a new branded assistant, before and after templating
+      - text: >-
+          Built an AI incident-triage platform (FastAPI, Next.js, PostgreSQL) ingesting
+          citizen reports through a Bale messenger bot into a JSON-schema-constrained
+          multimodal LLM pipeline performing topic classification, priority scoring,
+          structured extraction, and image and video analysis, with an automated
+          clarification loop that re-prompted reporters for missing location data.
+        group: ai-products
+        tags: [fastapi, nextjs, postgresql, llm, multimodal, structured-output, classification, chatbot, ai]
+        impact: high
+        needs_metric: complete-report rate achieved by the clarification loop (%)
+      - text: >-
+          Built an autonomous news-to-content agent (Django and Celery) polling RSS every 30
+          minutes and passing each article through a streaming LLM pipeline for
+          categorisation, sentiment, relevance scoring, and Persian translation,
+          auto-drafting SEO-optimised posts above a relevance threshold with no manual
+          writing.
+        group: ai-products
+        tags: [django, celery, llm, agents, automation, nlp, translation, seo, content, ai]
+        impact: high
+        needs_metric: publish-ready drafts produced per week
+      - text: >-
+          Automated delivery end to end with GitLab CI into Harbor into ArgoCD GitOps (build,
+          push, image-tag rewrite, auto-sync) on bare-metal Kubernetes provisioned by
+          Kubespray and Ansible, with an Istio service mesh, NFS-backed model caching, and
+          Prometheus and Sentry observability.
+        group: platform-delivery
+        tags: [gitops, argocd, gitlab, harbor, kubernetes, kubespray, ansible, istio, bare-metal, devops, observability]
+        impact: high
+
+  - id: longbio
+    company: LongBio
+    title: Fullstack Developer
+    employment: Freelance
+    location: Tehran, Iran
+    start: "2025"                     # start month unknown — see q-longbio-start
+    end: Nov 2025
+    link: longbio.com
+    context:                          # what does LongBio do? needed for the one-line subtext
+    tech: [CI/CD, GitHub Actions, Sentry, authentication]
+    bullets:
+      - text: >-
+          Lead software development, coordinating deployment and configuration of new
+          features and infrastructure components.
+        tags: [leadership, architecture, devops, ownership, freelance]
+        impact: high
+      - text: >-
+          Designed a lightweight, modular architecture optimized for rapid iteration and
+          low operational cost, with an emphasis on clean and maintainable code.
+        tags: [architecture, clean-code, maintainability, cost-optimization, fullstack]
+        impact: high
+      - text: >-
+          Built and maintained CI/CD pipelines automating build, test, and deploy across
+          development and production environments, mapped to GitHub branch strategy.
+        tags: [ci-cd, github-actions, devops, automation, testing]
+        impact: high
+      - text: >-
+          Implemented multiple authentication and login flows with logic adapted to client
+          time zones and regional requirements.
+        tags: [authentication, backend, internationalization, security]
+        impact: med
+      - text: >-
+          Set up application monitoring and error tracking on Sentry, improving reliability
+          and observability.
+        tags: [observability, sentry, monitoring, reliability]
+        impact: med
+
+  - id: hamravesh
+    company: Hamravesh
+    title: Site Reliability Engineer
+    employment: Full-time
+    location: Tehran, Iran
+    start: Sep 2023
+    end: Jun 2024
+    context: PaaS platform provider
+    tech: [SeaweedFS, Golang, ScyllaDB, Kubernetes, CDK8s, FastAPI, Prometheus, Grafana, VictoriaMetrics, S3, MinIO]
+    bullets:
+      - text: >-
+          Maintain and develop the production SeaweedFS storage service on Hamravesh's PaaS
+          platform — an S3-compatible, Go-based storage layer that outperforms MinIO at
+          terabyte scale on workloads dominated by small objects.
+        tags: [storage, s3, golang, sre, distributed-systems, paas]
+        impact: high
+      - text: >-
+          Provisioned storage as a multi-tenant service across a 100+ node cluster holding
+          40+ TB, using CDK8s for manifest generation and FastAPI for the provisioning API.
+        tags: [kubernetes, cdk8s, fastapi, python, multi-tenancy, storage, scale]
+        impact: high
+      - text: >-
+          Built an async replication service mirroring data to external S3 interfaces
+          (MinIO, AWS S3), instrumented with Prometheus metrics surfacing replication
+          status in Grafana.
+        tags: [python, async, replication, s3, prometheus, grafana, observability]
+        impact: high
+      - text: >-
+          Run ScyllaDB as the distributed HA datastore backing the service.
+        tags: [scylladb, distributed-systems, databases, high-availability]
+        impact: med
+      - text: >-
+          Instrumented metrics collection via Kubernetes ServiceMonitor with alerting rules
+          declared in VictoriaMetrics manifests.
+        tags: [kubernetes, prometheus, victoriametrics, monitoring, alerting, observability]
+        impact: med
+
+  - id: mofid
+    company: Mofid Securities
+    title: Backend Developer
+    title_variants: [DevOps Engineer, Fullstack Developer]   # all three used; pick per JD slant
+    employment: Full-time
+    location: Tehran, Iran
+    start: Jan 2022
+    end: Sep 2023
+    context: Bourseview — Iran's largest stock market data platform
+    tech: [Python, Pyramid, SQLAlchemy, FastAPI, Celery, T-SQL, SQL Server, ClickHouse, Sentry, Gunicorn, Kubernetes, ArgoCD, Envoy Proxy, Supervisord, CoreDNS, TradingView, TypeScript, Cypress, S3, Figma]
+    bullets:
+      - text: >-
+          Built the BV-Chart microservice (FastAPI + TradingView standard) against a
+          ClickHouse data warehouse, refactoring historical trade and metric endpoints and
+          cutting query response time by 50%.
+        tags: [fastapi, python, clickhouse, microservices, performance, data-engineering, refactoring]
+        impact: high
+      - text: >-
+          Diagnosed Gunicorn worker "system exit" failures by instrumenting JRPC endpoints
+          with Sentry via a decorator pattern, then redesigned the API to eliminate an N+1
+          query problem — a 10x load-time improvement on the affected endpoint.
+        tags: [python, sentry, debugging, performance, observability, design-patterns, api-design]
+        impact: high
+      - text: >-
+          Owned legacy Bourseview systems against a ~1 TB market database: calculation logic,
+          task scheduling, and multi-stage data pipelines.
+        tags: [python, legacy-systems, data-pipelines, scale, databases]
+        impact: high
+      - text: >-
+          Wrote advanced T-SQL — five-plus table joins, SELECT ... FOR UPDATE row locking,
+          and stored procedures running past 1,000 lines.
+        tags: [sql, t-sql, sqlserver, databases, performance]
+        impact: med
+      - text: >-
+          Audited the multi-level login flow in the Pyramid framework, finding and fixing
+          security defects in token encryption and PKCE authorization-token verification.
+        tags: [security, authentication, pkce, oauth, pyramid, python]
+        impact: high
+      - text: >-
+          Scheduled Celery jobs calling the Google Sheets REST API to keep commodity prices
+          current.
+        tags: [celery, python, async, integrations, scheduling]
+        impact: low
+      - text: >-
+          Configured Supervisord and CoreDNS so local development could resolve and call
+          individual services running on Kubernetes nodes.
+        tags: [devops, kubernetes, coredns, supervisord, developer-experience, networking]
+        impact: low
+      # --- DevOps-slanted bullets (added from the DevOps resume variant) ---
+      - text: >-
+          Tuned microservice performance and resilience with Envoy Proxy — load balancing,
+          circuit breaking, and traffic observability — reducing latency and improving
+          scalability.
+        tags: [envoy, service-mesh, microservices, performance, resilience, observability, networking, devops]
+        impact: high
+      - text: >-
+          Managed application delivery into complex Kubernetes clusters with ArgoCD,
+          automating a previously manual deployment process.
+        tags: [argocd, gitops, kubernetes, ci-cd, deployment, devops, automation]
+        impact: high
+      - text: >-
+          Ran CoreDNS for DNS resolution and service discovery inside Kubernetes, making
+          inter-service communication reliable across the cluster.
+        tags: [coredns, dns, kubernetes, service-discovery, networking, devops]
+        impact: med
+      - text: >-
+          Monitored query performance and optimized database operations across legacy
+          services running on a ~1 TB market database.
+        tags: [databases, performance, query-optimization, sql, legacy-systems, devops]
+        impact: high
+      # --- Frontend/fullstack bullets (added from the frontend resume variant) ---
+      - text: >-
+          Migrated four legacy frontend projects on bourseview.com, replacing unmaintainable
+          code with fully typed, documented, and test-covered code.
+        tags: [frontend, typescript, refactoring, testing, legacy-systems, maintainability]
+        impact: high
+      - text: >-
+          Implemented a micro-frontend architecture that raised page load speed 30% and cut
+          development time 20%.
+        tags: [micro-frontend, frontend, architecture, performance, developer-experience]
+        impact: high
+      - text: >-
+          Built integration and end-to-end test coverage with Cypress.
+        tags: [cypress, testing, e2e, frontend, quality]
+        impact: med
+      - text: >-
+          Implemented secure file upload using S3 pre-signed URLs.
+        tags: [s3, aws, security, file-upload, backend, api-design]
+        impact: med
+      - text: >-
+          Shipped features that improved staff workflow efficiency and enabled marketing
+          campaigns, with user-activity monitoring through Sentry.
+        tags: [product-engineering, frontend, sentry, analytics, marketing]
+        impact: med
+      - text: >-
+          Worked directly with the UI/UX team on design refinement, using Figma for design
+          and prototyping.
+        tags: [figma, ui-ux, collaboration, design, frontend]
+        impact: low
+      - text: >-
+          Practiced Agile and Scrum to keep the development workflow predictable.
+        tags: [agile, scrum, process, collaboration]
+        impact: low
+
+  - id: consulting
+    company: Independent
+    title: Technical Consultant
+    title_variants: [DevOps Consultant]   # both used; pick per JD slant
+    employment: Freelance
+    location: Remote
+    start: "2019"
+    end: Present
+    context: Overlaps the full-time roles below and above
+    tech: [Kubernetes, GitLab CI, Jenkins, Terraform, Ansible, AWS, CloudFormation, Prometheus, Grafana, Loki, Promtail, ELK, Sentry, Supervisord]
+    bullets:
+      - text: >-
+          Advised 10+ companies on web and data-analytics architecture, scoping the solution
+          against what each team could actually operate.
+        tags: [consulting, architecture, leadership, communication]
+        impact: high
+      - text: >-
+          Led client development teams through deployment and configuration of newly adopted
+          solutions.
+        tags: [leadership, mentoring, consulting, devops]
+        impact: med
+      - text: >-
+          Designed CI/CD pipelines covering build, test, and deploy, with GitLab-branch-mapped
+          environments for production and development and generated mock-data fixtures.
+        tags: [ci-cd, gitlab, devops, testing, automation]
+        impact: high
+      - text: >-
+          Stood up and helped maintain on-premise Kubernetes clusters.
+        tags: [kubernetes, devops, on-premise, infrastructure]
+        impact: med
+      - text: >-
+          Built monitoring and alerting stacks on Prometheus, Grafana, Loki, Promtail, and
+          ELK, plus Sentry for error tracking.
+        tags: [observability, prometheus, grafana, loki, elk, sentry, monitoring, alerting]
+        impact: high
+      # --- DevOps-slanted bullets (added from the DevOps resume variant) ---
+      - text: >-
+          Managed and automated AWS infrastructure as code with Terraform, CloudFormation,
+          and Ansible.
+        tags: [aws, terraform, cloudformation, ansible, iac, automation, cloud, devops]
+        impact: high
+      - text: >-
+          Built scalable, highly available systems on AWS across EC2, S3, RDS, Lambda,
+          CloudFormation, and CloudWatch.
+        tags: [aws, ec2, s3, rds, lambda, cloudwatch, cloud, high-availability, scalability]
+        impact: high
+      - text: >-
+          Troubleshot and repaired CI/CD pipelines in both GitLab CI and Jenkins to keep
+          integration and delivery unblocked.
+        tags: [ci-cd, gitlab, jenkins, troubleshooting, devops, automation]
+        impact: med
+      - text: >-
+          Configured and monitored applications under Supervisord for fault tolerance and
+          high availability, minimizing downtime.
+        tags: [supervisord, high-availability, fault-tolerance, reliability, monitoring, devops]
+        impact: med
+
+  - id: homeca
+    company: Homeca.ir
+    title: Tech Lead
+    title_variants: [DevOps Engineer, Fullstack Developer]   # both describe the work honestly; CTO removed — see q-homeca-title
+    employment: Full-time
+    location: Tehran, Iran
+    start: "2019"
+    end: "2022"
+    context: At-home health services marketplace; owned the complete system architecture
+    link: https://www.homeca.ir
+    tech: [Django, DRF, Next.js, React, Cypress, Leaflet, Mapbox, Kubernetes, HAProxy, Nginx, Cloudflare, MySQL, MinIO, Celery, RabbitMQ, GitLab CI, Kaniko, Sentry, Prometheus, Grafana, Loki, Mailu]
+    bullets:
+      - text: >-
+          Owned end-to-end system architecture as technical lead: backend, frontend
+          delivery, Kubernetes infrastructure, CI/CD, and observability.
+        tags: [leadership, architecture, tech-lead, ownership, full-stack]
+        impact: high
+      - text: >-
+          Built a fully SEO-optimized CMS on Next.js SSG behind Cloudflare CDN with a tuned
+          firewall and a layered nginx + crawler caching system, reaching an A+ GTmetrix
+          ranking.
+        tags: [nextjs, seo, cdn, cloudflare, caching, nginx, performance, frontend]
+        impact: high
+      - text: >-
+          Designed the backend on Django generic views and Django REST Framework, including
+          complex ORM join strategies and row-level locking for transactional integrity.
+        tags: [django, drf, python, orm, databases, transactions, api-design]
+        impact: high
+      - text: >-
+          Ran rolling updates gated on unit tests across staging and production for zero
+          downtime — a hard requirement given the SEO strategy.
+        tags: [kubernetes, ci-cd, testing, zero-downtime, deployment, devops]
+        impact: high
+      - text: >-
+          Built the full GitLab CI pipeline: Kaniko image builds, test stages, data fixtures,
+          and static/media migration across isolated environments through to Kubernetes deploy.
+        tags: [gitlab, ci-cd, kaniko, docker, kubernetes, automation, testing]
+        impact: high
+      - text: >-
+          Ran HAProxy as the Kubernetes ingress controller with nginx load balancing and
+          cache handling.
+        tags: [kubernetes, haproxy, nginx, ingress, networking, caching]
+        impact: med
+      - text: >-
+          Scheduled Kubernetes cronjobs in fully isolated environments to back up stateful
+          services including MySQL clusters and MinIO object storage.
+        tags: [kubernetes, backups, mysql, minio, reliability, devops]
+        impact: med
+      - text: >-
+          Implemented SMS OTP authentication and offloaded async work to Celery and RabbitMQ.
+        tags: [authentication, otp, celery, rabbitmq, async, python, messaging]
+        impact: med
+      - text: >-
+          Operated system and service monitoring across Sentry, Prometheus, Grafana, and Loki.
+        tags: [observability, sentry, prometheus, grafana, loki, monitoring]
+        impact: med
+      - text: >-
+          Self-hosted internal services on-premise including GitLab, Jira, and Mailu.
+        tags: [devops, self-hosted, gitlab, jira, mail, infrastructure]
+        impact: low
+      # --- Frontend/fullstack bullets (added from the frontend resume variant) ---
+      - text: >-
+          Shipped 100+ reusable components built to the design system.
+        tags: [frontend, design-system, components, react, nextjs, ui]
+        impact: high
+      - text: >-
+          Integrated Cypress test automation, raising application reliability.
+        tags: [cypress, testing, e2e, automation, quality, frontend]
+        impact: med
+      - text: >-
+          Built interactive map interfaces with Leaflet and Mapbox.
+        tags: [leaflet, mapbox, frontend, maps, geospatial, javascript]
+        impact: med
+      # --- DevOps-slanted bullet (added from the DevOps resume variant) ---
+      - text: >-
+          Packaged systems into self-contained deployable units, smoothing releases and
+          holding downtime to 0.1%.
+        tags: [deployment, packaging, reliability, downtime, devops, release-engineering]
+        impact: high
+        verify: true   # conflicts with the "zero downtime" bullet above — see q-homeca-downtime
+
+  - id: mizan
+    company: Mizan Gostaran Sharif
+    title: Web Developer
+    title_variants: [Fullstack Developer]
+    employment: Full-time
+    location: Tehran, Iran
+    start: Feb 2018
+    end: Jul 2019
+    context: One of Iran's largest HR evaluation and ranking companies
+    tech: [Express.js, Node.js, React, Next.js, Swagger/OpenAPI, PostgreSQL, MongoDB]
+    bullets:
+      - text: >-
+          Built backend services on Express.js with PostgreSQL as the primary store and
+          MongoDB as the log data lake.
+        tags: [nodejs, express, postgresql, mongodb, backend, javascript]
+        impact: med
+      - text: >-
+          Implemented extensive feature-flag control over live behavior — exam windows,
+          registration gateway availability, and similar operational switches.
+        tags: [feature-flags, backend, nodejs, product-engineering]
+        impact: low
+      # --- Frontend/fullstack bullets (added from the frontend resume variant) ---
+      - text: >-
+          Built Express.js APIs and the React + Next.js frontend consuming them, for one of
+          Iran's largest HR evaluation and ranking platforms.
+        tags: [react, nextjs, express, nodejs, fullstack, frontend, api-design]
+        impact: high
+      - text: >-
+          Maintained Swagger/OpenAPI specifications with cross-functional teams to keep REST
+          contracts consistent.
+        tags: [swagger, openapi, api-design, documentation, collaboration, rest]
+        impact: med
+
+  - id: almeera
+    company: Al Meera
+    title: Web Developer
+    title_variants: [Fullstack Developer]
+    employment: Freelance
+    location: Muscat, Oman
+    start: "2017"
+    end: Sep 2018
+    tech: [Express.js, Node.js, Next.js, MUI, i18n, Google BigQuery, Apache Spark, GitLab]
+    bullets:
+      - text: >-
+          Built a job recommendation system on Google BigQuery with machine learning models.
+        tags: [machine-learning, bigquery, recommendations, data-engineering, gcp]
+        impact: med
+      - text: >-
+          Processed big-data and streaming workloads with Apache Spark.
+        tags: [spark, big-data, streaming, data-engineering]
+        impact: med
+      - text: >-
+          Delivered application services on the Express.js framework.
+        tags: [nodejs, express, javascript, backend]
+        impact: low
+      # --- Frontend/fullstack bullets (added from the frontend resume variant) ---
+      - text: >-
+          Built an admin panel and its backing Express.js API for user data management.
+        tags: [fullstack, express, nodejs, admin, api-design, frontend]
+        impact: med
+      - text: >-
+          Built multi-language web apps using Next.js i18n.
+        tags: [nextjs, i18n, localization, frontend, react]
+        impact: med
+      - text: >-
+          Built responsive interfaces with MUI (Material-UI).
+        tags: [mui, material-ui, frontend, react, responsive, ui]
+        impact: low
+
+# ============================================================================
+# PROJECTS / ACTIVITIES
+# ============================================================================
+projects:
+
+  - id: cdk8s-seaweed-s3
+    name: cdk8s-seaweed-s3
+    year: "2024"
+    summary: >-
+      Open-source Python-defined Kubernetes provisioning for S3-compatible storage on
+      SeaweedFS — the public counterpart to the Hamravesh platform work
+    link: github.com/mm74noroozi/cdk8s-seaweed-s3
+    tech: [CDK8s, Python, Kubernetes, SeaweedFS, FastAPI, S3]
+    bullets:
+      - text: >-
+          Defines Kubernetes manifests and resources in Python via CDK8s rather than raw
+          YAML, making storage topology programmable and testable.
+        tags: [cdk8s, python, kubernetes, iac, open-source, infrastructure]
+        impact: high
+      - text: >-
+          Integrates with SeaweedFS to back S3 buckets with a scalable distributed
+          filesystem.
+        tags: [seaweedfs, s3, storage, distributed-systems, open-source]
+        impact: high
+      - text: >-
+          Implements dynamic provisioning of S3 storage namespaces — create, update, and
+          delete storage units — with a FastAPI service exposing bucket and object counts.
+        tags: [fastapi, python, provisioning, multi-tenancy, s3, api-design, storage]
+        impact: high
+
+  - id: mn-service
+    name: MN Service
+    year: Sep 2022 – Present
+    summary: Censorship-circumvention VPN service — personal hobby turned business
+    tech: [v2ray, New Relic, InfluxDB, Grafana, Cloudflare, Linux]
+    bullets:
+      - text: >-
+          Run a production VPN service serving 1,000+ clients and roughly 600 GB of daily
+          data transfer.
+        tags: [networking, scale, operations, entrepreneurship, vpn]
+        impact: high
+      - text: >-
+          Operate 10+ servers and 30+ domains, routing traffic anonymously through two CDNs
+          used as tunnels.
+        tags: [networking, infrastructure, cdn, operations, dns]
+        impact: high
+      - text: >-
+          Track usage and service health through a New Relic, InfluxDB, and Grafana
+          monitoring stack.
+        tags: [observability, newrelic, influxdb, grafana, monitoring, time-series]
+        impact: med
+
+  - id: loader
+    name: Loader
+    year: "2023"
+    summary: General-purpose workflow orchestration on Prefect, deployed via GitHub Actions
+    link: private GitHub repository
+    tech: [Prefect, Python, GitHub Actions, Selenium, GPT-4]
+    bullets:
+      - text: >-
+          Built a multi-node, geographically distributed workload scheduling system
+          accessible from any device, with remote monitoring.
+        tags: [python, prefect, orchestration, distributed-systems, scheduling, automation]
+        impact: high
+      - text: >-
+          Automated balance monitoring across multiple ArvanCloud accounts with
+          threshold alerting.
+        tags: [automation, monitoring, alerting, python, cloud]
+        impact: med
+      - text: >-
+          Implemented change-data-capture over Pasargad debit card transactions to drive a
+          payment system.
+        tags: [cdc, payments, data-engineering, python, fintech]
+        impact: med
+      - text: >-
+          Improved team efficiency by 40% and reduced scheduling errors by 25%.
+        tags: [automation, orchestration, impact]
+        impact: high
+        verify: true   # unverified on a private/personal project — confirm basis before rendering
+      - text: >-
+          In progress: pairing a GPT-4 engine with a Selenium crawler for adaptive web crawling.
+        tags: [llm, gpt, selenium, web-crawling, python, ai]
+        impact: low
+
+  - id: crawling
+    name: Distributed Web Crawling System
+    year: 2018 – Present
+    summary: High-concurrency crawler exporting live commodity pricing
+    tech: [Python, Scrapy, concurrency]
+    bullets:
+      - text: >-
+          Designed a crawling system issuing high-volume concurrent requests across many
+          sites to export gold and commodity market prices, with automated message
+          distribution to subscribers.
+        tags: [web-crawling, scrapy, python, concurrency, data-extraction, scale]
+        impact: med
+
+  - id: cf-tools
+    name: Online Tools and Internet Radio
+    year: 2018 – Present
+    link: https://a.mn-ops.ir/api
+    tech: [Cloudflare Workers, JavaScript]
+    bullets:
+      - text: >-
+          Built an aggregator for Persian and Turkish music plus a set of network utilities,
+          running entirely on Cloudflare Workers.
+        tags: [cloudflare-workers, serverless, javascript, edge-computing]
+        impact: low
+
+  - id: snippets
+    name: DevOps Snippets Library
+    year: 2018 – Present
+    link: github.com/monoruzi
+    tech: [Docker Compose, Bash]
+    bullets:
+      - text: >-
+          Maintain a public library of reusable DevOps and development templates —
+          docker-compose stacks, bash tooling, and mirror-repository configuration for
+          PyPI, npm, and Docker registries.
+        tags: [devops, docker, bash, open-source, tooling, developer-experience]
+        impact: low
+
+# ============================================================================
+# EDUCATION
+# ============================================================================
+education:
+  - institution: Sharif University of Technology
+    degree: M.Sc.
+    field: Bioelectrical Engineering
+    location: Tehran, Iran
+    start: "2018"
+    end: "2020"
+
+  - institution: Sharif University of Technology
+    degree: B.Sc.
+    field: Electrical Engineering
+    location: Tehran, Iran
+    start: "2014"
+    end: "2018"
+
+# ============================================================================
+# SKILLS — grouped; order within each group is re-sorted per JD at render time
+# ============================================================================
+skills:
+  Languages:
+    - Python
+    - SQL
+    - JavaScript
+    - TypeScript
+    - Go (reading/maintaining)
+    - Bash
+    - Regex
+    - LaTeX
+    - Markdown
+  Frameworks:
+    - Django
+    - Django REST Framework
+    - FastAPI
+    - Flask
+    - Pyramid + SQLAlchemy
+    - Scrapy
+    - Tortoise ORM
+    - SQLAlchemy 2.0
+    - Pydantic
+    - gevent
+    - Nuxt 3
+    - Express.js
+    - React
+    - Next.js
+    - MUI (Material-UI)
+    - Leaflet
+    - Mapbox
+    - CDK8s
+  Geospatial:
+    - PostGIS
+    - GeoPandas
+    - Shapely
+    - NetworkX
+    - osmnx / osm2streets
+    - OpenStreetMap / Overpass
+  Databases:
+    - PostgreSQL
+    - PostGIS
+    - Supabase
+    - MySQL
+    - MariaDB
+    - Redis
+    - SQL Server / T-SQL
+    - ClickHouse
+    - ScyllaDB
+    - MongoDB
+    - InfluxDB
+  Infrastructure:
+    - Linux
+    - Kubernetes
+    - Docker
+    - Docker Swarm
+    - Ansible
+    - ArgoCD
+    - Helm
+    - Kubespray
+    - Istio
+    - Harbor
+    - Terraform
+    - Nginx
+    - Traefik
+    - HAProxy
+    - Supervisord
+    - CoreDNS
+    - Keycloak
+    - Envoy Proxy
+    - SeaweedFS
+    - MinIO
+  Observability:
+    - Prometheus
+    - Grafana
+    - VictoriaMetrics
+    - Loki + Promtail
+    - ELK stack
+    - Sentry
+    - New Relic
+    - Splunk
+    - Metabase
+  Messaging:
+    - Apache Kafka
+    - RabbitMQ
+    - Celery
+    - Lightstreamer
+  Cloud:
+    - Terraform / Terraform Cloud
+    - Serverless Framework
+    - LocalStack
+    - AWS (EC2, S3, RDS, Lambda, CloudFormation, CloudWatch, SNS, SQS)
+    - Cloudflare / Cloudflare Workers
+    - GCP BigQuery
+  CI/CD:
+    - GitLab CE
+    - GitLab Runner
+    - GitHub Actions
+    - Jenkins
+    - ruff / pre-commit
+    - Kaniko
+    - ArgoCD
+  Networking:
+    - TCP/IP
+    - HTTP/1, HTTP/1.1, HTTP/2
+    - WebSocket
+    - TLS
+    - DNS
+    - SMTP
+    - v2ray
+  AI/ML:
+    - OpenAI API (Responses, structured output)
+    - OpenRouter / Gemini
+    - Prompt-injection defence
+    - LLM grounding strategies
+    - Deterministic rules engines alongside LLMs
+    - vLLM
+    - KServe
+    - LiteLLM
+    - Open WebUI
+    - Ollama
+    - Hugging Face
+    - Dify
+    - RAG
+    - LLM agents
+    - Structured / JSON-mode prompting
+    - Whisper ASR
+    - LoRA fine-tuning
+    - Multimodal pipelines
+    - NVIDIA GPU scheduling
+  Frontend:
+    - React
+    - Responsive design
+    - Mobile-first development
+    - Cross-browser compatibility
+    - Browser devtools / frontend debugging
+    - Next.js (SSG, SSR, i18n)
+    - Micro-frontend architecture
+    - Design systems / component libraries
+    - Cypress (integration + E2E)
+    - MUI (Material-UI)
+    - Leaflet / Mapbox
+    - Figma
+    - Responsive UI
+    - SEO optimization
+  Practices:
+    - Concurrency
+    - Distributed locking
+    - Rate limiting
+    - Online DDL / zero-downtime migrations
+    - Scrum
+    - Swagger / OpenAPI
+    - OOP
+    - Design patterns
+    - Clean code
+    - TDD
+    - CI/CD
+    - Agile
+    - REST API design
+    - Web crawling
+    - Algorithms
+
+languages:
+  - {name: Persian, level: Native}
+  - {name: English, level: Advanced}
+  - {name: Turkish, level: Intermediate}
+
+certifications: []
+
+# ============================================================================
+# OPEN QUESTIONS — resolve these before the first tailored render
+# ============================================================================
+open_questions:
+  - id: q-dirichlet-current
+    note: >-
+      Dirichlet is recorded as ending Sep 2026, the current month. Confirm whether the
+      engagement has actually ended or is ongoing; if ongoing, the end becomes "Present"
+      and it becomes a second live role alongside Finestel (labelled part-time, so not a
+      problem).
+  - id: q-yarai-metrics
+    note: >-
+      Five Yarai bullets arrived with unfilled placeholders and are stored WITHOUT numbers:
+      (1) inference cost reduction %, (2) number of internal teams on the gateway,
+      (3) branded-assistant launch time before/after templating, (4) complete-report rate
+      from the clarification loop, (5) publish-ready drafts per week. Supply any of these
+      and they go straight into the bullet text.
+  - id: q-timeline-note
+    note: >-
+      RESOLVED 2026-09. Sequence confirmed as Mofid (Jan 2022 - Sep 2023), Hamravesh
+      (Sep 2023 - Jun 2024, 9 months), Finestel (Jun 2024 - Present). Note this supersedes
+      the "Apr 2024" start given in the original Finestel write-up; if that figure came
+      from an offer letter or contract rather than memory, re-check it, since employment
+      dates are verified in background checks.
+  - id: q-finestel-visibility
+    note: >-
+      Is Finestel work publicly attributable, and are the figures ($250M monthly volume,
+      40,000+ accounts, 25K signals/day, 60M-row table) cleared for external use? They are
+      the strongest numbers in the file; confirm none are confidential before rendering.
+  - id: q-longbio-start
+    note: >-
+      LongBio now ends Nov 2025 (stated as one month before Yarai began). The start is
+      recorded only as "2025", which renders as "2025 - Nov 2025" and looks like a data
+      error. What month did it start? Under a year in a CTO role also benefits from being
+      shown precisely rather than vaguely.
+  - id: q-longbio-title-dropped
+    note: >-
+      LongBio was recorded as "Chief Technology Officer" from the original write-up, then
+      restated as freelance fullstack work; it is now "Fullstack Developer / Freelance" and
+      the CTO title has been removed rather than kept as a variant. If the CTO title was
+      contractual and you want it back, say so and it is restored.
+  - id: q-longbio-substance
+    note: >-
+      The LongBio bullets remain the most generic in the file and carry no metrics. Less
+      damaging now that the entry is a freelance engagement rather than a CTO claim, but
+      still needed: what LongBio does (the context field is empty), and what was
+      concretely built or shipped.
+  - id: q-frontend-years
+    note: >-
+      The frontend objective claims "over 4 years" as an individual contributor, but the
+      record shows frontend work at Al Meera (2017-18), Mizan (2018-19), Homeca (2019-22)
+      and Mofid (2022-24) — closer to 7. Did you mean 4 years of PRIMARILY frontend work?
+      As written it undersells you, and it also sits oddly next to the 8-year overall
+      claim.
+  - id: q-typescript
+    note: >-
+      "Fully typed" frontend migration at Mofid was read as TypeScript and TypeScript is
+      now in the skills list. Confirm — if the typing was JSDoc or PropTypes instead,
+      TypeScript comes back out.
+  - id: q-title-sprawl
+    note: >-
+      Homeca and LongBio are settled (Tech Lead; Fullstack Developer / Freelance). Still
+      open: Mofid carries three titles across your source resumes — Backend Developer,
+      DevOps, Fullstack Developer. All three plausibly describe the work, but confirm the
+      title of record so the others are understood as reframings rather than claims.
+  - id: q-github-account
+    note: >-
+      Two GitHub accounts in play: contact block says github.com/monoruzi, but
+      cdk8s-seaweed-s3 lives under github.com/mm74noroozi. Which account goes in the
+      header? If it is monoruzi, a reader following the header link will not find the
+      project that best supports your platform/SRE experience.
+  - id: q-shelved-projects
+    note: >-
+      "Contributing to Tortoise ORM" and "Ansible Django Tower" (both 2023) have stayed
+      commented out across resume versions. Dead, or worth reviving? A merged upstream PR
+      to Tortoise ORM would be strong open-source evidence if it actually landed.
+  - id: q-homeca-title
+    note: >-
+      RESOLVED 2026-09. Homeca title of record is "Tech Lead". The CTO claim that appeared
+      in one source resume has been removed. "DevOps Engineer" and "Fullstack Developer"
+      are retained as variants because both honestly describe the work done in the role.
+  - id: q-homeca-downtime
+    note: >-
+      Homeca claims both "zero downtime" (rolling updates bullet) and "downtime to 0.1%"
+      (packaging bullet). 0.1% is ~8.7 hours/year. The 0.1% bullet is flagged verify:true
+      and will not render until reconciled — which figure is real?
+  - id: q-mofid-refactoring
+    note: >-
+      The source resume had a bare "refactoring" bullet under Mofid Securities with no
+      detail. What was refactored, and what did it change?
+  - id: q-loader-metrics
+    note: >-
+      Loader's "40% team efficiency / 25% scheduling errors" — what team and what
+      measurement? Currently flagged verify:true and will not be rendered.
+  - id: q-hamravesh-scale
+    note: >-
+      SeaweedFS "better performance than MinIO" — is there a benchmark figure
+      (throughput, latency, object count) that can be cited?
+  - id: q-homeca-scale
+    note: >-
+      Homeca had no traffic, user, or team-size numbers. As CTO: team size, monthly
+      users, and request volume would all strengthen these bullets considerably.
+  - id: q-mn-service-revenue
+    note: >-
+      MN Service is described as a business. Is there a revenue figure worth citing,
+      and is this something you want on resumes at all given the subject matter?
+  - id: q-experience-anchor
+    note: >-
+      "8 years of experience" — anchored to 2018 (Mizan) this reads as 8 years as of
+      2026; anchored to 2017 (Al Meera) it is 9. Which start date do you claim?
+  - id: q-work-preferences
+    note: >-
+      Nothing recorded on target role, remote vs on-site, relocation/visa status, or
+      comp expectations. These drive tailoring decisions.

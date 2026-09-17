@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Resume</title>
+<style>
+/* ============================================================
+   DENSITY KNOBS — tune these first to hit exactly 2 pages.
+   Floors (do not go below; it reads cramped):
+     --fs-body: 9.6pt | --lh: 1.34 | --gap-section: 11pt | --gap-item: 7pt
+   Ceilings (above this it reads padded):
+     --fs-body: 11pt  | --lh: 1.55 | --gap-section: 20pt | --gap-item: 13pt
+   ============================================================ */
+:root{
+  --fs-body: 10.2pt;
+  --fs-name: 23pt;
+  --fs-h2: 10.5pt;
+  --fs-role: 10.6pt;
+  --fs-meta: 9.3pt;
+  --lh: 1.42;
+  --gap-section: 14pt;
+  --gap-item: 9.5pt;
+  --ink: #16191d;
+  --ink-soft: #4a5159;
+  --rule: #c8ccd2;
+  --accent: #1f4e79;
+  --page-margin: 0.58in;
+  --font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+@page { size: Letter; margin: var(--page-margin) 0.62in; }
+
+*{ box-sizing: border-box; }
+html,body{ margin:0; padding:0; }
+body{
+  font-family: var(--font);
+  font-size: var(--fs-body);
+  line-height: var(--lh);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---------- Header: plain text in the body, never a PDF header ---------- */
+.name{
+  font-size: var(--fs-name);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  margin: 0 0 2pt;
+  color: var(--ink);
+}
+.tagline{
+  font-size: var(--fs-meta);
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+  margin: 0 0 5pt;
+}
+.contact{
+  font-size: var(--fs-meta);
+  color: var(--ink-soft);
+  margin: 0 0 var(--gap-section);
+}
+.contact a{ color: inherit; text-decoration: none; }
+.contact .sep{ color: var(--rule); padding: 0 5pt; }
+
+/* ---------- Sections: standard headings, ATS pattern-matches these ------ */
+section{ margin-bottom: var(--gap-section); }
+h2{
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 7pt;
+  padding-bottom: 3pt;
+  border-bottom: 0.7pt solid var(--rule);
+}
+
+.summary{ margin: 0; color: var(--ink-soft); }
+
+/* ---------- Experience / Projects items ---------- */
+.item{ margin-bottom: var(--gap-item); break-inside: avoid; }
+.item:last-child{ margin-bottom: 0; }
+
+.item-head{
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10pt;
+}
+.role{ font-size: var(--fs-role); font-weight: 700; margin: 0; }
+.company{ font-weight: 600; color: var(--ink); }
+.dates{
+  font-size: var(--fs-meta);
+  color: var(--ink-soft);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.item-sub{
+  font-size: var(--fs-meta);
+  color: var(--ink-soft);
+  margin: 0 0 3.5pt;
+}
+
+ul{ margin: 3pt 0 0; padding-left: 12pt; }
+li{ margin-bottom: 2.2pt; padding-left: 1pt; }
+li::marker{ color: var(--rule); }
+li:last-child{ margin-bottom: 0; }
+strong{ font-weight: 600; }
+
+/* ---------- Skills: grouped, ordered by JD relevance ---------- */
+.skills{ margin: 0; }
+.skill-row{ margin-bottom: 3.5pt; display: flex; gap: 6pt; }
+.skill-row:last-child{ margin-bottom: 0; }
+.skill-label{
+  font-weight: 700;
+  min-width: 88pt;
+  flex-shrink: 0;
+}
+.skill-vals{ color: var(--ink-soft); }
+
+/* ---------- Education ---------- */
+.edu{ display: flex; justify-content: space-between; align-items: baseline; gap: 10pt; }
+
+/* Keep a heading from stranding at the foot of page 1 */
+h2{ break-after: avoid; }
+.item-head{ break-after: avoid; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1 class="name">FULL NAME</h1>
+  <p class="tagline">Target role, rewritten per JD</p>
+  <p class="contact">
+    city, country<span class="sep">|</span>email<span class="sep">|</span>phone<span class="sep">|</span>linkedin.com/in/x<span class="sep">|</span>github.com/x
+  </p>
+</header>
+
+<section>
+  <h2>Summary</h2>
+  <p class="summary">Rewritten per JD. Omit this section entirely rather than writing a generic one.</p>
+</section>
+
+<section>
+  <h2>Experience</h2>
+
+  <div class="item">
+    <div class="item-head">
+      <p class="role"><span class="company">Company</span> — Title</p>
+      <span class="dates">Jan 2023 – Present</span>
+    </div>
+    <p class="item-sub">Location · one-line context on the company or team, if useful</p>
+    <ul>
+      <li>Outcome-first bullet with a <strong>real metric</strong>.</li>
+    </ul>
+  </div>
+
+</section>
+
+<section>
+  <h2>Projects</h2>
+  <div class="item">
+    <div class="item-head">
+      <p class="role">Project Name</p>
+      <span class="dates">2024</span>
+    </div>
+    <p class="item-sub">Stack · link</p>
+    <ul><li>What it does and what was hard about it.</li></ul>
+  </div>
+</section>
+
+<section>
+  <h2>Skills</h2>
+  <div class="skills">
+    <div class="skill-row"><span class="skill-label">Languages</span><span class="skill-vals">…</span></div>
+    <div class="skill-row"><span class="skill-label">Backend</span><span class="skill-vals">…</span></div>
+  </div>
+</section>
+
+<section>
+  <h2>Education</h2>
+  <div class="item">
+    <div class="edu">
+      <p class="role"><span class="company">University</span> — Degree</p>
+      <span class="dates">2016 – 2020</span>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
