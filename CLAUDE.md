@@ -227,6 +227,40 @@ descriptions in a deliberately informal register, and matching formal prose agai
 can read as distant. If a JD is conspicuously informal, say so in the chat report and
 recommend a moderated register; do not quietly relax the default.
 
+## Persian resumes (RTL)
+
+Use `templates/base-fa.html` — `lang="fa" dir="rtl"`, Vazirmatn embedded (Arabic + Latin +
+Latin-Extended, one variable face per subset). Vazirmatn carries Latin as well as Persian,
+so English technical terms sit inside Persian prose in the same typeface instead of
+switching mid-sentence.
+
+**Bidirectional text is the thing that breaks.** The Unicode bidi algorithm handles plain
+Latin words inside Persian correctly, but reorders strings that mix Latin with digits,
+slashes, brackets or operators — `SQLAlchemy 2.0`, `p95`, `2.1s`, `ALGORITHM=INSTANT`,
+`select_related`. Wrap each of those in `<span class="ltr">`, which isolates the run. Plain
+words such as `Django` or `Kubernetes` need no wrapper. After rendering a Persian resume,
+read the PDF and confirm no mixed-script string has been visually reversed; this is not
+something the page count or a lint check will catch.
+
+**Layout under `dir="rtl"`:** `padding-inline-start` resolves to the right edge, so list
+indentation works without a separate rule; the `.item-head` flex row places dates on the
+left, which is correct. Dates are pinned LTR so Gregorian months and years do not reorder.
+
+**Density:** Persian sets wider and needs more leading than Latin at the same point size.
+The RTL template's floors are higher (`--fs-body: 10pt`, `--lh: 1.60`) and its default
+line-height is 1.75. Expect a Persian resume to hold noticeably less content per page than
+the Latin one; cut accordingly rather than dropping below the floors.
+
+**Register:** the formal-voice rules apply in Persian too — کتابی/رسمی throughout, no
+colloquial forms, no first person. Keep the same ban on padding and self-assessment.
+
+**Digits:** Latin digits (`40,000`) by default. They are standard in Iranian technical
+writing and avoid any font-fallback risk. Do not mix Latin and Persian digits in one
+document.
+
+**Calendar:** ask. Iranian employers vary between Gregorian and Jalali (شمسی) dates on
+Persian resumes, and the choice must be consistent across the whole document.
+
 ## Things to just do, without asking
 
 - Save the JD verbatim to `jd.md` (postings get taken down; you'll want it for interview prep)
@@ -249,6 +283,8 @@ recommend a moderated register; do not quietly relax the default.
 - `templates/example.html` — the same template filled in, as a markup reference
 - `build/render.sh` — HTML → PDF via headless Chrome, reports page count
 - `templates/_fonts.css` — embedded Source Sans 3 (base64 woff2); inlined into templates
+- `templates/base-fa.html` — Persian/RTL template (Vazirmatn, bidi isolation, RTL layout)
+- `templates/_fonts-fa.css` — embedded Vazirmatn (Arabic + Latin)
 - `.github/workflows/resumes.yml` — CI: validate, render, gate on page count, release
 - `build/check.py` — validates `master.yaml`; **run it after every edit to that file**.
   PyYAML silently keeps the last of any duplicate mapping key and will drop a whole role
