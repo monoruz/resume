@@ -81,6 +81,7 @@ profile:
         - "25K TradingView signals/day through the execution engine (finestel)"
         - "50% query response time cut via BV-Chart on ClickHouse (mofid)"
         - "10x endpoint improvement, N+1 fix (mofid)"
+        - "220 test cases, DI-swappable stores, 8-collection Mongo model, solo (optimalist)"
     ai_platform:
       emphasize:
         - Self-hosted LLM inference and serving infrastructure
@@ -101,6 +102,7 @@ profile:
         - "5 branded assistants from 127 Helm charts, 28 ArgoCD apps (yarai)"
         - "multimodal triage pipeline with schema-constrained output (yarai)"
         - "bare-metal k8s via Kubespray, Istio, GitLab CI to Harbor to ArgoCD (yarai)"
+        - "agentic content loop: chat action to coding agent to PR to merge to live questions (optimalist)"
     fintech_trading:
       emphasize:
         - Trading execution systems and order management
@@ -143,6 +145,7 @@ profile:
         - async cross-S3 replication with Prometheus status (hamravesh)
         - cdk8s-seaweed-s3 open-source repo (project)
         - 1000+ clients, 600 GB/day self-run infrastructure (mn-service)
+        - "Sentry-protocol ingest proxy into OpenSearch, self-hosted (optimalist)"
 
   themes:
     - Python backend engineering at scale (Django, DRF, FastAPI, Pyramid)
@@ -892,6 +895,344 @@ experience:
 # ============================================================================
 projects:
 
+  - id: optimalist
+    name: Optimalist (webhook.mn-ops.ir)
+    year: Mar 2024 – Present
+    status: ongoing
+    # Live and still being built: last commit 18 Sep 2026, and 167 of the 260 commits
+    # landed in the three months to that date. Re-check the repo before any render that
+    # prints "Present". The ongoing framing is load-bearing here, not a formality — this
+    # is current work, not an archived side project, and it should read that way.
+    summary: >-
+      Self-hosted Bun/TypeScript service behind one HTTP surface: a Telegram-native
+      adaptive-learning platform whose course content lives in a git repo and is
+      written by cloud coding agents, plus the personal-infrastructure webhooks
+      (Sentry-compatible error ingest, crypto alerting, uptime checks) running beside it.
+      Ongoing: running in production and under active development
+    link: github.com/mm74noroozi/optimalist
+    live: https://webhook.mn-ops.ir
+    tech: [Bun, TypeScript, MongoDB, Pinecone, OpenSearch, Telegram Bot API,
+           GitHub REST API, Cloud coding agents (Cursor), Sentry, New Relic, Cloudflare,
+           GitHub Actions, systemd]
+    bullets:
+
+      # ---- group: adaptive learning engine ----
+      - text: >-
+          Built a Telegram-native adaptive quiz platform end to end — course picker,
+          question card, code snippet, lettered option buttons, graded explanation — on a
+          MongoDB model of eight collections (Course, Question, QuizAnswer, QuizSession,
+          EduChat, RepoSync, QuizRevision, AsyncTask), with per-chat active-course state
+          driving every flow.
+        group: learning-engine
+        tags: [typescript, bun, mongodb, telegram, product-engineering, bot, domain-modelling, api-design]
+        impact: high
+      - text: >-
+          Designed the difficulty-adaptive question picker: a per-chat score floor that
+          Harder raises by 10% (falling back to a tenth of the course's score span when
+          the multiplier fails to move it) and Easier lowers, selecting through four
+          ordered candidate pools — unshown at the floor, any unshown, shown at the floor,
+          then any remaining — so repeats only appear once the course is exhausted, and
+          marking the pick as relaxed when nothing sits at or above the floor.
+        group: learning-engine
+        tags: [algorithms, adaptive-learning, ranking, product-engineering, typescript, domain-modelling]
+        impact: high
+      - text: >-
+          Pushed catalogue selection into the database rather than application memory:
+          a QuestionStore.listCatalog filter compiling to Mongo find() conditions
+          ($nin on already-answered ids, course equality) across three interchangeable
+          store implementations — MongoDB, in-memory, and a GitHub-API-backed cache —
+          behind one interface, and wrote it up as the repo's standing data-access rule.
+        group: learning-engine
+        tags: [mongodb, query-optimization, architecture, interfaces, dependency-injection, testing, scalability, standards]
+        impact: high
+      - text: >-
+          Embedded quiz answers into Pinecone (hosted llama-text-embed-v2, dense cosine)
+          under per-course and global namespaces, with vector teardown wired into course
+          deletion so the index never outlives its content.
+        group: learning-engine
+        tags: [pinecone, vector-database, embeddings, rag, ai, data-lifecycle, typescript]
+        impact: med
+
+      # ---- group: content pipeline & agent orchestration ----
+      - text: >-
+          Made a private GitHub repo of quiz JSON the source of truth and built the sync
+          path against it through the Trees, Blobs and Compare REST APIs: a delta sync
+          keyed on the last-synced commit SHA, an automatic fall back to a full tree
+          rebuild when Compare 404s or exceeds 300 changed files, a no-write no-op when
+          HEAD is unchanged, course knowledge maps rebuilt from directory structure, and a
+          single Telegram digest naming the changed courses and commit subjects.
+        group: content-pipeline
+        tags: [github-api, sync, idempotency, data-pipelines, webhooks, typescript, architecture, integrations]
+        impact: high
+      - text: >-
+          Built the agentic content loop: Create, Update, Revise and "no idea" actions in
+          the Telegram UI launch cloud coding agents against the courses repo, each
+          opening a pull request whose merge fires the sync webhook, flips the course to
+          Ready, and notifies the chat — closing the loop from a user tapping a button to
+          new questions being served, with no manual authoring step.
+        group: content-pipeline
+        tags: [ai, agents, automation, llm, orchestration, github, product-engineering, workflow]
+        impact: high
+      - text: >-
+          Made those launches durable with an AsyncTask job table covering six job kinds:
+          a row is written when work is queued, deleted on success, and retained with
+          status failed plus the error text when it is not, exposed through an endpoint
+          that lists outstanding jobs and retries them by id.
+        group: content-pipeline
+        tags: [reliability, job-queue, durability, retry, mongodb, error-handling, operations, backend]
+        impact: high
+
+      # ---- group: personal infrastructure ----
+      - text: >-
+          Implemented a Sentry-compatible ingest proxy speaking the SDK's own wire
+          protocol — /api/<project-id>/envelope/, gzip or plain, NDJSON envelope parsing —
+          extracting each entry of exception.values from level=error events and indexing
+          them into daily OpenSearch indices, giving a self-hosted error store any Sentry
+          SDK can point at unchanged.
+        group: infrastructure
+        tags: [observability, sentry, opensearch, protocols, error-tracking, self-hosted, backend, typescript]
+        impact: high
+      - text: >-
+          Built a crypto price-alert route evaluating 24-hour change against a ±2%
+          threshold with a 1% reset band and a signed high/low-water latch persisted per
+          pair, so a single market excursion produces one Telegram alert rather than a
+          notification per poll.
+        group: infrastructure
+        tags: [alerting, state-machines, opensearch, telegram, trading, hysteresis, backend]
+        impact: med
+      - text: >-
+          Ran uptime monitoring off OpenSearch-held targets — three attempts, 10-second
+          timeout, ten-way bounded concurrency — persisting only genuine up/down flips and
+          notifying Telegram on transition; plus a Trello webhook fanning card list moves
+          out to subscribed chats.
+        group: infrastructure
+        tags: [monitoring, uptime, concurrency, opensearch, webhooks, telegram, operations]
+        impact: med
+      - text: >-
+          Instrumented the service against itself: Sentry for exceptions and traces,
+          structured per-request access logs to New Relic with Cloudflare-aware client-IP
+          resolution (CF-Connecting-IP, then Forwarded headers, then the socket address),
+          and failure notification to an ops chat.
+        group: infrastructure
+        tags: [observability, sentry, newrelic, logging, cloudflare, networking, sre]
+        impact: med
+
+      # ---- group: engineering practice ----
+      - text: >-
+          Kept the codebase testable by construction — every handler resolving its stores
+          through one dependency-injection module so tests inject in-memory
+          implementations while production falls back to MongoDB and Pinecone — reaching
+          220 test cases across 15 files (~7.3K lines of tests against ~8.3K lines of
+          source) on a solo project of 260 commits.
+        group: practice
+        tags: [testing, dependency-injection, architecture, clean-code, maintainability, typescript, quality]
+        impact: high
+      - text: >-
+          Documented the system as architecture rather than prose: route-layer,
+          course-lifecycle, sync and quiz-selection flows written as Mermaid diagrams
+          checked into the repo next to the code they describe, alongside a written
+          data-access standard enforced in review.
+        group: practice
+        tags: [documentation, architecture, standards, diagrams, developer-experience, process]
+        impact: med
+      - text: >-
+          Deployed on a self-hosted GitHub Actions runner to a systemd-managed service,
+          with the whole stack running on personal infrastructure behind Cloudflare.
+        group: practice
+        tags: [ci-cd, github-actions, systemd, self-hosted, deployment, devops, linux]
+        impact: med
+      - text: >-
+          The service is live and still being extended rather than archived: 260 commits
+          since March 2024, of which 167 landed in the three months to September 2026,
+          each reaching the running service through the same pipeline.
+        group: practice
+        tags: [ownership, continuous-delivery, production, long-running, side-project, maintenance]
+        impact: med
+
+  - id: datasource-panels
+    name: Datasource Management Panels (MongoDB · PostgreSQL · OpenSearch · MinIO)
+    year: Aug – Sep 2026
+    # Documented from the code on 2026-09-18: 86 commits across four repos between
+    # 19 Aug and 15 Sep 2026, ~7.8K lines of hand-written TypeScript excluding generated
+    # UI primitives, 162 assertions across 8 test files. Every figure here is countable
+    # from the repos; none is estimated. Usage numbers are absent on purpose — see
+    # q-datasource-panels-usage.
+    summary: >-
+      Four self-hosted admin consoles built on one architecture — a browser-side console
+      for MongoDB, PostgreSQL, OpenSearch and MinIO, each connecting to a datastore the
+      user supplies at runtime rather than one baked into the deployment, with no
+      credential ever written to a server-side store.
+    link: github.com/monoruz
+    live: https://monogo.vercel.app · https://postgres-panel.vercel.app · https://opensearch-panel.vercel.app · https://minio-admin.vercel.app
+    tech: [TypeScript, Next.js 16 (App Router), React 19, Node.js, MongoDB, PostgreSQL,
+           OpenSearch, MinIO, node-postgres, AWS SigV4, Tailwind CSS, Vercel]
+    bullets:
+
+      # ---- group: shared platform ----
+      - text: >-
+          Built four database admin consoles on one shared architecture — MongoDB,
+          PostgreSQL, OpenSearch and MinIO — where the operator pastes a connection string
+          at runtime and the panel introspects whatever it finds, so a single deployment
+          serves any cluster rather than being bound to one configured at build time.
+        group: platform
+        tags: [typescript, nextjs, react, architecture, developer-tools, databases, product-engineering]
+        impact: high
+      - text: >-
+          Kept credentials out of server-side storage entirely: every connection lives in
+          an httpOnly, SameSite=Lax cookie scoped to the browser session — secure-flagged
+          from the forwarded protocol, 90-day lifetime — so the hosted panels hold no
+          database secret of their own and a deployment compromise exposes no stored
+          connection.
+        group: platform
+        tags: [security, authentication, cookies, session-management, threat-modelling, backend]
+        impact: high
+      - text: >-
+          Let the MongoDB panel hold up to eight saved connections per session, encoded
+          into one cookie against a 3,500-byte budget checked before the write, with
+          usernames and passwords redacted out of every URI before it reaches the UI and a
+          duplicate check that re-activates an existing entry instead of storing it twice.
+        group: platform
+        tags: [session-management, security, redaction, multi-tenancy, ux, typescript]
+        impact: med
+
+      # ---- group: MongoDB panel ----
+      - text: >-
+          Inferred collection schemas from data rather than a declared model: a 50-document
+          sample walked three levels deep across up to 80 paths, classifying BSON types
+          (ObjectId, Decimal128, Binary, Timestamp) alongside JSON ones and recording
+          per-field coverage, so a schemaless collection renders as a typed table with the
+          most-populated fields first.
+        group: mongodb
+        tags: [mongodb, schema-inference, bson, data-modelling, algorithms, typescript]
+        impact: high
+      - text: >-
+          Derived foreign keys where MongoDB has none: field-name suffixes (Id, Ids, Slug,
+          Name, Ref) resolved against the live collection list through singular, plural and
+          PascalCase variants, then dereferenced on hover into a preview of the referenced
+          document — giving a document store the relational navigation it does not natively
+          offer.
+        group: mongodb
+        tags: [mongodb, relations, inference, algorithms, developer-tools, ux, typescript]
+        impact: high
+      - text: >-
+          Compiled the query UI to native Mongo rather than filtering in the browser: ten
+          filter operators typed to each field's inferred type, $text search when the
+          collection carries a text index and an escaped-regex fan-out across inferred
+          string fields when it does not, direct ObjectId lookup when the term is a
+          24-character hex id, and server-side pagination throughout.
+        group: mongodb
+        tags: [mongodb, query-optimization, search, indexing, pagination, backend, typescript]
+        impact: high
+      - text: >-
+          Hardened the document editor against prototype pollution and malformed input —
+          __proto__, constructor and prototype rejected at every path segment, dotted paths
+          validated before assignment, and extended-JSON $oid and $date hydrated back into
+          real BSON types on the way in.
+        group: mongodb
+        tags: [security, input-validation, prototype-pollution, mongodb, bson, backend]
+        impact: high
+      - text: >-
+          Cached one connected client per URI on the global object so serverless
+          invocations reuse pools instead of reconnecting, with 8-second selection and
+          connect timeouts, automatic directConnection for local hosts, and driver errors
+          translated into remedies — refused localhost connections, failed auth, and
+          unreachable clusters each explained in terms of what to change.
+        group: mongodb
+        tags: [performance, connection-pooling, serverless, error-handling, developer-experience, mongodb]
+        impact: med
+
+      # ---- group: PostgreSQL panel ----
+      - text: >-
+          Built a schema designer over the PostgreSQL catalogs — pg_database, pg_namespace,
+          pg_class, pg_constraint and information_schema — that reads tables, columns,
+          estimated row counts and full constraint definitions via pg_get_constraintdef,
+          with constraint columns resolved in declaration order through conkey ordinality.
+        group: postgres
+        tags: [postgresql, sql, introspection, system-catalogs, data-modelling, backend]
+        impact: high
+      - text: >-
+          Covered the DDL surface an operator actually needs: create table with primary
+          key, unique, foreign key and check constraints; add, alter, rename and drop
+          column; add and drop constraint; create, switch and drop database — each
+          assembled from validated fragments rather than string-interpolated user input.
+        group: postgres
+        tags: [postgresql, ddl, sql, database-administration, api-design, backend]
+        impact: high
+      - text: >-
+          Closed the SQL-injection surface that a schema editor inherently opens: every
+          identifier matched against a strict pattern and double-quote-escaped before
+          quoting, every type checked against a whitelist of twelve regex patterns, default
+          values normalised through bare-keyword, numeric and quoted-literal forms with
+          statement terminators and comment markers rejected, check expressions refused if
+          they carry any DDL or DML keyword, and all row-level CRUD parameterised.
+        group: postgres
+        tags: [security, sql-injection, input-validation, postgresql, defensive-programming, backend]
+        impact: high
+      - text: >-
+          Made dropping a database work on managed hosts, where it usually does not: the
+          panel reconnects to a maintenance database it can actually open, terminates
+          competing backends through pg_stat_activity, tries DROP DATABASE WITH (FORCE) and
+          falls back to the plain form — with provider-internal databases (Aiven's _aiven,
+          rdsadmin, cloudsqladmin, azure_maintenance) excluded from connection attempts
+          after pg_hba rejections were traced to them.
+        group: postgres
+        tags: [postgresql, managed-services, reliability, debugging, operations, aiven, backend]
+        impact: high
+
+      # ---- group: OpenSearch and MinIO ----
+      - text: >-
+          Built an OpenSearch console that flattens nested mappings into dotted field paths
+          and compiles the filter UI into the right query for each field type —
+          simple_query_string across text and keyword fields, term against the .keyword
+          subfield, case-insensitive wildcard, match_phrase, and range — with index listing
+          via _cat, system indices hidden, and bulk deletes routed through _delete_by_query
+          with conflicts=proceed.
+        group: search-storage
+        tags: [opensearch, elasticsearch, search, query-dsl, mappings, backend, typescript]
+        impact: high
+      - text: >-
+          Stripped credentials from OpenSearch request URLs before dispatch, moving them
+          into a Basic authorization header, so cluster passwords never appear in a request
+          line that a proxy or access log would record.
+        group: search-storage
+        tags: [security, credentials, logging, opensearch, networking, backend]
+        impact: med
+      - text: >-
+          Signed MinIO admin API calls by hand with AWS Signature V4 to reach the
+          list-users, user-info, create-user and set-user-policy endpoints the official SDK
+          does not expose — pairing them with SDK calls for buckets, objects and policies
+          so one console covers both storage and identity.
+        group: search-storage
+        tags: [minio, s3, aws-sigv4, object-storage, iam, api-integration, backend]
+        impact: high
+
+      # ---- group: engineering practice ----
+      - text: >-
+          Tested the logic that carries the risk — identifier quoting, type and default-value
+          validation, schema inference, foreign-key resolution, query compilation, URI
+          masking and the drop-database fallback — with 162 assertions across eight files,
+          written as plain Node scripts run through --experimental-strip-types so the suites
+          add no test-framework dependency at all.
+        group: practice
+        tags: [testing, quality, security-testing, nodejs, typescript, zero-dependency, maintainability]
+        impact: high
+      - text: >-
+          Shipped all four panels to production on Vercel in under a month — 86 commits
+          between 19 August and 15 September 2026 across four repositories, roughly 7.8K
+          lines of hand-written TypeScript excluding generated UI primitives — on Next.js 16
+          App Router with React 19 and Node-runtime route handlers.
+        group: practice
+        tags: [delivery, velocity, nextjs, react, vercel, deployment, typescript]
+        impact: med
+      - text: >-
+          Converged the four panels on one set of conventions — cookie-held connections,
+          a single JSON route handler per datastore, typed error translation at the edge,
+          and the same connect-introspect-browse-edit flow — so each new datastore reused
+          the previous panel's shape rather than restarting the design.
+        group: practice
+        tags: [architecture, consistency, reuse, design-patterns, developer-experience, typescript]
+        impact: med
+
   - id: cdk8s-seaweed-s3
     name: cdk8s-seaweed-s3
     year: "2024"
@@ -1267,10 +1608,14 @@ open_questions:
       title of record so the others are understood as reframings rather than claims.
   - id: q-github-account
     note: >-
-      Two GitHub accounts in play: contact block says github.com/monoruzi, but
-      cdk8s-seaweed-s3 lives under github.com/mm74noroozi. Which account goes in the
-      header? If it is monoruzi, a reader following the header link will not find the
-      project that best supports your platform/SRE experience.
+      THREE GitHub accounts now in play: the contact block says github.com/monoruzi,
+      cdk8s-seaweed-s3 and optimalist live under github.com/mm74noroozi, and all four
+      datasource panels live under github.com/monoruz. Which account goes in the header?
+      Whichever is chosen, a reader following the header link will miss most of the work —
+      this is worth consolidating, or the header link should point at the account holding
+      the projects the target role cares about. Also confirm whether the four panel repos
+      are public; if they are private, the link is decorative and the same caveat as
+      q-optimalist-link applies.
   - id: q-shelved-projects
     note: >-
       "Contributing to Tortoise ORM" and "Ansible Django Tower" (both 2023) have stayed
@@ -1314,3 +1659,44 @@ open_questions:
     note: >-
       Nothing recorded on target role, remote vs on-site, relocation/visa status, or
       comp expectations. These drive tailoring decisions.
+  - id: q-optimalist-metrics
+    note: >-
+      Optimalist is documented from the code only: 260 commits, ~8.3K LOC source, ~7.3K
+      LOC tests, 220 test cases, 8 Mongo collections — all countable and safe. What is
+      absent is usage: how many chats use the quiz bot, how many questions are in the
+      courses repo, how many courses exist, how much traffic webhook.mn-ops.ir serves.
+      Any one of those turns this from "well-built" into "well-built and used". Nothing
+      has been guessed; add real figures and the bullets can carry them.
+  - id: q-datasource-panels-usage
+    note: >-
+      The datasource-panels entry is documented from the code only: 86 commits, ~7.8K LOC,
+      162 assertions, four deployed URLs — all countable and safe. Absent is any evidence
+      of use: does anyone other than you operate these panels, are they used against real
+      production datastores or only your own, and is the Vercel deployment public or
+      access-restricted? "Built four admin consoles" and "built four admin consoles other
+      engineers use daily" are very different claims; only the first is currently supported.
+  - id: q-datasource-panels-v0
+    note: >-
+      All four panels were bootstrapped with v0 (the READMEs say so, and v0 markers survive
+      in the logging). The substantial logic — schema inference, foreign-key resolution,
+      SQL identifier and type validation, the managed-host drop-database fallback, the
+      SigV4 admin signing — is clearly hand-written, and the bullets deliberately describe
+      only that layer. Still worth deciding how you want to answer "did you write this?" in
+      an interview, because a reviewer who opens the repo will see the provenance. Being
+      first to say it is generally stronger than being asked.
+  - id: q-datasource-panels-security
+    note: >-
+      The panels accept a database connection string from the browser and hold it in a
+      cookie. For your own use that is a deliberate, reasonable design. If any of the four
+      deployments is publicly reachable, note that anyone who finds the URL can point it at
+      any datastore they can reach from Vercel's egress — fine by design, but confirm that
+      is intended before citing the live URLs on a resume, particularly for a
+      security-adjacent role where a reviewer may probe them.
+  - id: q-optimalist-link
+    note: >-
+      The optimalist entry carries both github.com/mm74noroozi/optimalist and
+      https://webhook.mn-ops.ir at your instruction. The repo is private, so the GitHub
+      link 404s for a reviewer today — either make it public before sending a resume that
+      cites it, or drop the link and keep the description. The live URL also exposes a
+      personal ops endpoint that accepts unauthenticated Sentry envelopes; confirm that is
+      intentional.
