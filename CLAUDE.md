@@ -309,6 +309,11 @@ Persian resumes, and the choice must be consistent across the whole document.
   PyYAML silently keeps the last of any duplicate mapping key and will drop a whole role
   without raising, so never trust a bare `safe_load` as proof the edit landed. The checker
   also reports `verify: true` bullets and concurrent "Present" roles.
+- `docs/job-search-criteria.md` — the user's job-search constraints, verbatim (pay minimums,
+  7-day freshness, US/Israel entity rule, Iran eligibility, payment routes, priority labels)
+- `.claude/skills/job-research/SKILL.md` — the job-search procedure: AI-led web research on
+  vacancies and companies, verified against the criteria file; reports go to
+  `research/<date>/report.md`
 - `jobs/<slug>/` — one directory per application
 - `out/` — scratch renders (gitignored)
 
