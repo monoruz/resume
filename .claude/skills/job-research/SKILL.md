@@ -86,6 +86,9 @@ or ask the company. Keep the long detail in the file.
 
 ## Never
 
+- Search for jobs using Python, or any script that scrapes, downloads or parses job
+  feeds. mono's standing rule: discovery and verification are done by AI research,
+  meaning web search plus reading each page, so every result gets judgement, not a regex.
 - Submit applications, contact companies, or disclose candidate information.
 - Invent or estimate dates, pay, policies, applicant counts, growth or eligibility.
 - Treat "remote", "global team", crypto activity or an Estonian invoice option as
