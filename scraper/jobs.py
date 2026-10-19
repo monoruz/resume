@@ -7,15 +7,35 @@ Sources (all public, no API key):
   wwr        https://weworkremotely.com/categories/*.rss  RSS
   hn         Hacker News "Who is hiring?" via the Algolia API
 
-Scoring is mechanical and explainable; every row carries the terms that matched.
-  title    0-40  best-matching target family (backend, platform/SRE, AI infra, fintech)
-  skills   0-45  weighted coverage of resume skills found in title + tags + description
-  location -20..+15  worldwide / EMEA-friendly vs. country-restricted
-  penalty  title words for roles outside the target (mobile, sales, junior, ...)
+Filtering and labels follow docs/job-search-criteria.md. The compensation minimums,
+the freshness window and the label names are read from that file at run time.
+
+  1. Hard exclusions (label "Excluded", with the reason):
+     - publication date missing or older than the freshness window
+     - confirmed maximum cash compensation below the full-/part-time minimum
+     - role based in the United States or Israel
+     - posting restricts the work location to somewhere Iran is not, or lists Iran
+       among excluded/sanctioned countries
+     - on-site role without explicit visa sponsorship
+     - not an engineering role at all (sales, recruiting, design, ...)
+  2. Evidence columns, each kept separate as the criteria require:
+     iran_eligibility  confirmed / unknown / incompatible
+     crypto_pay, b2b_invoice  advertised option / unknown
+     comp_meets_min    yes / no / unverified
+  3. Label: Confirmed-compatible needs Iran confirmed + a payment route + comp met;
+     Conditional needs at least one of Iran confirmed or a payment route;
+     everything else that survives is Low-priority/unverified.
+  4. Group: A = remote, B = sponsored relocation. Group C (outreach) needs research
+     a feed cannot supply, so it is not produced here.
+  5. Within a label, rows sort by the criteria's ranking order, using technical fit
+     (title family + weighted resume-skill overlap, 0-85) as the main tie-breaker.
+
+Outputs: out/jobs/ranked.csv (every row, excluded included, with reasons) and
+out/jobs/report.md (group A and B tables, plus exclusion counts).
 
 Usage:
-  python3 scraper/jobs.py                       # all sources -> out/jobs/ranked.csv
-  python3 scraper/jobs.py --sources hn,wwr --top 30 --min-score 40
+  python3 scraper/jobs.py                       # all sources
+  python3 scraper/jobs.py --sources hn,wwr --top 30
   python3 scraper/jobs.py --cache out/jobs/raw.json   # re-score a saved fetch offline
 
 Stdlib + PyYAML only (PyYAML is already required by build/check.py).
@@ -37,23 +57,64 @@ FAMILIES = {
     'backend': (r'\b(backend|back-end|back end|python|django|fastapi|api)\b', 30),
     'platform-sre': (r'\b(sre|site reliability|platform|devops|infrastructure|infra|'
                      r'kubernetes|cloud engineer|reliability|production engineer)\b', 30),
-    'ai-infra': (r'\b(llm|ai|ml|machine learning|mlops|genai|inference|applied ai)\b', 30),
+    'ai-infra': (r'\b(llm|ai|ml|machine learning|mlops|genai|inference|applied ai|agents?)\b', 30),
+    'fullstack': (r'\b(full[- ]?stack)\b', 25),
     'fintech': (r'\b(trading|fintech|exchange|crypto|payments?|quant|defi|brokerage)\b', 20),
+    'founding-lead': (r'\b(founding|tech lead|technical lead|cto|head of engineering)\b', 20),
+    'consulting': (r'\b(consultant|consulting|contractor|freelance)\b', 15),
+    'frontend': (r'\b(frontend|front-end|front end|react|next\.?js)\b', 15),
+    'seo': (r'\b(seo|technical seo)\b', 15),
 }
 SENIORITY = (r'\b(senior|sr\.?|staff|lead|principal)\b', 10)
-ENGINEER = r'\b(engineer|developer|sre|architect|programmer)\b'
-NEGATIVE = (r'\b(ios|android|mobile|swift|kotlin|java(?!script)|\.net|c#|php|ruby|rails|'
-            r'salesforce|sap|designer|sales|marketing|recruiter|account executive|'
-            r'customer success|support specialist|intern|junior|jr\.?|writer|'
-            r'data entry|qa tester|manual qa)\b')
+ENGINEER = r'\b(engineer|developer|sre|architect|programmer|consultant|cto)\b'
+# Criteria: "avoid unnecessary exact-stack exclusions", so only roles that are not
+# engineering at all are cut. Native mobile is kept but simply scores low on fit.
+NOT_ENGINEERING = (r'\b(sales|marketing manager|recruiter|account executive|account manager|'
+                   r'customer success|support specialist|designer|copywriter|writer|'
+                   r'data entry|intern|internship)\b')
 
-# Location: mono is in Tehran. Worldwide roles are the realistic pool; EMEA and
-# timezone-band roles are worth a look; country-restricted roles are pushed down.
-LOC_GOOD = r'\b(worldwide|anywhere|global|any location|remote \(global\)|all countries)\b'
-LOC_OK = r'\b(emea|europe|middle east|asia|utc[+-]?[0-4]\b|gmt[+-]?[0-4]\b|cet|eet|turkey|uae|dubai)\b'
-LOC_BAD = (r'\b(us only|usa only|u\.s\. only|united states|us-based|us based|canada only|'
-           r'uk only|must be located in|must reside in|north america|americas|latam|'
-           r'us citizens?|security clearance|est|pst|cst)\b')
+# --- Geography (criteria: GEOGRAPHIC COMPANY RULES, CANDIDATE PROFILE) -----------
+US_IL = (r'\b(united states|usa|u\.s\.a?\.?|us[- ]based|us only|us citizens?|'
+         r'us residents?|israel|tel aviv|herzliya|haifa|jerusalem|'
+         r'san francisco|sf bay|bay area|new york|nyc|seattle|boston|austin|chicago|'
+         r'los angeles|denver|atlanta|miami|washington,? dc|security clearance)\b')
+# A location field naming only somewhere Iran is not, e.g. "Europe only", "UK", "LATAM".
+NOT_IRAN_REGION = (r'\b(canada|north america|americas|latam|latin america|south america|'
+                   r'mexico|brazil|argentina|colombia|uk|united kingdom|ireland|europe|eu|'
+                   r'eea|germany|france|spain|portugal|netherlands|poland|italy|sweden|'
+                   r'norway|denmark|finland|switzerland|austria|belgium|czech|romania|'
+                   r'australia|new zealand|india|philippines|japan|singapore|apac|africa)\b')
+OPEN_REGION = (r'\b(worldwide|anywhere|global|any location|all countries|emea|'
+               r'middle east|mena|asia|iran|utc[+-]?[0-4]\b|gmt[+-]?[0-4]\b)\b')
+IRAN_EXCLUDED = (r'(sanctioned countr|ofac|embargoed|(except|excluding|exclude|not|outside of)'
+                 r'[^.]{0,60}\biran\b|\biran\b[^.]{0,40}\b(cuba|north korea|syria|crimea)|'
+                 r'\b(cuba|north korea|syria|crimea)\b[^.]{0,40}\biran\b)')
+REMOTE = r'\bremote\b'
+NOT_REMOTE = r'\b(no remote|not remote|onsite only|on-site only|in[- ]office only)\b'
+
+# --- Payment routes (criteria: REMOTE CONTRACTING AND PAYMENT) -------------------
+# Kept as separate columns because evidence for one does not confirm another.
+CRYPTO_PAY = (r'\b(paid in (crypto|usdc|usdt|stablecoins?)|pay(ment|s)? in (crypto|usdc|usdt|'
+              r'stablecoins?)|salary in (crypto|usdc|usdt)|(usdc|usdt|stablecoin) (salary|'
+              r'payments?|compensation)|crypto (salary|payroll|compensation|payments? option))')
+B2B_INVOICE = (r'\b(b2b contract|b2b agreement|invoice us|invoic(e|ing) (monthly|through|via)|'
+               r'contract(or)? via your (own )?company|through your (own )?(company|agency)|'
+               r'subcontract(ing|or)?|independent contractor|contractor agreement|'
+               r'agency or individual)\b')
+
+# --- Relocation track ------------------------------------------------------------
+VISA = (r'\b(visa sponsorship|sponsor(s|ing)? (a |your |work )?visas?|will sponsor|'
+        r'h-?1b sponsorship|blue card sponsorship|skilled worker visa sponsorship)\b')
+NO_VISA = (r'\b(no|not|unable to|cannot|can\'t|do not|don\'t|without)\b[^.]{0,30}'
+           r'\b(visa|sponsor)')
+
+# --- Other priority signals ------------------------------------------------------
+PREFERRED_INDUSTRY = (r'\b(fintech|trading|exchange|brokerage|payments|financial|crypto|defi|'
+                      r'seo|search engine optimi[sz]ation|llm|generative ai|ai[- ]native|'
+                      r'machine learning|inference)\b')
+LOW_COMPETITION = (r'\b(contract|contractor|freelance|paid trial|paid project|trial project|'
+                   r'founding|first engineer|sole engineer|email (the )?(founder|cto))\b')
+PART_TIME = r'\bpart[- ]time\b'
 
 # Resume tags are slugs; these are the words a JD uses for them.
 SYNONYMS = {
@@ -160,7 +221,8 @@ def parse_remoteok(text):
             continue  # first element is the legal notice
         sal = ''
         if j.get('salary_min'):
-            sal = f"{j['salary_min']}-{j.get('salary_max') or ''}"
+            hi = j.get('salary_max') or j['salary_min']
+            sal = f"${j['salary_min']} - ${hi} per year"
         out.append(_job('remoteok', j.get('position'), j.get('company'),
                         j.get('url') or f"https://remoteok.com/remote-jobs/{j.get('id')}",
                         j.get('location'), j.get('tags') or [], j.get('description'),
@@ -202,8 +264,9 @@ def parse_hn_comment(c, thread_id=None):
     company = parts[0] if parts else ''
     role_re = re.compile(ENGINEER + r'|' + SENIORITY[0], re.I)
     title = next((p for p in parts[1:] if role_re.search(p)), ' | '.join(parts[1:3]))
-    loc_re = re.compile(r'remote|onsite|on-site|hybrid|' + LOC_GOOD, re.I)
-    location = ' | '.join(p for p in parts[1:] if loc_re.search(p))
+    # Every other header field except links and pay is treated as location text.
+    skip = re.compile(r'https?://|www\.|\$|€|£|\bsalary\b', re.I)
+    location = ' | '.join(p for p in parts[1:] if p != title and not skip.search(p))
     posted = (c.get('created_at') or '')[:10]
     return _job('hn', title or first[:80], company,
                 f"https://news.ycombinator.com/item?id={c.get('id')}",
@@ -233,14 +296,14 @@ def fetch_wwr():
 
 
 def fetch_hn():
-    """Latest 'Ask HN: Who is hiring?' thread; only comments that mention remote."""
+    """Latest 'Ask HN: Who is hiring?' thread; comments mentioning remote work or visas."""
     hits = json.loads(_get('https://hn.algolia.com/api/v1/search_by_date'
                            '?tags=story,author_whoishiring&hitsPerPage=10'))['hits']
     story = next(h for h in hits if 'who is hiring' in h['title'].lower())
     thread = json.loads(_get(f"https://hn.algolia.com/api/v1/items/{story['objectID']}",
                              timeout=90))
     return [parse_hn_comment(c) for c in thread.get('children', [])
-            if c.get('text') and re.search(r'\bremote\b', c['text'], re.I)]
+            if c.get('text') and re.search(r'\bremote\b|\bvisa', c['text'], re.I)]
 
 
 FETCHERS = {'remoteok': fetch_remoteok, 'remotive': fetch_remotive,
@@ -248,12 +311,88 @@ FETCHERS = {'remoteok': fetch_remoteok, 'remotive': fetch_remotive,
 
 
 # ---------------------------------------------------------------------------
-# Scoring
+# Criteria file: the numbers and labels come from docs/job-search-criteria.md
 # ---------------------------------------------------------------------------
-def score(job, profile):
+CRITERIA_PATH = ROOT / 'docs/job-search-criteria.md'
+_WORDS = {w: i for i, w in enumerate(
+    'zero one two three four five six seven eight nine ten eleven twelve thirteen '
+    'fourteen'.split())}
+
+
+def load_criteria(path=CRITERIA_PATH):
+    """Pull the machine-checkable values out of the prose brief; fail loudly if absent."""
+    text = re.sub(r'\s+', ' ', Path(path).read_text())
+
+    def need(rx, what):
+        m = re.search(rx, text, re.I)
+        if not m:
+            raise SystemExit(f'{path}: could not find {what} (pattern {rx!r})')
+        return m
+
+    money = lambda m: int(m.group(1).replace(',', ''))
+    days = need(r'publication date within the preceding (\w+) days', 'freshness window').group(1)
+    labels = re.findall(r'- (Confirmed-compatible|Conditional|Low-priority/unverified|Excluded):',
+                        text)
+    if len(labels) != 4:
+        raise SystemExit(f'{path}: expected the four priority labels, found {labels}')
+    return {
+        'min_full_time': money(need(r'Full-time: minimum USD ([\d,]+) gross per month',
+                                    'full-time minimum')),
+        'min_part_time': money(need(r'Part-time: minimum USD ([\d,]+) gross per month',
+                                    'part-time minimum')),
+        'fresh_days': int(days) if days.isdigit() else _WORDS[days.lower()],
+        'labels': labels,
+    }
+
+
+# ---------------------------------------------------------------------------
+# Compensation
+# ---------------------------------------------------------------------------
+_MONEY = re.compile(
+    r'(?<![A-Za-z])(?:usd\s?|us\$|\$)\s?(\d[\d,]*(?:\.\d+)?)\s?(k)?(?![\d.]*\s?(?:m|mm|b|bn|'
+    r'million|billion)\b)'
+    r'(?:\s?(?:-|–|to)\s?(?:usd\s?|us\$|\$)?\s?(\d[\d,]*(?:\.\d+)?)\s?(k)?)?'
+    r'\s*(/\s?(?:hr|hour|h|mo|month|yr|year|annum)|per (?:hour|month|year|annum)|an hour|a year|'
+    r'monthly|annually|hourly)?', re.I)
+
+
+def parse_comp(text, part_time=False):
+    """Return (max monthly USD or None, readable basis). None means unverified.
+
+    Only USD amounts are read; other currencies stay unverified rather than being
+    converted at a guessed rate. Part-time annual or hourly figures are not converted,
+    because the criteria forbid treating a full-time-equivalent as the monthly amount.
+    """
+    best = None
+    for m in _MONEY.finditer(text or ''):
+        lo, lo_k, hi, hi_k, unit = m.groups()
+        val = float((hi or lo).replace(',', '')) * (1000 if (hi_k or (lo_k and not hi)) else 1)
+        unit = (unit or '').lower()
+        if 'h' in unit and 'month' not in unit or unit == 'hourly':
+            if part_time:
+                continue
+            monthly, basis = val * 160, f'${val:,.0f}/h x 160h'
+        elif 'mo' in unit:
+            monthly, basis = val, f'${val:,.0f}/month'
+        elif 'y' in unit or 'ann' in unit or val >= 20000:
+            if part_time:
+                continue
+            monthly, basis = val / 12, f'${val:,.0f}/year'
+        else:
+            continue                      # bare small number: unit unknown
+        if monthly < 300:
+            continue                      # too small to be a salary: likely a price or fee
+        if best is None or monthly > best[0]:
+            best = (round(monthly), basis)
+    return best or (None, '')
+
+
+# ---------------------------------------------------------------------------
+# Evaluation
+# ---------------------------------------------------------------------------
+def tech_fit(job, profile):
     title = job['title'].lower()
     hay = ' '.join([title, ' '.join(job['tags']).lower(), job['description'].lower()])
-
     fam_hits = [(f, w) for f, (rx, w) in FAMILIES.items() if re.search(rx, title)]
     title_pts = max((w for _, w in fam_hits), default=0)
     if len(fam_hits) > 1:
@@ -271,24 +410,131 @@ def score(job, profile):
             got += w
     # Saturating: ~25 weight-points of overlap is a full-marks match.
     skill_pts = round(45 * min(got / 25, 1), 1)
+    return {'fit': round(title_pts + skill_pts, 1), 'title_pts': title_pts,
+            'skill_pts': skill_pts, 'family': '+'.join(f for f, _ in fam_hits) or '-',
+            'matched_skills': ', '.join(s for _, s in sorted(matched, reverse=True)[:10])}
 
-    loc = (job['location'] + ' ' + hay[:600]).lower()
-    if re.search(LOC_GOOD, loc):
-        loc_pts, loc_tag = 15, 'worldwide'
-    elif re.search(LOC_BAD, job['location'].lower() or loc):
-        loc_pts, loc_tag = -20, 'restricted'
-    elif re.search(LOC_OK, loc):
-        loc_pts, loc_tag = 8, 'emea/tz'
+
+def _days_old(posted, today):
+    try:
+        return (today - datetime.strptime(posted[:10], '%Y-%m-%d').date()).days
+    except ValueError:
+        return None
+
+
+def evaluate(job, profile, crit, today):
+    fit = tech_fit(job, profile)
+    title = job['title'].lower()
+    body = ' '.join([title, ' '.join(job['tags']).lower(), job['description'].lower()])
+    loc = job['location'].lower()
+    excluded, questions = [], []
+
+    # Freshness
+    age = _days_old(job['posted'], today)
+    if age is None:
+        excluded.append('no verifiable publication date')
+    elif age > crit['fresh_days']:
+        excluded.append(f'published {age} days ago (limit {crit["fresh_days"]})')
+
+    # Work arrangement and relocation track
+    remote = job['source'] != 'hn' or bool(re.search(REMOTE, loc or body[:300]))
+    if re.search(NOT_REMOTE, body):
+        remote = False
+    visa = bool(re.search(VISA, body)) and not re.search(NO_VISA, body)
+    group = 'A' if remote else 'B'
+    if not remote and not visa:
+        excluded.append('on-site without explicit visa sponsorship')
+    if group == 'B':
+        questions.append('visa sponsorship for an Iranian applicant not confirmed')
+
+    # Geography: US/Israel-based roles, and location restrictions that leave Iran out
+    open_region = bool(re.search(OPEN_REGION, loc))
+    if re.search(US_IL, loc) and not open_region:
+        excluded.append('role based in the United States or Israel')
+        entity = 'US/Israel (from location)'
     else:
-        loc_pts, loc_tag = 0, 'unclear'
+        entity = 'unknown'
+        questions.append('actual hiring entity and country unknown')
 
-    penalty = -30 if re.search(NEGATIVE, title) else 0
-    total = round(title_pts + skill_pts + loc_pts + penalty, 1)
-    top_skills = [s for _, s in sorted(matched, reverse=True)[:10]]
-    return {**job, 'score': total, 'title_pts': title_pts, 'skill_pts': skill_pts,
-            'loc_pts': loc_pts, 'location_fit': loc_tag,
-            'family': '+'.join(f for f, _ in fam_hits) or '-',
-            'matched_skills': ', '.join(top_skills)}
+    if re.search(IRAN_EXCLUDED, body):
+        iran = 'incompatible'
+        excluded.append('posting excludes Iran or sanctioned countries')
+    elif re.search(r'\biran\b', loc):
+        iran = 'confirmed'
+    elif group == 'A' and loc and not open_region and re.search(NOT_IRAN_REGION, loc):
+        iran = 'incompatible'
+        excluded.append(f'location restricted to: {job["location"][:40]}')
+    else:
+        iran = 'unknown'
+        if group == 'A':
+            questions.append('Iran-based work not confirmed')
+
+    # Payment routes, kept separate
+    crypto = 'advertised option' if re.search(CRYPTO_PAY, body) else 'unknown'
+    b2b = 'advertised option' if re.search(B2B_INVOICE, body) else 'unknown'
+    if crypto == b2b == 'unknown' and group == 'A':
+        questions.append('payment route unknown')
+
+    # Compensation
+    part_time = bool(re.search(PART_TIME, body))
+    contract = bool(re.search(r'\b(contract|contractor|freelance)\b', title + ' ' + loc))
+    monthly, basis = parse_comp(job['salary'] or '', part_time)
+    if monthly is None:
+        monthly, basis = parse_comp(job['title'] + ' ' + job['description'][:1500], part_time)
+    minimum = crit['min_part_time'] if part_time else crit['min_full_time']
+    if monthly is None:
+        comp_ok = 'unverified'
+        questions.append('compensation undisclosed')
+    elif monthly >= minimum:
+        comp_ok = 'yes'
+    else:
+        comp_ok = 'no'
+        excluded.append(f'max pay ${monthly:,}/month below ${minimum:,} minimum')
+
+    if re.search(NOT_ENGINEERING, title):
+        excluded.append('not an engineering role')
+
+    labels = dict(zip(['confirmed', 'conditional', 'low', 'excluded'], crit['labels']))
+    route = 'advertised option' in (crypto, b2b)
+    if excluded:
+        label = labels['excluded']
+    elif iran == 'confirmed' and route and comp_ok == 'yes':
+        label = labels['confirmed']
+    elif iran == 'confirmed' or route:
+        label = labels['conditional']
+    else:
+        label = labels['low']
+
+    industry = bool(re.search(PREFERRED_INDUSTRY, body))
+    low_comp = bool(re.search(LOW_COMPETITION, body))
+    why = [f'fit {fit["fit"]:.0f}/85']
+    why += [w for w, ok in [('Iran confirmed', iran == 'confirmed'),
+                            ('crypto pay', crypto != 'unknown'),
+                            ('B2B/invoice', b2b != 'unknown'),
+                            ('pay meets minimum', comp_ok == 'yes'),
+                            ('preferred industry', industry),
+                            ('contract/founding/trial', low_comp)] if ok]
+    return {**job, **fit, 'group': group, 'label': label,
+            'excluded_reason': '; '.join(excluded),
+            'rationale': ', '.join(why),
+            'employment': 'part-time' if part_time else ('contract' if contract else 'full-time'),
+            'comp_monthly_usd_max': monthly or '', 'comp_basis': basis,
+            'comp_meets_min': comp_ok, 'iran_eligibility': iran,
+            'crypto_pay': crypto, 'b2b_invoice': b2b,
+            'payment_route': 'advertised option' if route else 'unknown',
+            'visa_sponsorship': 'advertised' if visa else 'no',
+            'hiring_entity': entity, 'days_old': '' if age is None else age,
+            'preferred_industry': 'yes' if industry else '',
+            'low_competition_signal': 'yes' if low_comp else '',
+            'open_questions': '; '.join(questions)}
+
+
+def rank_key(r, crit):
+    """Label first, then the criteria's RANKING order as far as a feed can show it."""
+    return (crit['labels'].index(r['label']), r['group'],
+            -(r['iran_eligibility'] == 'confirmed') - (r['payment_route'] != 'unknown'),
+            -(r['comp_meets_min'] == 'yes'), -r['fit'],
+            -(r['preferred_industry'] == 'yes'), -(r['low_competition_signal'] == 'yes'))
 
 
 def dedupe(jobs):
@@ -302,9 +548,58 @@ def dedupe(jobs):
     return out
 
 
-COLUMNS = ['score', 'title', 'company', 'family', 'location_fit', 'location', 'salary',
-           'matched_skills', 'source', 'posted', 'url',
-           'title_pts', 'skill_pts', 'loc_pts']
+COLUMNS = ['group', 'label', 'rationale', 'excluded_reason', 'title', 'company', 'url',
+           'posted', 'days_old', 'employment', 'comp_monthly_usd_max', 'comp_basis',
+           'comp_meets_min', 'iran_eligibility', 'payment_route', 'crypto_pay', 'b2b_invoice',
+           'visa_sponsorship', 'hiring_entity', 'location', 'fit', 'family', 'matched_skills',
+           'preferred_industry', 'low_competition_signal', 'open_questions', 'source',
+           'title_pts', 'skill_pts']
+
+
+def _md(v):
+    return str(v).replace('|', '/').replace('\n', ' ')
+
+
+def write_report(path, rows, crit, today):
+    keep = [r for r in rows if r['label'] != crit['labels'][-1]]
+    gone = [r for r in rows if r['label'] == crit['labels'][-1]]
+    out = [f'# Job scan {today.isoformat()}', '',
+           f'Criteria: `docs/job-search-criteria.md` (full-time minimum ${crit["min_full_time"]:,}'
+           f'/month, part-time ${crit["min_part_time"]:,}/month, published within '
+           f'{crit["fresh_days"]} days). {len(keep)} kept, {len(gone)} excluded.', '',
+           'Everything below is read from the posting text only. "unknown" means the posting '
+           'is silent, not that the answer is no; each item still needs confirmation from the '
+           'company before applying.', '']
+    head = ['Label', 'Role', 'Company', 'Posted', 'Type', 'Pay/month (max)', 'Meets min',
+            'Iran work', 'Payment route', 'Fit', 'Open questions']
+    for group, name in [('A', 'A. Remote vacancies'), ('B', 'B. Sponsored-relocation vacancies')]:
+        g = [r for r in keep if r['group'] == group]
+        out += [f'## {name} ({len(g)})', '']
+        if not g:
+            out += ['None this run.', '']
+            continue
+        out += ['| ' + ' | '.join(head) + ' |', '|' + '---|' * len(head)]
+        for r in g:
+            pay = f'${r["comp_monthly_usd_max"]:,}' if r['comp_monthly_usd_max'] else '-'
+            route = ', '.join(k for k, c in [('crypto', 'crypto_pay'), ('B2B', 'b2b_invoice')]
+                              if r[c] != 'unknown') or 'unknown'
+            out.append('| ' + ' | '.join(_md(x) for x in [
+                r['label'], f'[{r["title"][:60]}]({r["url"]})', r['company'][:30], r['posted'],
+                r['employment'], pay, r['comp_meets_min'], r['iran_eligibility'], route,
+                f'{r["fit"]:.0f}', r['open_questions']]) + ' |')
+        out.append('')
+    out += ['## C. Outreach companies', '',
+            'Not produced by the scraper: this track needs sourced research on each company.', '',
+            '## Excluded', '', '| Reason | Count |', '|---|---|']
+    counts = {}
+    for r in gone:
+        for reason in r['excluded_reason'].split('; '):
+            key = re.sub(r'\d+', 'N', reason) if 'published' in reason or 'max pay' in reason \
+                else reason
+            key = key.split(':')[0]
+            counts[key] = counts.get(key, 0) + 1
+    out += [f'| {k} | {v} |' for k, v in sorted(counts.items(), key=lambda kv: -kv[1])]
+    Path(path).write_text('\n'.join(out) + '\n')
 
 
 def main(argv=None):
@@ -312,10 +607,14 @@ def main(argv=None):
     ap.add_argument('--sources', default=','.join(FETCHERS))
     ap.add_argument('--out', default=str(ROOT / 'out/jobs'))
     ap.add_argument('--top', type=int, default=25, help='rows printed to stdout')
-    ap.add_argument('--min-score', type=float, default=0, help='drop rows below this from the CSV')
     ap.add_argument('--cache', help='score a raw.json from a previous run instead of fetching')
+    ap.add_argument('--criteria', default=str(CRITERIA_PATH))
+    ap.add_argument('--today', help='run date YYYY-MM-DD for the freshness rule (default: today, UTC)')
     a = ap.parse_args(argv)
 
+    crit = load_criteria(a.criteria)
+    today = (datetime.strptime(a.today, '%Y-%m-%d').date() if a.today
+             else datetime.now(timezone.utc).date())
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
     if a.cache:
@@ -335,19 +634,21 @@ def main(argv=None):
         (out / 'raw.json').write_text(json.dumps(raw))
 
     profile = load_profile()
-    ranked = sorted((score(j, profile) for j in dedupe(raw)), key=lambda r: -r['score'])
-    ranked = [r for r in ranked if r['score'] >= a.min_score]
+    rows = sorted((evaluate(j, profile, crit, today) for j in dedupe(raw)),
+                  key=lambda r: rank_key(r, crit))
 
     with open(out / 'ranked.csv', 'w', newline='') as f:
         w = csv.DictWriter(f, fieldnames=COLUMNS, extrasaction='ignore')
         w.writeheader()
-        w.writerows(ranked)
+        w.writerows(rows)
+    write_report(out / 'report.md', rows, crit, today)
 
-    print(f'\n{len(ranked)} ranked -> {out / "ranked.csv"}\n')
-    print(f'{"score":>5}  {"location":10}  {"title":45}  {"company":22}  source')
-    for r in ranked[:a.top]:
-        print(f'{r["score"]:5.0f}  {r["location_fit"]:10}  {r["title"][:45]:45}  '
-              f'{r["company"][:22]:22}  {r["source"]}')
+    kept = [r for r in rows if r['label'] != crit['labels'][-1]]
+    print(f'\n{len(kept)} kept, {len(rows) - len(kept)} excluded -> {out / "report.md"}\n')
+    print(f'{"grp":3}  {"label":24}  {"fit":>3}  {"title":40}  {"company":20}  pay')
+    for r in kept[:a.top]:
+        print(f'{r["group"]:3}  {r["label"]:24}  {r["fit"]:3.0f}  {r["title"][:40]:40}  '
+              f'{r["company"][:20]:20}  {r["comp_meets_min"]}')
     return 0
 
 

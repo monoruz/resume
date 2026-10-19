@@ -309,8 +309,11 @@ Persian resumes, and the choice must be consistent across the whole document.
   PyYAML silently keeps the last of any duplicate mapping key and will drop a whole role
   without raising, so never trust a bare `safe_load` as proof the edit landed. The checker
   also reports `verify: true` bullets and concurrent "Present" roles.
+- `docs/job-search-criteria.md` — the user's job-search constraints, verbatim (pay minimums,
+  7-day freshness, US/Israel entity rule, Iran eligibility, payment routes, priority labels)
 - `scraper/jobs.py` — fetches remote listings (RemoteOK, Remotive, We Work Remotely, HN
-  Who is hiring) and ranks them against `master.yaml` into `out/jobs/ranked.csv`;
+  Who is hiring), applies the criteria file's hard exclusions and labels, ranks by fit
+  against `master.yaml`, and writes `out/jobs/ranked.csv` and `out/jobs/report.md`;
   tests in `scraper/test_jobs.py` (`python3 -m unittest discover scraper`)
 - `jobs/<slug>/` — one directory per application
 - `out/` — scratch renders (gitignored)
