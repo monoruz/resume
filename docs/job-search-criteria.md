@@ -1,8 +1,8 @@
 # Job-search criteria
 
-<!-- Supplied by mono on 2026-10-19; kept verbatim below. scraper/jobs.py reads the
-     compensation minimums, the freshness window and the priority labels from this file,
-     so edit the numbers here rather than in code. -->
+<!-- Supplied by mono on 2026-10-19; kept verbatim below. The job-research skill
+     (.claude/skills/job-research/SKILL.md) treats this file as the authority on every
+     constraint, so change the rules here. -->
 
 You are a company-research and job-discovery agent helping a software
 engineer secure paid work as quickly as possible.

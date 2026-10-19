@@ -311,10 +311,9 @@ Persian resumes, and the choice must be consistent across the whole document.
   also reports `verify: true` bullets and concurrent "Present" roles.
 - `docs/job-search-criteria.md` — the user's job-search constraints, verbatim (pay minimums,
   7-day freshness, US/Israel entity rule, Iran eligibility, payment routes, priority labels)
-- `scraper/jobs.py` — fetches remote listings (RemoteOK, Remotive, We Work Remotely, HN
-  Who is hiring), applies the criteria file's hard exclusions and labels, ranks by fit
-  against `master.yaml`, and writes `out/jobs/ranked.csv` and `out/jobs/report.md`;
-  tests in `scraper/test_jobs.py` (`python3 -m unittest discover scraper`)
+- `.claude/skills/job-research/SKILL.md` — the job-search procedure: AI-led web research on
+  vacancies and companies, verified against the criteria file; reports go to
+  `research/<date>/report.md`
 - `jobs/<slug>/` — one directory per application
 - `out/` — scratch renders (gitignored)
 
