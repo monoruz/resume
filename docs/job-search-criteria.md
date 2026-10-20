@@ -302,3 +302,18 @@ Distinguish recruiter statements, company statements, and third-party reports.
 
 Return fewer results rather than padding with weak or ineligible companies.
 Do not submit applications, send outreach, or disclose candidate information.
+
+---
+
+## Addendum (mono, 2026-10-20)
+
+Added after the brief above; it has the same authority.
+
+- **Exclude Iranian companies.** Exclude opportunities where the hiring or contracting
+  entity is registered or headquartered in Iran, or where the business's main operations
+  are in Iran, including through a foreign shell entity. Decide this from legal pages,
+  registry entries and the company's own statements, never from the nationality, names
+  or language of founders or staff. This does not affect the Iran-based team signal: a
+  non-Iranian company that engages engineers working from Iran remains a positive signal.
+- **Company sources and ranking signals** for discovery, track C, and growth evidence are
+  listed in `docs/company-sources.md`.

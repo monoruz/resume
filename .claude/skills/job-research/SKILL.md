@@ -15,6 +15,7 @@ checked against the criteria before it is reported.
 |---|---|
 | `docs/job-search-criteria.md` | Every constraint, label, ranking rule and output field. Re-read it at the start of each run; it overrides anything in this file. |
 | `data/master.yaml` | Technical experience. Fit explanations cite role ids and bullets from it. Never claim a skill that is not in it. |
+| `docs/company-sources.md` | Where to find companies (funding, hiring, growth and tech sources), domain-based de-duplication, and the ranking signals used within the criteria's order. |
 
 ## Preflight: the web must be readable
 
@@ -41,7 +42,10 @@ place of verified results.
      Skilled Worker, UAE employment visa). Generic "relocation support" does not count.
    - **C. Outreach companies.** Companies with a sourced reason to approach (expansion,
      a documented technical need matching master.yaml, explicit contractor/crypto/B2B
-     policy, confirmed Iran-based engineers) but no qualifying recent vacancy.
+     policy, confirmed Iran-based engineers) but no qualifying recent vacancy. Find them
+     through the funding, accelerator and growth sources in `docs/company-sources.md`,
+     and rank them with its signals (new funding, open senior roles, headcount growth,
+     leadership changes, stack match).
 3. **Verify each candidate by opening it.** For every vacancy, open the listing (prefer
    the company's own page over a board repost) and record:
    - publication date as stated on the page, with where it was read; no date means
@@ -52,8 +56,11 @@ place of verified results.
    - employment type (full-time, part-time, contract).
 4. **Research each surviving company** (the "deep" part):
    - actual hiring entity and its country: legal notice/imprint, terms of service,
-     contract language, job-board entity field. A foreign office address alone is not
-     an entity;
+     contract language, job-board entity field, national company registry. A foreign
+     office address alone is not an entity. **Exclude Iranian companies** (entity
+     registered or headquartered in Iran, or main operations in Iran, including through
+     a foreign shell), decided from these sources only, never from people's names or
+     nationality;
    - contractor and payment policy: crypto pay, third-party invoicing, B2B; record each
      separately with its source;
    - Iran-based engineers: only explicit public statements (company pages, posts by the
@@ -89,7 +96,8 @@ or ask the company. Keep the long detail in the file.
 - Search for jobs using Python, or any script that scrapes, downloads or parses job
   feeds. mono's standing rule: discovery and verification are done by AI research,
   meaning web search plus reading each page, so every result gets judgement, not a regex.
-- Submit applications, contact companies, or disclose candidate information.
+- Submit applications, contact companies, or disclose candidate information. This
+  includes cold-email tools and contact-harvesting services (see `docs/company-sources.md`).
 - Invent or estimate dates, pay, policies, applicant counts, growth or eligibility.
 - Treat "remote", "global team", crypto activity or an Estonian invoice option as
   confirmation of Iran-based eligibility.
