@@ -315,7 +315,8 @@ Persian resumes, and the choice must be consistent across the whole document.
   sources) and the signals for ranking them; exclusions include Iranian companies
 - `.claude/skills/job-research/SKILL.md` — the job-search procedure: AI-led web research on
   vacancies and companies, verified against the criteria file; reports go to
-  `research/<date>/report.md`
+  `research/<date>/report.md`; the daily scheduled run keeps a seen-jobs ledger in the
+  project files so no job is proposed twice
 - `jobs/<slug>/` — one directory per application
 - `out/` — scratch renders (gitignored)
 
