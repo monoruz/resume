@@ -87,9 +87,39 @@ Write `research/<YYYY-MM-DD>/report.md` with:
 - an "Excluded" table listing what was cut and the failing requirement, so the same
   leads are not re-researched next run.
 
-Commit the report on the working branch. In chat, report the group tables (top results
+For a daily scheduled run, see the next section for where the report goes. For an ad hoc
+run, commit the report on the working branch. In chat, report the group tables (top results
 only), the count of excluded leads by reason, and the open questions mono must answer
 or ask the company. Keep the long detail in the file.
+
+## Daily run and de-duplication
+
+A scheduled task runs this procedure once a day. mono must never be shown the same job
+twice, so every run works against a persistent ledger.
+
+| File | Purpose |
+|---|---|
+| `/mnt/project-files/job-scan/seen-jobs.md` | Ledger of every lead proposed or excluded, with its key, status and URL. Its header defines the key and the matching rules. |
+| `/mnt/project-files/job-scan/reports/<YYYY-MM-DD>.md` | The full report for that run (same structure as Output below). |
+
+1. **Read the ledger first.** Before researching, load every key and URL.
+2. **Skip repeats during discovery**, not only at the end: a candidate whose key or URL
+   is in the ledger, or that is the same role at the same company re-listed under another
+   city or board, is not re-verified or re-reported. Excluded leads stay excluded unless
+   a new listing with a new URL and a new publication date appears.
+3. **Outreach companies (C)** already proposed may return only as an *update*, when a
+   new dated signal exists, and the update names what changed.
+4. **Report only new results.** Fewer results are fine; an empty run says so in one line.
+5. **Append to the ledger after the run**: every new proposed, excluded and unverified
+   lead, with today's date as first seen. Update `Last seen` on repeats that were
+   encountered again. Re-read the file about ten seconds after writing to confirm it
+   landed.
+6. **Write the report** to `reports/<date>.md` (not to the repo), then post a short
+   summary to mono: the top new results as a table, the count of excluded leads by
+   reason, and open questions, with the report attached.
+
+The ledger holds facts mono has already seen, so it is safe to read; it is never a
+reason to skip verification of a new lead.
 
 ## Never
 
