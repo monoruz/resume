@@ -84,6 +84,8 @@ Write `research/<YYYY-MM-DD>/report.md` with:
 - below the tables, one short section per result with every field the criteria's
   REQUIRED RESULTS list asks for, each claim linked to its source and marked as a
   company statement, recruiter statement or third-party report;
+- a **Company profiles** table, one row per proposed company, with the attributes in
+  `docs/company-sources.md` § Company profile (rule from mono, 2026-10-21);
 - an "Excluded" table listing what was cut and the failing requirement, so the same
   leads are not re-researched next run.
 
@@ -109,12 +111,16 @@ twice, so every run works against a persistent ledger.
    a new listing with a new URL and a new publication date appears.
 3. **Outreach companies (C)** already proposed may return only as an *update*, when a
    new dated signal exists, and the update names what changed.
-4. **Report only new results.** Fewer results are fine; an empty run says so in one line.
-5. **Append to the ledger after the run**: every new proposed, excluded and unverified
+4. **Profile every proposed company** while researching it: size, hiring and headcount
+   growth, funding and budget signals, and the other attributes listed in
+   `docs/company-sources.md` § Company profile. Each daily report carries the
+   Company profiles table.
+5. **Report only new results.** Fewer results are fine; an empty run says so in one line.
+6. **Append to the ledger after the run**: every new proposed, excluded and unverified
    lead, with today's date as first seen. Update `Last seen` on repeats that were
    encountered again. Re-read the file about ten seconds after writing to confirm it
    landed.
-6. **Write the report** to `reports/<date>.md` (not to the repo), then post a short
+7. **Write the report** to `reports/<date>.md` (not to the repo), then post a short
    summary to mono: the top new results as a table, the count of excluded leads by
    reason, and open questions, with the report attached.
 
