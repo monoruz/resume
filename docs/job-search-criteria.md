@@ -317,3 +317,8 @@ Added after the brief above; it has the same authority.
   non-Iranian company that engages engineers working from Iran remains a positive signal.
 - **Company sources and ranking signals** for discovery, track C, and growth evidence are
   listed in `docs/company-sources.md`.
+- **Company attributes in every report** (mono, 2026-10-21). For each proposed company,
+  report the attributes found during research: company size, hiring and headcount
+  growth, growth status, funding and budget comments, leadership changes, entity,
+  reputation and other material comments. The table layout is in
+  `docs/company-sources.md` § Company profile.
