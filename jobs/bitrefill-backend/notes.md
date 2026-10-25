@@ -44,7 +44,7 @@ field, but no slang.
 ## Draft form answers
 
 **Where are you based? (Country/City)**
-> Tehran, Iran. I work fully remote and can overlap with any time zone.
+> Tehran, Iran
 
 **Please share a link to your Github, Portfolio, LinkedIn or similar**
 > LinkedIn: linkedin.com/in/mohammad-noroozi · GitHub: github.com/monoruz
@@ -63,6 +63,7 @@ field, but no slang.
 - Name on the form: Mono Ruzi.
 - GitHub: github.com/monoruz (resume header and `master.yaml` updated).
 - No optional remarks in the answers (the crypto-payment line was removed).
+- Never state job-search criteria (pay, payment route, sanctions, eligibility) in application text; now a rule in `CLAUDE.md`.
 
 ## Quantification prompts
 
