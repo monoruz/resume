@@ -44,7 +44,7 @@ field, but no slang.
 ## Draft form answers
 
 **Where are you based? (Country/City)**
-> Tehran, Iran. I work fully remote and can overlap with any time zone. I would take the crypto payment option.
+> Tehran, Iran. I work fully remote and can overlap with any time zone.
 
 **Please share a link to your Github, Portfolio, LinkedIn or similar**
 > LinkedIn: linkedin.com/in/mohammad-noroozi · GitHub: github.com/monoruz
@@ -58,11 +58,11 @@ field, but no slang.
 **Tell us about a technical challenge you faced and how you overcame it**
 > At Finestel, users occasionally got duplicate or wrongly sized orders. The cause was concurrency: fills arriving at the same time raced each other through trade callbacks, take-profit calculation and balance updates. I added Redis distributed locks around those three paths, with blocking and non-blocking variants depending on whether a second caller should wait or back off. Duplicate orders fell to near zero. That exposed a second problem: our state and the exchange's state could still drift (a fill we missed, an order left open). So I built reconciliation jobs that compare the two and repair the gap, such as cancelling dangling orders and filling take-profit gaps. Stuck positions that needed someone to fix them by hand dropped by about 75%.
 
-## Before submitting
+## Decided by mono (2026-10-25)
 
-- Legal name for the form: the resume says "Mono Ruzi"; LinkedIn and email say Mohammad Noroozi.
-- GitHub account for the links field (github.com/monoruz holds the panels; the resume header says github.com/monoruzi).
-- Whether to name crypto payment in the first answer.
+- Name on the form: Mono Ruzi.
+- GitHub: github.com/monoruz (resume header and `master.yaml` updated).
+- No optional remarks in the answers (the crypto-payment line was removed).
 
 ## Quantification prompts
 
