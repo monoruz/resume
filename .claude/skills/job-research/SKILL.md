@@ -15,6 +15,7 @@ checked against the criteria before it is reported.
 |---|---|
 | `docs/job-search-criteria.md` | Every constraint, label, ranking rule and output field. Re-read it at the start of each run; it overrides anything in this file. |
 | `data/master.yaml` | Technical experience. Fit explanations cite role ids and bullets from it. Never claim a skill that is not in it. |
+| `docs/rules.md` | mono's standing rules: LinkedIn only through the signed-in Chrome extension, per-track fetch budget, Google Sheet updates and staging, application drafting. Read it every run. |
 | `docs/company-sources.md` | Where to find companies (funding, hiring, growth and tech sources), domain-based de-duplication, and the ranking signals used within the criteria's order. |
 
 ## Preflight: the web must be readable
