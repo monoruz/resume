@@ -26,7 +26,7 @@ default procedure differ, the rule wins.
 |---|---|
 | Job search is AI research only: web search plus opening and reading each page. Never write or run Python, scrapers, feed parsers or search scripts for discovery. (A scraper was built once and removed in PR #1.) | 2026-10-19 |
 | Exclude Iranian companies (also recorded in the criteria addendum). | 2026-10-20 |
-| **LinkedIn leads are read only through mono's signed-in Chrome browser extension**, one listing at a time, in a new tab. Never scrape, bulk-export, message anyone, apply or change anything on LinkedIn. When the extension tools are not available in a session, do not fetch LinkedIn any other way: record the lead as `unverified (LinkedIn: check in Chrome)` and say so in the summary. | 2026-11-07 |
+| **LinkedIn is read and applied to only through mono's signed-in Chrome browser extension**, driven from a remote session on mono's Mac. Read listings by hand, one at a time in a new tab, from the first results page only. Never scrape, bulk-export or automate it. Nothing is applied for, no one is messaged, and nothing on the profile is changed without mono's yes for that specific job. When the extension is not available in a session, do not fetch LinkedIn any other way: record the lead as `unverified (LinkedIn: check in Chrome)` and say so in the summary. | 2026-11-07 |
 | Always confirm an HN "Who is hiring?" claim on the employer's own page (a post once offered a UK visa while the employer page required UK residence). | 2026-11-03 |
 
 ### Sources that worked
@@ -111,7 +111,8 @@ that has the Sheets connector imports them.
 | **On-site and relocation jobs: minimum US$4,000 per month.** Reject an on-site job whose stated pay is below it. Remote jobs keep the US$3,000 full-time and US$2,000 part-time minimums from the criteria file. | 2026-11-07 |
 | Expected-salary fields: when a form asks for it, answer US$4,000 per month for on-site and relocation jobs, converted to the form's currency at the current rate (for example AED 14,690 at the 3.6725 peg). Fill it only when the field asks; this does not lift the rule against stating the criteria elsewhere. | 2026-11-07 |
 | Answer only what a field asks; leave optional fields and remarks blank. | 2026-10-25 |
-| Answers come only from `data/master.yaml`; use the existing track resumes (backend, platform/SRE, AI/LLM infrastructure) in the project files. | 2026-10-25 |
+| Answers come only from `data/master.yaml`. | 2026-10-25 |
+| Use the latest track resumes (2026-10-25): **backend**, **platform-sre** and **ai-llm**. They are in the project files under `resumes/`, saved on LinkedIn, and in the `resumes/` folder of mono's jobs folder on the Mac. Pick the track closest to the vacancy. | 2026-10-25 |
 | Never solve a captcha. Forms behind a captcha, a sign-in, a video answer, or a cloud block go to mono to send. | 2026-10-25 |
 
 ### Who sends which form
