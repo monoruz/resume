@@ -113,6 +113,7 @@ that has the Sheets connector imports them.
 | Expected-salary fields: when a form asks for it, answer US$4,000 per month for on-site, relocation and visa-sponsorship jobs, converted to the form's currency at the current rate (for example AED 14,690 at the 3.6725 peg). Fill it only when the field asks; this does not lift the rule against stating the criteria elsewhere. | 2026-11-07 |
 | Answer only what a field asks; leave optional fields and remarks blank. | 2026-10-25 |
 | Answers come only from `data/master.yaml`. | 2026-10-25 |
+| Personal form fields (date of birth, citizenship, marital status, children) come from `applications/personal-info.md` in the private project files. Never copy them into this public repo. Fill them only when a form asks. | 2026-11-07 |
 | Use the latest track resumes (2026-10-25): **backend**, **platform-sre** and **ai-llm**. They are in the project files under `resumes/`, saved on LinkedIn, and in the `resumes/` folder of mono's jobs folder on the Mac. Pick the track closest to the vacancy. | 2026-10-25 |
 | Never solve a captcha. Forms behind a captcha, a sign-in, a video answer, or a cloud block go to mono to send. | 2026-10-25 |
 
