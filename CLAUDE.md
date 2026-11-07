@@ -315,6 +315,7 @@ is the truthful location (Tehran, Iran), stated plainly and without commentary.
 - `templates/base.html` — empty single-column template with density knobs in `<style>`
 - `templates/example.html` — the same template filled in, as a markup reference
 - `build/render.sh` — HTML → PDF via headless Chrome, reports page count
+- `build/notify.sh` — sends a job-search event to mono's Telegram (token from env, never committed); see `docs/rules.md` section 8
 - `templates/_fonts.css` — embedded Source Sans 3 (base64 woff2); inlined into templates
 - `templates/base-fa.html` — Persian/RTL template (Vazirmatn, bidi isolation, RTL layout)
 - `templates/_fonts-fa.css` — embedded Vazirmatn (Arabic + Latin)
