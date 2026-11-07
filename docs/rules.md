@@ -27,7 +27,7 @@ default procedure differ, the rule wins.
 |---|---|
 | Job search is AI research only: web search plus opening and reading each page. Never write or run Python, scrapers, feed parsers or search scripts for discovery. (A scraper was built once and removed in PR #1.) | 2026-10-19 |
 | Exclude Iranian companies (also recorded in the criteria addendum). | 2026-10-20 |
-| **LinkedIn is read and applied to only through mono's signed-in Chrome browser extension**, driven from a remote session on mono's Mac. Read listings by hand, one at a time in a new tab, from the first results page only. Never scrape, bulk-export or automate it. Nothing is applied for, no one is messaged, and nothing on the profile is changed without mono's yes for that specific job. When the extension is not available in a session, do not fetch LinkedIn any other way: record the lead as `unverified (LinkedIn: check in Chrome)` and say so in the summary. | 2026-11-07 |
+| **LinkedIn is read and applied to only through mono's signed-in Chrome browser extension**, driven from a remote session on mono's Mac. Read listings by hand, one at a time in a new tab, from the first results page only. Never scrape, bulk-export or automate it. Applications there follow the automatic-apply rule in section 5; no one is messaged and nothing on the profile is changed without mono's yes. When the extension is not available in a session, do not fetch LinkedIn any other way: record the lead as `unverified (LinkedIn: check in Chrome)` and say so in the summary. | 2026-11-07 |
 | Always confirm an HN "Who is hiring?" claim on the employer's own page (a post once offered a UK visa while the employer page required UK residence). | 2026-11-03 |
 
 ### Sources that worked
@@ -50,7 +50,7 @@ A scheduled task runs every day at 08:43 Asia/Tehran and posts into the
 | 3 | Profile every proposed company (size, hiring activity, headcount growth, growth status, funding and budget, leadership changes, HQ and entity, reputation, comments). Each figure has a link and date, otherwise "not found". |
 | 4 | Write the report to the project files (`job-scan/reports/<date>.md`) and append to the ledger. Reports are **never committed to this repo** (mono reverted one, PR #2). |
 | 4b | Update the Google Sheet, or stage rows for import (section 4). |
-| 5 | Draft applications for new A/B vacancies (section 5). |
+| 5 | Apply to every new qualifying A/B vacancy automatically (section 5); hand off only with a stated reason, sent by Telegram. |
 | 6 | Post one short, table-first summary: top results per group, short company table, excluded count by reason, applications drafted and what each needs from mono, whether the Sheet was updated or rows staged, whether LinkedIn was checked, open questions. One line if nothing new qualifies. |
 
 ## 4. Google Sheet job tracker
@@ -125,7 +125,8 @@ that has the Sheets connector imports them.
 | Rule | Since |
 |---|---|
 | Applying is on for every qualifying lead ("start to apply to all", 2026-10-25; "apply after you find the job", 2026-10-28). The daily search drafts an application for each new proposed A or B vacancy. Not for track C outreach, internships, fellowships, or management roles the career file cannot support. | 2026-10-28 |
-| **Approval before submitting (updated 2026-11-07).** Applications that pass the criteria are submitted **without mono's approval** when they go through a company's own careers-site form or by email (next row). Before submitting a form, check every typed field on its Review page against these rules and `data/master.yaml`. mono's yes is still needed for LinkedIn applications and for any answer the career file cannot support. Every answer comes only from verified facts (`data/master.yaml` and what mono has confirmed). Captchas, passwords and account creation are always left to mono, so forms with a captcha, a sign-in or account step, a video answer or a cloud block still go to mono to send. | 2026-11-07 |
+| **Apply automatically (mono, 2026-11-07).** Every application that passes the criteria is submitted without asking mono, on any route: company careers sites, ATS forms, email, LinkedIn. Use full permission: accept privacy notices, consents and terms, create an account when a form requires one, and answer every required field. Before submitting, check every typed field on the Review page against these rules. Answers come only from verified facts (`data/master.yaml`, `docs/personal-info.md`, what mono has confirmed); a required answer that no verified fact supports is a valid reason to hand off. Never write a password into this repo, the Sheet or a Telegram message. | 2026-11-07 |
+| **Hand off to mono only for a captcha or reCAPTCHA, or another rational blocker.** Try every other route first. When stuck, send mono a Telegram message naming the job, the link and the exact reason (for example "reCAPTCHA on submit" or "needs years of Proxmox, not in the career file"), and mark the application `mono to send` or `needs info`. A hand-off without a stated reason is not allowed. | 2026-11-07 |
 | **Email applications.** When a company's contact point in the Applications tab is an email address, send the application to it directly through the Gmail connector, without asking mono first. The email follows every application text rule here (Mono Ruzi, github.com/monoruz, truthful location, no criteria) and attaches the closest track resume. Then update the Sheet as for any successful application. | 2026-11-07 |
 | No cold outreach to companies unless mono asks for it. | 2026-10-25 |
 | The name is always **Mono Ruzi**; the GitHub link is always **github.com/monoruz**. | 2026-10-25 |
@@ -137,19 +138,19 @@ that has the Sheets connector imports them.
 | Answers come only from `data/master.yaml`. | 2026-10-25 |
 | Personal form fields (date of birth, citizenship, marital status, children) come from `docs/personal-info.md`. Fill them only when a form asks. | 2026-11-07 |
 | Use the latest track resumes (2026-10-25): **backend**, **platform-sre** and **ai-llm**. They are in the project files under `resumes/`, saved on LinkedIn, and in the `resumes/` folder of mono's jobs folder on the Mac. Pick the track closest to the vacancy. | 2026-10-25 |
-| Never solve a captcha. Forms behind a captcha, a sign-in, a video answer, or a cloud block go to mono to send. | 2026-10-25 |
+| Never solve a captcha or reCAPTCHA: it is the one step that is always mono's. | 2026-10-25 |
 
 ### Who sends which form
 
 | Platform | Sent by | Reason |
 |---|---|---|
-| Teamtailor, Breezy | assistant, after approval | no captcha |
+| Teamtailor, Breezy, company careers sites | assistant, automatically | no captcha |
 | Ashby | mono | reCAPTCHA Enterprise |
 | Recruitee | mono | hCaptcha image challenge |
 | BambooHR (some) | mono | reCAPTCHA v2; may need a street address and postal code |
-| Workable | mono | Cloudflare blocks the cloud server (error 1015) |
-| Himalayas, LinkedIn | mono | sign-in |
-| Forms with video answers | mono | video |
+| Workable | assistant from mono's Mac session; mono only if that is blocked too | Cloudflare blocks the cloud server (error 1015) |
+| Himalayas, LinkedIn | assistant (LinkedIn through the Chrome extension) | sign-in or account creation is allowed |
+| Forms with video answers | mono | a video of mono cannot be produced |
 
 ### Files (project files, not this repo)
 
