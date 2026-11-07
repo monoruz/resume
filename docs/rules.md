@@ -19,6 +19,7 @@ default procedure differ, the rule wins.
 | Prefer tables and visual layouts over plain prose in reports and replies. | standing |
 | No email address, password, token or other secret is ever committed to this repo. | standing |
 | **Every new standing rule goes into this repo as a pull request**, usually as a row in this file. Project memory alone is not enough. | 2026-11-07 |
+| **Telegram messages** go to mono for four events only: new job (with description and company details), application submitted, company reply (🟢 interview, 🔴 rejected, 🎉 offer), and pending applications (🖐️ you send it, ✍️ needs your OK). Each has a bold emoji header, one emoji bullet per field and a 🔗 link line. Templates and setup are in section 8, Telegram notifications. | 2026-11-07 |
 
 ## 2. Job discovery
 
@@ -83,6 +84,27 @@ the same session, before moving on to the next form.
 | Prefix date-like or range-like text (`10-23`, `11-50`, `+16%`) with an apostrophe. | Sheets parses typed values. |
 | Match updates to existing rows on Ledger key (column Y). | Row positions shift. |
 | Verify a bulk import with a temporary COUNTIF / SUMPRODUCT(ROW) checksum in a spare About cell, then clear it. | A hand-copy slip once shifted rows by one; the checksum caught it. |
+
+### Status colors
+
+**Rule (mono, 2026-11-07): statuses are color-coded.** On the Jobs and Applications tabs,
+conditional formatting colors the whole row by its Status, matched on the status's first
+word. The legend is on the About tab (rows 11-20).
+
+| Color | Status group | Status values |
+|---|---|---|
+| Dark green, bold | Offer | offer received |
+| Light blue | Interview | interview booked or scheduled |
+| Light green | Applied | applied, submitted, in review |
+| Light orange | Waiting on mono | awaiting approval, mono to send, needs info, draft ready |
+| Orange | Blocked | blocked |
+| Light yellow | New | proposed |
+| Light purple | Unverified | unverified |
+| Light red | Rejected | rejected |
+| Grey, faded | Excluded | excluded, skipped, closed |
+
+A new status value must start with one of these words, or its row stays uncolored. Do not
+add manual fills over the conditional formatting.
 
 ### Staging route
 
