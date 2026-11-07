@@ -51,8 +51,11 @@ case "$event" in
     exit 2 ;;
 esac
 
-text="${icon} ${label}"$'\n'"${message}"
-[[ -n "$link" ]] && text+=$'\n'"${link}"
+# The body is sent as Telegram HTML: escape it, then bold the header.
+# Write bullets as lines starting with "• " and an emoji (see docs/rules.md section 8).
+esc() { local t="${1//&/&amp;}"; t="${t//</&lt;}"; printf '%s' "${t//>/&gt;}"; }
+text="<b>${icon} ${label}</b>"$'\n\n'"$(esc "$message")"
+[[ -n "$link" ]] && text+=$'\n\n'"🔗 $(esc "$link")"
 
 # Telegram caps a message at 4096 characters.
 text="${text:0:4000}"
@@ -61,6 +64,7 @@ response="$(curl -sS --max-time 20 \
   "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
   --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
   --data-urlencode "text=${text}" \
+  --data-urlencode "parse_mode=HTML" \
   --data-urlencode "disable_web_page_preview=true" 2>&1)"
 
 if [[ "$response" == *'"ok":true'* ]]; then

@@ -165,6 +165,42 @@ after the event with `build/notify.sh <event> "<message>" [link]`.
 | 3 | Company update | `reply` | email tracking, when an employer email arrives | Company, role, outcome (interview, accepted, rejected, other), next step and date. |
 | 4 | Pending applications | `pending` | daily search and application sessions, whenever the list changes | Count, then one line each: company, role, what is needed (mono's approval, or mono to send because of a captcha or sign-in). |
 
+### Message templates
+
+The script adds the bold header (emoji + event name) and the 🔗 link line. The body is
+one bullet per line, each `• <emoji> <field>`; leave out a bullet whose value is unknown.
+
+```text
+🔎 New job
+• 🏢 Acme (acme.io), Platform SRE
+• 🌍 Remote, EU hours · Track A
+• 💰 $5,000–6,500/month
+• 📝 Runs Kubernetes on GCP; owns on-call, Terraform and the CI pipeline.
+• 📊 120 people · Series B $40M (2025) · HQ Berlin · headcount +18% in a year
+🔗 https://acme.io/jobs/123
+```
+
+```text
+✅ Application submitted
+• 🏢 Acme, Platform SRE
+• 🆔 APP012 · Teamtailor
+• 📄 Resume: platform-sre
+```
+
+```text
+📩 Company update
+• 🏢 Acme, Platform SRE (APP012)
+• 🟢 Interview invited   (🔴 rejected · 🎉 offer · 🟡 other)
+• 📅 Next: 45-min call, 12 Nov 14:00 UTC
+```
+
+```text
+⏳ Pending applications
+• 🖐️ Foo, Backend Engineer: you send it (Ashby captcha)
+• ✍️ Bar, AI Engineer: answers need your OK
+• 📊 2 pending in total
+```
+
 | Setup rule | Why |
 |---|---|
 | The bot token and chat id are the environment variables `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` in the project's cloud environment (on the Mac, `~/.config/jobs/telegram.env`, chmod 600). | No token is ever committed to this repo (section 1). |
