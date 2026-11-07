@@ -311,6 +311,8 @@ Persian resumes, and the choice must be consistent across the whole document.
   also reports `verify: true` bullets and concurrent "Present" roles.
 - `docs/job-search-criteria.md` — the user's job-search constraints, verbatim (pay minimums,
   7-day freshness, US/Israel entity rule, Iran eligibility, payment routes, priority labels)
+- `docs/rules.md` — mono's standing rules and workflows: LinkedIn via the Chrome extension,
+  daily-run steps and fetch budget, Google Sheet tracker and staging, application rules
 - `docs/company-sources.md` — where to find companies (funding, hiring, growth, tech
   sources) and the signals for ranking them; exclusions include Iranian companies
 - `.claude/skills/job-research/SKILL.md` — the job-search procedure: AI-led web research on
