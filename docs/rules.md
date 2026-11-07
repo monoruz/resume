@@ -18,6 +18,7 @@ default procedure differ, the rule wins.
 | Never mention the AI assistant in commit messages, PR text or code. | standing |
 | Prefer tables and visual layouts over plain prose in reports and replies. | standing |
 | No email address, password, token or other secret is ever committed to this repo. | standing |
+| **Every new standing rule goes into this repo as a pull request**, usually as a row in this file. Project memory alone is not enough. | 2026-11-07 |
 
 ## 2. Job discovery
 
@@ -57,6 +58,11 @@ A scheduled task runs every day at 08:43 Asia/Tehran and posts into the
 The Google Sheet "Job Search Tracker" in mono's Drive is the source of truth for every
 job lead, company profile and application status. The markdown ledgers and
 `job-tracker.xlsx` in the project files are backups and the dedup source only.
+
+**Rule (mono, 2026-11-07): update the Sheet right after every successful application.**
+As soon as a submission is confirmed, add or update its row in the Applications tab
+(status, date, notes) and set the job's Status and Application IDs in the Jobs tab, in
+the same session, before moving on to the next form.
 
 ### Tabs
 
@@ -101,7 +107,9 @@ that has the Sheets connector imports them.
 | No cold outreach to companies unless mono asks for it. | 2026-10-25 |
 | The name is always **Mono Ruzi**; the GitHub link is always **github.com/monoruz**. | 2026-10-25 |
 | Never state the job-search criteria in application text: no pay minimums, payment routes (crypto, Estonian invoicing), sanctions, entity or eligibility conditions in answers, cover letters or summaries. | 2026-10-25 |
-| Location is answered truthfully ("Tehran, Iran") with no commentary; never conceal residence. | 2026-10-25 |
+| Location on forms: **Tehran, Iran**, stated plainly with no commentary; never conceal residence. When a form's location list has no Iran option, use **Yerevan, Armenia**. The LinkedIn profile location stays as it is (Yerevan, Armenia). | 2026-11-07 |
+| **On-site and relocation jobs: minimum US$4,000 per month.** Reject an on-site job whose stated pay is below it. Remote jobs keep the US$3,000 full-time and US$2,000 part-time minimums from the criteria file. | 2026-11-07 |
+| Expected-salary fields: when a form asks for it, answer US$4,000 per month for on-site and relocation jobs, converted to the form's currency at the current rate (for example AED 14,690 at the 3.6725 peg). Fill it only when the field asks; this does not lift the rule against stating the criteria elsewhere. | 2026-11-07 |
 | Answer only what a field asks; leave optional fields and remarks blank. | 2026-10-25 |
 | Answers come only from `data/master.yaml`; use the existing track resumes (backend, platform/SRE, AI/LLM infrastructure) in the project files. | 2026-10-25 |
 | Never solve a captcha. Forms behind a captcha, a sign-in, a video answer, or a cloud block go to mono to send. | 2026-10-25 |
