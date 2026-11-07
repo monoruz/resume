@@ -93,6 +93,28 @@ Rules for using them:
 - Funding and growth raise priority but never override an exclusion or a hard
   requirement.
 
+## Company profile
+
+Rule (mono, 2026-10-21): every report includes a **Company profiles** table with one row
+per proposed company (groups A, B and C). Record what the research found, with a link and
+date for each figure; write "not found" rather than leaving a cell out or estimating.
+
+| Attribute | What to record | Typical sources |
+|---|---|---|
+| Size | Employee count or band, and the engineering team size if stated | LinkedIn company page, Crunchbase, company About page |
+| Hiring activity | Number of open roles, and how many are engineering, as read on the run date | Careers page, ATS board |
+| Headcount growth | Change over the last 3-6 months, or "not found" | LinkedIn headcount trend |
+| Growth status | One of: verified growth (signals 1-4 above) · actively hiring · flat · shrinking (layoffs, closed roles) · unknown | Signals table above |
+| Funding and budget | Last round, amount and date; total raised; revenue, profitability or treasury comments; any budget or cost-cutting news | Crunchbase, Dealroom, press, company announcements |
+| Leadership changes | New CTO, VP Engineering, Head of Talent or similar in the last 6 months | LinkedIn, press |
+| HQ and entity | Headquarters city and the hiring or contracting entity with its country | Legal pages, registries |
+| Reputation | Glassdoor, Blind, Trustpilot scores with review counts, and repeated complaint themes, especially pay | Review sites, forums |
+| Comments | Other material facts found: remote policy, team locations, product momentum, and any contradictions between sources | Company blog, press |
+
+Keep company statements, recruiter statements and third-party reports distinguishable,
+as the criteria require. For a recruiter listing with an unnamed client, profile the
+recruiter and note that the client is unknown.
+
 ## Decision-makers and outreach
 
 Research may name the role to approach (CTO, VP of Engineering, founder, Head of Talent)
