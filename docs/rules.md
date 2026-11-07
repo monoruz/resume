@@ -103,7 +103,8 @@ that has the Sheets connector imports them.
 | Rule | Since |
 |---|---|
 | Applying is on for every qualifying lead ("start to apply to all", 2026-10-25; "apply after you find the job", 2026-10-28). The daily search drafts an application for each new proposed A or B vacancy. Not for track C outreach, internships, fellowships, or management roles the career file cannot support. | 2026-10-28 |
-| **Nothing is submitted until mono approves that application's answers.** A submission cannot be undone. | 2026-10-25 |
+| **Nothing is submitted until mono approves that application's answers.** A submission cannot be undone. The one exception is email applications (next row). | 2026-10-25 |
+| **Email applications need no approval.** When a company's contact point in the Applications tab is an email address, send the application to it directly through the Gmail connector, without asking mono first. The email follows every application text rule here (Mono Ruzi, github.com/monoruz, truthful location, no criteria) and attaches the closest track resume. Then update the Sheet as for any successful application. | 2026-11-07 |
 | No cold outreach to companies unless mono asks for it. | 2026-10-25 |
 | The name is always **Mono Ruzi**; the GitHub link is always **github.com/monoruz**. | 2026-10-25 |
 | Never state the job-search criteria in application text: no pay minimums, payment routes (crypto, Estonian invoicing), sanctions, entity or eligibility conditions in answers, cover letters or summaries. | 2026-10-25 |
@@ -143,7 +144,7 @@ Re-read `index.md` and `drafts.md` just before each write; other sessions edit t
 | Rule |
 |---|
 | Employer emails (replies, interviews, rejections, offers) update the Applications tab: Status, Notes, date and next step; and Jobs or Companies when the email adds facts. |
-| Each email gets a drafted reply, written as Mono Ruzi, never mentioning the job-search criteria. **mono sends it; never send without mono's OK.** |
+| Each email gets a drafted reply, written as Mono Ruzi, never mentioning the job-search criteria. **mono sends it; never send without mono's OK.** Application emails to an email contact point are the exception (section 5). |
 | Most employer mail comes from Ashby (`no-reply@ashbyhq.com`) and Teamtailor (`*.teamtailor-mail.com`) senders. |
 
 ## 7. Rendering in the cloud container
