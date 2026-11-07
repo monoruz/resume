@@ -280,6 +280,20 @@ document.
 **Calendar:** ask. Iranian employers vary between Gregorian and Jalali (شمسی) dates on
 Persian resumes, and the choice must be consistent across the whole document.
 
+## Application form answers and cover letters
+
+Applications are submitted only when mono asks for a specific one, and only after mono
+confirms the final answers.
+
+**Rule (mono, 2026-10-25): never state the job-search criteria in application text.** Answers,
+cover letters, and resume summaries do not mention pay minimums, payment routes (crypto,
+Estonian invoicing), sanctions, entity or eligibility conditions, or any other constraint
+from `docs/job-search-criteria.md`. Those are questions for the hiring conversation, not the
+application. Skip optional remarks, too: answer what the field asks.
+
+This does not permit concealment. When a form asks where the candidate is based, the answer
+is the truthful location (Tehran, Iran), stated plainly and without commentary.
+
 ## Things to just do, without asking
 
 - Save the JD verbatim to `jd.md` (postings get taken down; you'll want it for interview prep)
