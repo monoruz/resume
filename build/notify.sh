@@ -53,7 +53,7 @@ esac
 
 # The body is sent as Telegram HTML: escape it, then bold the header.
 # Write bullets as lines starting with "• " and an emoji (see docs/rules.md section 8).
-esc() { local t="${1//&/&amp;}"; t="${t//</&lt;}"; printf '%s' "${t//>/&gt;}"; }
+esc() { printf '%s' "$1" | sed -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g'; }
 text="<b>${icon} ${label}</b>"$'\n\n'"$(esc "$message")"
 [[ -n "$link" ]] && text+=$'\n\n'"🔗 $(esc "$link")"
 
