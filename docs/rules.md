@@ -154,22 +154,19 @@ page count as usual. On mono's Mac, `render.sh` remains the tool.
 
 ## 8. Telegram notifications
 
-**Rule (mono, 2026-11-07): send a Telegram message for every event.** Every session that
-does project work sends one short message per event, right after the event, with
-`build/notify.sh <event> "<message>" [link]`.
+**Rule (mono, 2026-11-07): send a Telegram message for every job-search event.** Only the
+four events below count; repo, PR, CI and run-status activity is never sent. Send right
+after the event with `build/notify.sh <event> "<message>" [link]`.
 
-| Event | `<event>` | When | Example message |
-|---|---|---|---|
-| Application submitted | `applied` | after the confirmation page, alongside the Sheet update | `Bitrefill, Backend Engineer (APP004). Teamtailor form.` |
-| Email sent or received | `email` | an application email is sent, or an employer email arrives | `Sent to jobs@acme.io: Platform SRE application.` |
-| New leads found | `leads` | the daily search or any search finds new qualifying jobs | `3 new: Acme (A), Foo (B), Bar (A). Top: Acme Platform SRE.` |
-| Waiting on mono | `waiting` | anything blocks on mono: approval, a captcha form to send, a reply draft, a question | `Ashby form for Foo needs you to send it (captcha).` |
-| Daily search summary | `daily` | the end of each daily run, even when nothing new qualifies | `No new qualifying jobs; 14 excluded.` |
-| Problem | `error` | a run fails or a tool is unreachable | `Sheets connector unavailable; rows staged.` |
+| # | Event | `<event>` | Sent by | Message contents |
+|---|---|---|---|---|
+| 1 | New job found | `job` | daily search, any search | Role, company, track, location, pay; 2-3 line description summary; company details (size, funding, HQ/entity, growth); listing link. One message per job. |
+| 2 | Application submitted | `applied` | whoever submits, right after the confirmation page | Company, role, application ID, platform, resume track. |
+| 3 | Company update | `reply` | email tracking, when an employer email arrives | Company, role, outcome (interview, accepted, rejected, other), next step and date. |
+| 4 | Pending applications | `pending` | daily search and application sessions, whenever the list changes | Count, then one line each: company, role, what is needed (mono's approval, or mono to send because of a captcha or sign-in). |
 
 | Setup rule | Why |
 |---|---|
 | The bot token and chat id are the environment variables `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` in the project's cloud environment (on the Mac, `~/.config/jobs/telegram.env`, chmod 600). | No token is ever committed to this repo (section 1). |
-| One event, one message; keep it to one or two lines, company and role first, with a link when one exists. | Messages are read on a phone. |
-| Never put personal details (DOB, citizenship, email addresses other than the employer's) in a message. | Telegram is outside the project. |
-| A missing token or failed send is reported once in the thread and never stops the run. | The script exits 0 on failure by design. |
+| Never put personal details (DOB, citizenship, mono's email) in a message. | Telegram is outside the project. |
+| A missing token or failed send is reported once in the thread and never stops the run. | The script exits 0 on a failed send by design. |

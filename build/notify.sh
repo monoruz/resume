@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
-# Send a one-line job-search event to mono's Telegram chat.
+# Send a job-search event to mono's Telegram chat.
 #
 #   build/notify.sh <event> "<message>" [link]
 #
-# <event> is one of: applied, email, leads, waiting, daily, error, info
+# <event> is one of:
+#   job      new job found: role, company, description summary, company details
+#   applied  application submitted
+#   reply    company update on an application (interview, accept, reject)
+#   pending  applications waiting to be submitted by mono or awaiting approval
 #
 # Credentials are read from the environment, never from this repo:
 #   TELEGRAM_BOT_TOKEN   bot token from @BotFather
@@ -16,7 +20,7 @@
 
 set -u
 
-event="${1:-info}"
+event="${1:-}"
 message="${2:-}"
 link="${3:-}"
 
@@ -37,13 +41,14 @@ if [[ -z "${TELEGRAM_BOT_TOKEN:-}" || -z "${TELEGRAM_CHAT_ID:-}" ]]; then
 fi
 
 case "$event" in
-  applied) icon="✅"; label="Applied" ;;
-  email)   icon="📧"; label="Email" ;;
-  leads)   icon="🔎"; label="New leads" ;;
-  waiting) icon="⏳"; label="Waiting on you" ;;
-  daily)   icon="📋"; label="Daily search" ;;
-  error)   icon="⚠️"; label="Problem" ;;
-  *)       icon="ℹ️"; label="Update" ;;
+  job)     icon="🔎"; label="New job" ;;
+  applied) icon="✅"; label="Application submitted" ;;
+  reply)   icon="📩"; label="Company update" ;;
+  pending) icon="⏳"; label="Pending applications" ;;
+  test)    icon="🧪"; label="Test" ;;
+  *)
+    echo "notify: unknown event '$event' (use job, applied, reply, pending)" >&2
+    exit 2 ;;
 esac
 
 text="${icon} ${label}"$'\n'"${message}"
