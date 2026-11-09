@@ -48,12 +48,15 @@ A scheduled task runs every day at 08:43 Asia/Tehran and posts into the
 | 2 | Run tracks A (remote), B (sponsored relocation), C (outreach) in parallel. **Each track gets at most 30 page fetches** (the fetch budget is about 100 pages/hour shared by the whole session) and starts by resolving the previous day's `unverified` rows for its track. |
 | 2b | LinkedIn leads through the Chrome extension only (section 2). |
 | 3 | Profile every proposed company (size, hiring activity, headcount growth, growth status, funding and budget, leadership changes, HQ and entity, reputation, comments). Each figure has a link and date, otherwise "not found". |
-| 4 | Write the report to the project files (`job-scan/reports/<date>.md`) and append to the ledger. Reports are **never committed to this repo** (mono reverted one, PR #2). |
-| 4b | Update the Google Sheet, or stage rows for import (section 4). |
+| 4 | **No markdown report file (mono, 2026-11-09).** Do not write `job-scan/reports/<date>.md`; record every result in the Google Sheet instead (step 4b). Still append to the seen-jobs ledger, which is the dedup source. Nothing from a run is committed to this repo. |
+| 4b | Update the Google Sheet with every new, excluded and unverified lead, company and application (section 4). Only when no Sheets access exists in the session, stage the rows for import instead. |
 | 5 | Apply to every new qualifying A/B vacancy automatically, in this same run, as soon as it is found (section 5). Never wait for mono to write; if the Mac session is parked, send a Telegram message at once. Hand off only with a stated reason, sent by Telegram. |
-| 6 | Post one short, table-first summary: top results per group, short company table, excluded count by reason, applications drafted and what each needs from mono, whether the Sheet was updated or rows staged, whether LinkedIn was checked, open questions. One line if nothing new qualifies. |
+| 6 | Post one short, table-first summary (no file attached): top results per group, short company table, excluded count by reason, applications drafted and what each needs from mono, whether the Sheet was updated or rows staged, whether LinkedIn was checked, open questions. One line if nothing new qualifies. |
 
 ## 4. Google Sheet job tracker
+
+**Rule (mono, 2026-11-09): "there is no need to report in md file. just keep sheet updated".**
+Runs no longer write markdown report files; the Sheet is the only record of results.
 
 **Rule (mono, 2026-11-04): "from now on please update all datas on google sheet".**
 The Google Sheet "Job Search Tracker" in mono's Drive is the source of truth for every
