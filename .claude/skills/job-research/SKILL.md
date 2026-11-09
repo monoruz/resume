@@ -103,7 +103,7 @@ twice, so every run works against a persistent ledger.
 | File | Purpose |
 |---|---|
 | `/mnt/project-files/job-scan/seen-jobs.md` | Ledger of every lead proposed or excluded, with its key, status and URL. Its header defines the key and the matching rules. |
-| `/mnt/project-files/job-scan/reports/<YYYY-MM-DD>.md` | The full report for that run (same structure as Output below). |
+| ~~`/mnt/project-files/job-scan/reports/<YYYY-MM-DD>.md`~~ | No longer written (mono, 2026-11-09): results go to the Google Sheet only. See `docs/rules.md`. |
 
 1. **Read the ledger first.** Before researching, load every key and URL.
 2. **Skip repeats during discovery**, not only at the end: a candidate whose key or URL
@@ -121,9 +121,9 @@ twice, so every run works against a persistent ledger.
    lead, with today's date as first seen. Update `Last seen` on repeats that were
    encountered again. Re-read the file about ten seconds after writing to confirm it
    landed.
-7. **Write the report** to `reports/<date>.md` (not to the repo), then post a short
+7. **Update the Google Sheet** (no markdown report file; see `docs/rules.md`), then post a short
    summary to mono: the top new results as a table, the count of excluded leads by
-   reason, and open questions, with the report attached.
+   reason, and open questions.
 
 The ledger holds facts mono has already seen, so it is safe to read; it is never a
 reason to skip verification of a new lead.
