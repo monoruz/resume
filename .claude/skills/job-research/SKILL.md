@@ -133,8 +133,10 @@ reason to skip verification of a new lead.
 - Search for jobs using Python, or any script that scrapes, downloads or parses job
   feeds. mono's standing rule: discovery and verification are done by AI research,
   meaning web search plus reading each page, so every result gets judgement, not a regex.
-- Submit applications, contact companies, or disclose candidate information. This
-  includes cold-email tools and contact-harvesting services (see `docs/company-sources.md`).
+- Submit applications or contact companies outside the rules in `docs/rules.md`
+  section 5 (automatic applications and automatic track C outreach, mono 2026-11-07 and
+  2026-11-10), or use cold-email tools and contact-harvesting services (see
+  `docs/company-sources.md`).
 - Invent or estimate dates, pay, policies, applicant counts, growth or eligibility.
 - Treat "remote", "global team", crypto activity or an Estonian invoice option as
   confirmation of Iran-based eligibility.

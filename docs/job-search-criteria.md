@@ -322,3 +322,10 @@ Added after the brief above; it has the same authority.
   growth, growth status, funding and budget comments, leadership changes, entity,
   reputation and other material comments. The table layout is in
   `docs/company-sources.md` § Company profile.
+
+## Addendum (mono, 2026-11-07 and 2026-11-10)
+
+The brief's line "Do not submit applications, send outreach, or disclose candidate
+information" is replaced: qualifying vacancies are applied to automatically, and track C
+outreach companies are emailed mono's resume automatically. The rules for both are in
+`docs/rules.md` section 5.
