@@ -25,7 +25,7 @@ default procedure differ, the rule wins.
 | Rule | Since |
 |---|---|
 | Job search is AI research only: web search plus opening and reading each page. Never write or run Python, scrapers, feed parsers or search scripts for discovery. (A scraper was built once and removed in PR #1.) | 2026-10-19 |
-| Exclude Iranian companies (also recorded in the criteria addendum). | 2026-10-20 |
+| Exclude Iranian companies (also recorded in the criteria addendum). **Exception: the Iran track, section 9.** | 2026-10-20 |
 | **LinkedIn is read and applied to only through mono's signed-in Chrome browser extension**, driven from a remote session on mono's Mac. Read listings by hand, one at a time in a new tab, from the first results page only. Never scrape, bulk-export or automate it. Nothing is applied for, no one is messaged, and nothing on the profile is changed without mono's yes for that specific job. When the extension is not available in a session, do not fetch LinkedIn any other way: record the lead as `unverified (LinkedIn: check in Chrome)` and say so in the summary. | 2026-11-07 |
 | Always confirm an HN "Who is hiring?" claim on the employer's own page (a post once offered a UK visa while the employer page required UK residence). | 2026-11-03 |
 
@@ -151,3 +151,21 @@ Re-read `index.md` and `drafts.md` just before each write; other sessions edit t
 `build/render.sh` produces no output in either headless mode inside the cloud container.
 There, render with Playwright `page.pdf()` and `preferCSSPageSize: true`, then check the
 page count as usual. On mono's Mac, `render.sh` remains the tool.
+
+## 9. Iran track (Jobinja, Jobvision, Quera)
+
+**Rule (mono, 2026-11-10): a separate daily track for Iranian job platforms**, run in
+mono's signed-in Chrome on the Mac, alongside the remote and relocation search in section 3.
+It covers **jobinja.ir, jobvision.ir and quera.org/magnet** only.
+
+| Rule | Since |
+|---|---|
+| For these three platforms only, the Iranian-company exclusion (section 2), all salary minimums (section 5) and the rule against mentioning Iran do not apply. | 2026-11-10 |
+| Apply as widely as possible; salary is ignored. Order: AI / LLM roles first, then backend (Python, Django, FastAPI), platform, SRE and DevOps. | 2026-11-10 |
+| Salary field: **توافقی (negotiable)**. When a number is required: **2,000,000,000 rials per month** (200,000,000 toman). | 2026-11-10 |
+| Never apply to a previous employer: Finestel, Dirichlet, Yarai, LongBio, Hamravesh (همروش), Mofid Securities / Bourseview (کارگزاری مفید), Homeca, Mizan Gostaran Sharif, Al Meera. Source: `data/master.yaml` and the resume PDFs. | 2026-11-10 |
+| Fully automated: apply without asking. Only a captcha or a sign-in that needs mono's password pauses a run. | 2026-11-10 |
+| Resumes: only the backend, platform-sre and ai-llm-infrastructure track PDFs; on platforms that use their own profile resume, the platform profile is used. | 2026-11-10 |
+| Search is AI browsing only, one listing at a time (section 2). | 2026-11-10 |
+| Log every job and application in the Google Sheet with Track **I Iran**; send the four Telegram events (section 8). | 2026-11-10 |
+
