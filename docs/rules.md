@@ -1,5 +1,23 @@
 # Standing rules and workflows
 
+> ## STRICT RULE: never ask for approval to apply (mono, 2026-11-10)
+>
+> **Never ask mono for approval, confirmation or a "yes" before applying to a job.** This
+> covers submitting any application form and sending any application or outreach email.
+> Pausing for confirmation breaks the automated cycle; mono has stated there is no risk in
+> applying and that this is the final word on it.
+>
+> | Allowed to stop a run | Not allowed to stop a run |
+> |---|---|
+> | A captcha or reCAPTCHA | Waiting for mono's approval or confirmation |
+> | A login wall that needs mono's own existing credentials | Showing mono the answers first |
+> | | Privacy notices, consents, terms, account creation |
+> | | A required answer with no supporting fact: answer it truthfully (for example 0 or No) and continue |
+>
+> When a run does stop, send mono a Telegram message with the job, the link and the
+> exact reason, and move on to the next job. This rule overrides every older rule in this
+> repo that asks for approval before applying.
+
 Rules mono has given during the job search that were not yet written down in this repo.
 They carry the same authority as `docs/job-search-criteria.md`; where a rule here and a
 default procedure differ, the rule wins.
@@ -128,9 +146,9 @@ that has the Sheets connector imports them.
 | Rule | Since |
 |---|---|
 | Applying is on for every qualifying lead ("start to apply to all", 2026-10-25; "apply after you find the job", 2026-10-28). The daily search drafts an application for each new proposed A or B vacancy. Not for internships, fellowships, or management roles the career file cannot support. | 2026-10-28 |
-| **Apply automatically (mono, 2026-11-07).** Every application that passes the criteria is submitted without asking mono, on any route: company careers sites, ATS forms, email, LinkedIn. Use full permission: accept privacy notices, consents and terms, create an account when a form requires one, and answer every required field. Before submitting, check every typed field on the Review page against these rules. Answers come only from verified facts (`data/master.yaml`, `docs/personal-info.md`, what mono has confirmed); a required answer that no verified fact supports is a valid reason to hand off. Never write a password into this repo, the Sheet or a Telegram message. | 2026-11-07 |
+| **Apply automatically (mono, 2026-11-07).** Every application that passes the criteria is submitted without asking mono, on any route: company careers sites, ATS forms, email, LinkedIn. Use full permission: accept privacy notices, consents and terms, create an account when a form requires one, and answer every required field. Before submitting, check every typed field on the Review page against these rules. Answers come only from verified facts (`data/master.yaml`, `docs/personal-info.md`, what mono has confirmed); a required answer that no verified fact supports is answered truthfully (for example 0 or No), never invented and never a reason to wait. Never write a password into this repo, the Sheet or a Telegram message. | 2026-11-07 |
 | **Apply as soon as the job is found (mono, 2026-11-08).** A qualifying A or B vacancy is applied to in the same run that finds it. It is never held until mono writes in a thread. If the application has to wait (for example the session on mono's Mac is parked or offline), send mono a Telegram message right away with the job, the link and what it is waiting on. | 2026-11-08 |
-| **Hand off to mono only for a captcha or reCAPTCHA, or another rational blocker.** Try every other route first. When stuck, send mono a Telegram message naming the job, the link and the exact reason (for example "reCAPTCHA on submit" or "needs years of Proxmox, not in the career file"), and mark the application `mono to send` or `needs info`. A hand-off without a stated reason is not allowed. | 2026-11-07 |
+| **Hand off to mono only for a captcha or reCAPTCHA, or a login wall that needs mono's own credentials.** Try every other route first. When stuck, send mono a Telegram message naming the job, the link and the exact reason (for example "reCAPTCHA on submit"), and mark the application `mono to send`. A hand-off without a stated reason is not allowed. | 2026-11-07 |
 | **Email applications.** When a company's contact point in the Applications tab is an email address, send the application to it directly through the Gmail connector, without asking mono first. The email follows every application text rule here (Mono Ruzi, github.com/monoruz, truthful location, no criteria) and attaches the closest track resume. Then update the Sheet as for any successful application. | 2026-11-07 |
 | **Outreach (track C) is automatic (mono, 2026-11-10).** Every qualifying outreach company gets mono's resume, fully automated with no approval, in the same run that finds it. This also covers every earlier C lead in the Sheet and the seen-jobs ledger that has not yet been contacted. Send one short, personalised email from mono's Gmail (as Mono Ruzi) to the company's own published contact for hiring (careers or jobs address, contact form, or a founder or CTO address the company itself publishes), naming the dated signal that prompted it and attaching the closest track resume. All application text rules apply. One email per company; no automated follow-ups. Then record it in the Applications tab as Applied and send the Telegram "application submitted" message. This replaces the 2026-10-25 "no cold outreach" rule. | 2026-11-10 |
 | The name is always **Mono Ruzi**; the GitHub link is always **github.com/monoruz**. | 2026-10-25 |
