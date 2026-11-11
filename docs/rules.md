@@ -165,7 +165,7 @@ It covers **jobinja.ir, jobvision.ir and quera.org/magnet** only.
 | Salary field: **توافقی (negotiable)**. When a number is required: **2,000,000,000 rials per month** (200,000,000 toman). | 2026-11-10 |
 | Never apply to a previous employer: Finestel, Dirichlet, Yarai, LongBio, Hamravesh (همروش), Mofid Securities / Bourseview (کارگزاری مفید), Homeca, Mizan Gostaran Sharif, Al Meera. Source: `data/master.yaml` and the resume PDFs. | 2026-11-10 |
 | Fully automated: apply without asking. Only a captcha or a sign-in that needs mono's password pauses a run. | 2026-11-10 |
-| Resumes: only the backend, platform-sre and ai-llm-infrastructure track PDFs; on platforms that use their own profile resume, the platform profile is used. | 2026-11-10 |
+| Resumes: always attach a custom track PDF (ai-llm for AI roles, backend, platform-sre). **Never send a platform profile or platform-built resume.** On Jobvision, apply only when the uploaded PDF is attached; if a flow sends only the profile, skip the job. | 2026-11-11 |
 | Search is AI browsing only, one listing at a time (section 2). | 2026-11-10 |
 | Log every job and application in the Google Sheet with Track **I Iran**; send the four Telegram events (section 8). | 2026-11-10 |
 
