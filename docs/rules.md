@@ -160,6 +160,7 @@ that has the Sheets connector imports them.
 | Answers come only from `data/master.yaml`. | 2026-10-25 |
 | Personal form fields (date of birth, citizenship, marital status, children) come from `docs/personal-info.md`. Fill them only when a form asks. | 2026-11-07 |
 | Use the latest track resumes (2026-10-25): **backend**, **platform-sre** and **ai-llm**. They are in the project files under `resumes/`, saved on LinkedIn, and in the `resumes/` folder of mono's jobs folder on the Mac. Pick the track closest to the vacancy. | 2026-10-25 |
+| **Always send mono's custom PDF resume (mono, 2026-11-11).** Every application and outreach email attaches one of the generated PDF resumes (the closest track, or a tailored `jobs/<slug>/resume.pdf`). Never submit a platform profile in place of a resume: no "apply with LinkedIn", "use my Indeed/Himalayas/Wellfound profile" or imported-profile option. When a form offers both, choose upload and attach the PDF; if it accepts only a profile, use the PDF anyway through any upload field it has, and add the job to the hand-off list with that reason only when no upload exists. | 2026-11-11 |
 | Never solve a captcha or reCAPTCHA: it is the one step that is always mono's. | 2026-10-25 |
 
 ### Who sends which form
