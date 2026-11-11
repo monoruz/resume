@@ -118,16 +118,14 @@ recruiter and note that the client is unknown.
 ## Decision-makers and outreach
 
 Research may name the role to approach (CTO, VP of Engineering, founder, Head of Talent)
-and link the company's own team or contact page, so mono can write a personalised
-message. A good hook is a dated, sourced signal, such as "raised a Series A in
+and link the company's own team or contact page, for the personalised outreach
+email. A good hook is a dated, sourced signal, such as "raised a Series A in
 September and opened three senior backend roles".
 
-Out of scope, per `job-search-criteria.md` ("Do not submit applications, send outreach,
-or disclose candidate information" and "Do not collect unnecessary personal information
-about individual employees"):
+**Outreach is now sent automatically (mono, 2026-11-10; see `docs/rules.md` section 5).**
+Each qualifying C company gets one email with mono's resume, sent to a contact the company
+itself publishes. These remain out of scope:
 
-- sending, queuing or automating any message (cold-email tools such as Instantly or Lemlist);
+- cold-email tools and sequencers (Instantly, Lemlist) and automated follow-up chains;
 - harvesting personal email addresses or profiles (Apollo, Hunter, Dropcontact, PhantomBuster);
 - proxies or session tricks to get around a site's access controls.
-
-mono sends every message personally.

@@ -282,8 +282,9 @@ Persian resumes, and the choice must be consistent across the whole document.
 
 ## Application form answers and cover letters
 
-Applications are submitted only when mono asks for a specific one, and only after mono
-confirms the final answers.
+Applications are submitted automatically, **with no approval or confirmation from mono**
+(strict rule, 2026-11-10, at the top of `docs/rules.md`). Only a captcha or a login wall
+that needs mono's own credentials may stop a submission.
 
 **Rule (mono, 2026-10-25): never state the job-search criteria in application text.** Answers,
 cover letters, and resume summaries do not mention pay minimums, payment routes (crypto,
