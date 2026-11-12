@@ -742,8 +742,8 @@ experience:
 
   - id: homeca
     company: Homeca.ir
-    title: Tech Lead
-    title_variants: [DevOps Engineer, Fullstack Developer]   # both describe the work honestly; CTO removed — see q-homeca-title
+    title: Fullstack Developer
+    title_variants: [DevOps Engineer]   # title of record set by mono 2026-11-12 — see q-homeca-title
     employment: Full-time
     location: Tehran, Iran
     start: "2019"
@@ -753,9 +753,9 @@ experience:
     tech: [Django, DRF, Next.js, React, Cypress, Leaflet, Mapbox, Kubernetes, HAProxy, Nginx, Cloudflare, MySQL, MinIO, Celery, RabbitMQ, GitLab CI, Kaniko, Sentry, Prometheus, Grafana, Loki, Mailu]
     bullets:
       - text: >-
-          Owned end-to-end system architecture as technical lead: backend, frontend
+          Owned end-to-end system architecture: backend, frontend
           delivery, Kubernetes infrastructure, CI/CD, and observability.
-        tags: [leadership, architecture, tech-lead, ownership, full-stack]
+        tags: [architecture, ownership, full-stack]
         impact: high
       - text: >-
           Built a fully SEO-optimized CMS on Next.js SSG behind Cloudflare CDN with a tuned
@@ -1602,7 +1602,7 @@ open_questions:
       TypeScript comes back out.
   - id: q-title-sprawl
     note: >-
-      Homeca and LongBio are settled (Tech Lead; Fullstack Developer / Freelance). Still
+      Homeca and LongBio are settled (Fullstack Developer; Fullstack Developer / Freelance). Still
       open: Mofid carries three titles across your source resumes — Backend Developer,
       DevOps, Fullstack Developer. All three plausibly describe the work, but confirm the
       title of record so the others are understood as reframings rather than claims.
@@ -1623,9 +1623,10 @@ open_questions:
       to Tortoise ORM would be strong open-source evidence if it actually landed.
   - id: q-homeca-title
     note: >-
-      RESOLVED 2026-09. Homeca title of record is "Tech Lead". The CTO claim that appeared
-      in one source resume has been removed. "DevOps Engineer" and "Fullstack Developer"
-      are retained as variants because both honestly describe the work done in the role.
+      RESOLVED 2026-11-12 (mono). Homeca title of record is "Fullstack Developer", replacing
+      the earlier "Tech Lead". Do not present the role as tech lead. The CTO claim that appeared
+      in one source resume has been removed. "DevOps Engineer" is retained as a variant
+      because it also describes the work done in the role.
   - id: q-homeca-downtime
     note: >-
       Homeca claims both "zero downtime" (rolling updates bullet) and "downtime to 0.1%"

@@ -26,7 +26,7 @@ Node.js, MongoDB and OpenSearch evidence the Python-heavy career would otherwise
 | Node.js/TypeScript as the main language | Express at Mizan (2018-19) and Al Meera (2017-18); TypeScript in Optimalist and the datasource panels | No recent *employed* Node.js role; Python is the main language since 2019 |
 | Typesense | OpenSearch query compilation, MongoDB text search | Typesense itself not used |
 | E-commerce | Homeca marketplace; Stripe billing at Finestel | No storefront or gift-card catalogue work |
-| Mentoring juniors | Tech lead at Homeca; Finestel documentation and rule set | No explicit mentoring line in the master file |
+| Mentoring juniors | Finestel documentation and rule set | No explicit mentoring line in the master file |
 
 ## Cut to make two pages
 
