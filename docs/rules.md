@@ -91,10 +91,11 @@ the same session, before moving on to the next form.
 
 | Tab | Columns |
 |---|---|
-| Jobs | Job ID (`J0001`…), Company ID, Company *(formula)*, Role, Track (A Remote / B Relocation / C Outreach; I Iran, see `docs/iran/rules.md`), Status (proposed / excluded / unverified), Label, Fit, First seen, Last seen, Posted, Location, Type, Pay, Visa sponsorship, Iran work, Payment route, Hiring entity, Language, Outreach angle, Listing URL, Ledger note, Daily reports, Application IDs, Ledger key: **25 columns** |
+| Jobs | Job ID (`J0001`…), Company ID, Company *(formula)*, Role, Track (A Remote / B Relocation / C Outreach), Status (proposed / excluded / unverified), Label, Fit, First seen, Last seen, Posted, Location, Type, Pay, Visa sponsorship, Iran work, Payment route, Hiring entity, Language, Outreach angle, Listing URL, Ledger note, Daily reports, Application IDs, Ledger key: **25 columns** |
 | Companies | Company ID (= website domain, same as the ledger key domain), Company, Website, three count columns *(formula)*, then Size, Hiring activity, Headcount growth, Growth status, Funding and budget, Leadership changes, HQ and entity, Reputation, Comments, First profiled, Last profiled |
 | Applications | Application ID (`APP001`…), Company ID, Company *(formula)*, Job ID, Role, ledger #, Status, Notes |
 | About | Legend |
+| Iran Jobs, Iran Companies, Iran Applications | Iran track only (Track I Iran), same columns as the three tabs above, own ID sequences `IJ` / `IA`. Rules in `docs/iran/rules.md`. Never write Iran-track rows to Jobs, Companies or Applications (mono, 2026-11-12). |
 
 ### Writing rules
 
@@ -109,7 +110,7 @@ the same session, before moving on to the next form.
 
 ### Status colors
 
-**Rule (mono, 2026-11-07): statuses are color-coded.** On the Jobs and Applications tabs,
+**Rule (mono, 2026-11-07): statuses are color-coded.** On the Jobs and Applications tabs (and their Iran copies),
 conditional formatting colors the whole row by its Status, matched on the status's first
 word. The legend is on the About tab (rows 11-20).
 
