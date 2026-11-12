@@ -27,6 +27,7 @@ default procedure differ, the rule wins.
 | Job-search constraints, labels, ranking | `docs/job-search-criteria.md` |
 | Company sources and ranking signals | `docs/company-sources.md` |
 | Research procedure, ledger, daily dedup | `.claude/skills/job-research/SKILL.md` |
+| Iran track (Jobinja, Jobvision, Quera) | `docs/iran/rules.md` only |
 | Everything below | this file only |
 
 ## 1. General
@@ -44,7 +45,7 @@ default procedure differ, the rule wins.
 | Rule | Since |
 |---|---|
 | Job search is AI research only: web search plus opening and reading each page. Never write or run Python, scrapers, feed parsers or search scripts for discovery. (A scraper was built once and removed in PR #1.) | 2026-10-19 |
-| Exclude Iranian companies (also recorded in the criteria addendum). **Exception: the Iran track, section 9.** | 2026-10-20 |
+| Exclude Iranian companies (also recorded in the criteria addendum). The Iran track is separate: see `docs/iran/rules.md`. | 2026-10-20 |
 | **LinkedIn is read and applied to only through mono's signed-in Chrome browser extension**, driven from a remote session on mono's Mac. Read listings by hand, one at a time in a new tab, from the first results page only. Never scrape, bulk-export or automate it. Applications there follow the automatic-apply rule in section 5; no one is messaged and nothing on the profile is changed without mono's yes. When the extension is not available in a session, do not fetch LinkedIn any other way: record the lead as `unverified (LinkedIn: check in Chrome)` and say so in the summary. | 2026-11-07 |
 | Always confirm an HN "Who is hiring?" claim on the employer's own page (a post once offered a UK visa while the employer page required UK residence). | 2026-11-03 |
 
@@ -94,6 +95,7 @@ the same session, before moving on to the next form.
 | Companies | Company ID (= website domain, same as the ledger key domain), Company, Website, three count columns *(formula)*, then Size, Hiring activity, Headcount growth, Growth status, Funding and budget, Leadership changes, HQ and entity, Reputation, Comments, First profiled, Last profiled |
 | Applications | Application ID (`APP001`…), Company ID, Company *(formula)*, Job ID, Role, ledger #, Status, Notes |
 | About | Legend |
+| Iran Jobs, Iran Companies, Iran Applications | Iran track only (Track I Iran), same columns as the three tabs above, own ID sequences `IJ` / `IA`. Rules in `docs/iran/rules.md`. Never write Iran-track rows to Jobs, Companies or Applications (mono, 2026-11-12). |
 
 ### Writing rules
 
@@ -108,7 +110,7 @@ the same session, before moving on to the next form.
 
 ### Status colors
 
-**Rule (mono, 2026-11-07): statuses are color-coded.** On the Jobs and Applications tabs,
+**Rule (mono, 2026-11-07): statuses are color-coded.** On the Jobs and Applications tabs (and their Iran copies),
 conditional formatting colors the whole row by its Status, matched on the status's first
 word. The legend is on the About tab (rows 11-20).
 
@@ -254,21 +256,3 @@ one bullet per line, each `• <emoji> <field>`; leave out a bullet whose value 
 | The bot token and chat id are the environment variables `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` in the project's cloud environment (on the Mac, `~/.config/jobs/telegram.env`, chmod 600). | No token is ever committed to this repo (section 1). |
 | Never put personal details (DOB, citizenship, mono's email) in a message. | Telegram is outside the project. |
 | A missing token or failed send is reported once in the thread and never stops the run. | The script exits 0 on a failed send by design. |
-
-## 9. Iran track (Jobinja, Jobvision, Quera)
-
-**Rule (mono, 2026-11-10): a separate daily track for Iranian job platforms**, run in
-mono's signed-in Chrome on the Mac, alongside the remote and relocation search in section 3.
-It covers **jobinja.ir, jobvision.ir and quera.org/magnet** only.
-
-| Rule | Since |
-|---|---|
-| For these three platforms only, the Iranian-company exclusion (section 2), all salary minimums (section 5) and the rule against mentioning Iran do not apply. | 2026-11-10 |
-| Apply as widely as possible; salary is ignored. Order: AI / LLM roles first, then backend (Python, Django, FastAPI), platform, SRE and DevOps. | 2026-11-10 |
-| Salary field: **توافقی (negotiable)**. When a number is required: **2,000,000,000 rials per month** (200,000,000 toman). | 2026-11-10 |
-| Never apply to a previous employer: Finestel, Dirichlet, Yarai, LongBio, Hamravesh (همروش), Mofid Securities / Bourseview (کارگزاری مفید), Homeca, Mizan Gostaran Sharif, Al Meera. Source: `data/master.yaml` and the resume PDFs. | 2026-11-10 |
-| Fully automated: apply without asking. Only a captcha or a sign-in that needs mono's password pauses a run. | 2026-11-10 |
-| Resumes: always attach a custom track PDF (ai-llm for AI roles, backend, platform-sre). **Never send a platform profile or platform-built resume.** On Jobvision, apply only when the uploaded PDF is attached; if a flow sends only the profile, skip the job. | 2026-11-11 |
-| Search is AI browsing only, one listing at a time (section 2). | 2026-11-10 |
-| Log every job and application in the Google Sheet with Track **I Iran**; send the four Telegram events (section 8). | 2026-11-10 |
-
