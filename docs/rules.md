@@ -48,7 +48,6 @@ default procedure differ, the rule wins.
 | Job-search constraints, labels, ranking | `docs/job-search-criteria.md` |
 | Company sources and ranking signals | `docs/company-sources.md` |
 | Research procedure, ledger, daily dedup | `.claude/skills/job-research/SKILL.md` |
-| Iran track (Jobinja, Jobvision, Quera) | `docs/iran/rules.md` only |
 | Everything below | this file only |
 
 ## 1. General
@@ -66,7 +65,7 @@ default procedure differ, the rule wins.
 | Rule | Since |
 |---|---|
 | Job search is AI research only: web search plus opening and reading each page. Never write or run Python, scrapers, feed parsers or search scripts for discovery. (A scraper was built once and removed in PR #1.) | 2026-10-19 |
-| Exclude Iranian companies (also recorded in the criteria addendum). The Iran track is separate: see `docs/iran/rules.md`. | 2026-10-20 |
+| Exclude Iranian companies (also recorded in the criteria addendum). | 2026-10-20 |
 | **LinkedIn is read and applied to only through mono's signed-in Chrome browser extension**, driven from a remote session on mono's Mac. Read listings by hand, one at a time in a new tab, from the first results page only. Never scrape, bulk-export or automate it. Applications there follow the automatic-apply rule in section 5; no one is messaged and nothing on the profile is changed without mono's yes. When the extension is not available in a session, do not fetch LinkedIn any other way: record the lead as `unverified (LinkedIn: check in Chrome)` and say so in the summary. | 2026-11-07 |
 | Always confirm an HN "Who is hiring?" claim on the employer's own page (a post once offered a UK visa while the employer page required UK residence). | 2026-11-03 |
 
@@ -116,7 +115,6 @@ the same session, before moving on to the next form.
 | Companies | Company ID (= website domain, same as the ledger key domain), Company, Website, three count columns *(formula)*, then Size, Hiring activity, Headcount growth, Growth status, Funding and budget, Leadership changes, HQ and entity, Reputation, Comments, First profiled, Last profiled |
 | Applications | Application ID (`APP001`…), Company ID, Company *(formula)*, Job ID, Role, ledger #, Status, Notes |
 | About | Legend |
-| Iran Jobs, Iran Companies, Iran Applications | Iran track only (Track I Iran), same columns as the three tabs above, own ID sequences `IJ` / `IA`. Rules in `docs/iran/rules.md`. Never write Iran-track rows to Jobs, Companies or Applications (mono, 2026-11-12). |
 
 ### Writing rules
 
@@ -131,7 +129,7 @@ the same session, before moving on to the next form.
 
 ### Status colors
 
-**Rule (mono, 2026-11-07): statuses are color-coded.** On the Jobs and Applications tabs (and their Iran copies),
+**Rule (mono, 2026-11-07): statuses are color-coded.** On the Jobs and Applications tabs,
 conditional formatting colors the whole row by its Status, matched on the status's first
 word. The legend is on the About tab (rows 11-20).
 
