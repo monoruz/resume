@@ -215,6 +215,7 @@ Re-read `index.md` and `drafts.md` just before each write; other sessions edit t
 |---|
 | Employer emails (replies, interviews, rejections, offers) update the Applications tab: Status, Notes, date and next step; and Jobs or Companies when the email adds facts. |
 | Each email gets a drafted reply, written as Mono Ruzi, never mentioning the job-search criteria. **mono sends it; never send without mono's OK.** Application emails to an email contact point are the exception (section 5). |
+| **Rejection reason (mono, 2026-11-14).** Every rejection records a reason in the Status cell and in the Telegram message. Use the exact reason when the company states one (for example "salary expectation did not match"). Otherwise give the most likely reason, marked `likely` (for example `likely: seniority`, `likely: skills gap`, `likely: location or visa`, `likely: Iran/sanctions screen`, `likely: salary`), based on the role and what the email says. Never present a guess as stated. |
 | Most employer mail comes from Ashby (`no-reply@ashbyhq.com`) and Teamtailor (`*.teamtailor-mail.com`) senders. |
 
 ## 7. Rendering in the cloud container
@@ -233,7 +234,7 @@ after the event with `build/notify.sh <event> "<message>" [link]`.
 |---|---|---|---|---|
 | 1 | New job found | `job` | daily search, any search | Role, company, track, location, pay; 2-3 line description summary; company details (size, funding, HQ/entity, growth); listing link. One message per job. |
 | 2 | Application submitted | `applied` | whoever submits, right after the confirmation page | Company, role, application ID, platform, resume track. |
-| 3 | Company update | `reply` | email tracking, when an employer email arrives | Company, role, outcome (interview, accepted, rejected, other), next step and date. |
+| 3 | Company update | `reply` | email tracking, when an employer email arrives | Company, role, outcome (interview, accepted, rejected, other), next step and date. A rejection always carries a ❓ reason line: the exact stated reason, or the likely one marked `likely` (section 6). |
 | 4 | Pending applications | `pending` | daily search and application sessions, whenever the list changes | Count, then one line each: company, role, what is needed (mono's approval, or mono to send because of a captcha or sign-in). |
 
 ### Message templates
@@ -263,6 +264,13 @@ one bullet per line, each `• <emoji> <field>`; leave out a bullet whose value 
 • 🏢 Acme, Platform SRE (APP012)
 • 🟢 Interview invited   (🔴 rejected · 🎉 offer · 🟡 other)
 • 📅 Next: 45-min call, 12 Nov 14:00 UTC
+```
+
+```text
+📩 Company update
+• 🏢 Foo, Senior SRE (APP034)
+• 🔴 Rejected (14 Nov)
+• ❓ Reason (likely): seniority; the role asks for staff-level ownership
 ```
 
 ```text
