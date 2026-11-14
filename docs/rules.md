@@ -18,6 +18,27 @@
 > exact reason, and move on to the next job. This rule overrides every older rule in this
 > repo that asks for approval before applying.
 
+> ## STRICT RULE: verify HQ and hiring entity before every application (mono, 2026-11-14)
+>
+> **No application or outreach email goes out until the company's HQ country and the
+> employing entity for that role are recorded with a source.** This check runs after the
+> criteria filter and before the application, and the no-confirmation rule above does
+> not skip it. A London, Amsterdam or "remote" location never answers it: ElevenLabs
+> (Eleven Labs Inc., New York) was applied to on 2026-10-27 because the role was listed
+> as London/remote while the employer was unknown.
+>
+> | Step | What to check | Result |
+> |---|---|---|
+> | 1 | HQ country, from the imprint, terms, privacy policy or national registry (not the job location) | write it to Companies "HQ and entity" with the link |
+> | 2 | Employing entity for this role: the legal name in the posting, offer terms, ATS privacy notice ("data controller") or job-board entity field | write it to Jobs "Hiring entity" with the link |
+> | 3 | HQ in the US or Israel | apply only when step 2 names a non-US/non-Israeli entity that employs or contracts for this role; otherwise `excluded: US/Israel entity` |
+> | 4 | Employing entity in the US or Israel, whatever the HQ | `excluded: US/Israel entity` |
+> | 5 | Entity not found, or sources disagree (for example Berlin on one page, San Francisco on another) | do not apply; mark `unverified (entity)` and keep it as a lead only |
+>
+> A label such as "Low-priority/unverified" is never enough to apply. Only a row whose
+> entity is confirmed by step 2 can be applied to. The 10-27 batch skipped this check
+> (ElevenLabs, Stream, both Supabase roles).
+
 Rules mono has given during the job search that were not yet written down in this repo.
 They carry the same authority as `docs/job-search-criteria.md`; where a rule here and a
 default procedure differ, the rule wins.
@@ -148,7 +169,7 @@ that has the Sheets connector imports them.
 | Rule | Since |
 |---|---|
 | Applying is on for every qualifying lead ("start to apply to all", 2026-10-25; "apply after you find the job", 2026-10-28). The daily search drafts an application for each new proposed A or B vacancy. Not for internships, fellowships, or management roles the career file cannot support. | 2026-10-28 |
-| **Apply automatically (mono, 2026-11-07).** Every application that passes the criteria is submitted without asking mono, on any route: company careers sites, ATS forms, email, LinkedIn. Use full permission: accept privacy notices, consents and terms, create an account when a form requires one, and answer every required field. Before submitting, check every typed field on the Review page against these rules. Answers come only from verified facts (`data/master.yaml`, `docs/personal-info.md`, what mono has confirmed); a required answer that no verified fact supports is answered truthfully (for example 0 or No), never invented and never a reason to wait. Never write a password into this repo, the Sheet or a Telegram message. | 2026-11-07 |
+| **Apply automatically (mono, 2026-11-07).** Every application that passes the criteria and the HQ/entity check at the top of this file is submitted without asking mono, on any route: company careers sites, ATS forms, email, LinkedIn. Use full permission: accept privacy notices, consents and terms, create an account when a form requires one, and answer every required field. Before submitting, check every typed field on the Review page against these rules. Answers come only from verified facts (`data/master.yaml`, `docs/personal-info.md`, what mono has confirmed); a required answer that no verified fact supports is answered truthfully (for example 0 or No), never invented and never a reason to wait. Never write a password into this repo, the Sheet or a Telegram message. | 2026-11-07 |
 | **Apply as soon as the job is found (mono, 2026-11-08).** A qualifying A or B vacancy is applied to in the same run that finds it. It is never held until mono writes in a thread. If the application has to wait (for example the session on mono's Mac is parked or offline), send mono a Telegram message right away with the job, the link and what it is waiting on. | 2026-11-08 |
 | **Hand off to mono only for a captcha or reCAPTCHA, or a login wall that needs mono's own credentials.** Try every other route first. When stuck, send mono a Telegram message naming the job, the link and the exact reason (for example "reCAPTCHA on submit"), and mark the application `mono to send`. A hand-off without a stated reason is not allowed. | 2026-11-07 |
 | **Email applications.** When a company's contact point in the Applications tab is an email address, send the application to it directly through the Gmail connector, without asking mono first. The email follows every application text rule here (Mono Ruzi, github.com/monoruz, truthful location, no criteria) and attaches the closest track resume. Then update the Sheet as for any successful application. | 2026-11-07 |

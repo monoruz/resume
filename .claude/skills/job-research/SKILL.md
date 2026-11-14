@@ -75,6 +75,13 @@ place of verified results.
 5. **Apply the criteria**: remove confirmed hard-requirement failures, label the rest
    (Confirmed-compatible / Conditional / Low-priority/unverified), and rank in the
    criteria's order. Fewer verified results beat a padded list.
+6. **Entity check before applying** (mono, 2026-11-14). Before any application or
+   outreach, record the HQ country and the employing entity for the role, each with a
+   source (imprint, terms, ATS privacy notice, registry). If the HQ or the employing
+   entity is in the US or Israel, exclude it unless a non-US/non-Israeli employing entity
+   for this role is named. If the entity is unknown or the sources disagree, do not
+   apply: keep it as `unverified (entity)`. A job location is never evidence of the
+   entity. Full table: the HQ/entity check at the top of `docs/rules.md`.
 
 ## Output
 
