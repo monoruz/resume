@@ -329,3 +329,11 @@ The brief's line "Do not submit applications, send outreach, or disclose candida
 information" is replaced: qualifying vacancies are applied to automatically, and track C
 outreach companies are emailed mono's resume automatically. The rules for both are in
 `docs/rules.md` section 5.
+
+## Addendum (mono, 2026-11-14): entity check before applying
+
+"If the relevant entity is unclear, retain only as a lower-ranked, unverified lead" means
+the lead stays in the tracker and is **not applied to**. A US- or Israel-headquartered
+company is applied to only when its posting or legal documents name a non-US/non-Israeli
+entity that employs or contracts for this role. The job's city or "remote" wording does
+not prove the entity. The procedure is the HQ/entity check at the top of `docs/rules.md`.
