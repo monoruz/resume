@@ -18,6 +18,19 @@
 > exact reason, and move on to the next job. This rule overrides every older rule in this
 > repo that asks for approval before applying.
 
+> ## RULE: exhaustive search, strict checks (mono, 2026-11-17)
+>
+> "Go search as much positions as possible, never give up until you search every thing that
+> you could under all circumstances and rules that are defined in project. But never
+> sacrifice low quality matches to higher job positions. Strictly investigate on job
+> position for every rule that I have defined."
+>
+> | Do | Never |
+> |---|---|
+> | Cover every source, job title and region the routine lists (six tracks, LinkedIn on the Mac) | Stop a run early because the first sources were thin |
+> | When the page budget runs out, continue in a later wave or hand the checks to the Mac Chrome session | Mark a lead unverified only because fetches ran out, without queueing its check |
+> | Check every listing against every rule: freshness, region/Iran eligibility, HQ and hiring entity, pay minimums, fit, exclusions | Relax any rule, or apply to a weak match, to raise the application count |
+
 > ## STRICT RULE: verify HQ and hiring entity before every application (mono, 2026-11-14)
 >
 > **No application or outreach email goes out until the company's HQ country and the
