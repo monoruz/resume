@@ -34,6 +34,7 @@
 > | 3 | HQ in the US or Israel | apply only when step 2 names a non-US/non-Israeli entity that employs or contracts for this role; otherwise `excluded: US/Israel entity` |
 > | 4 | Employing entity in the US or Israel, whatever the HQ | `excluded: US/Israel entity` |
 > | 5 | Entity not found, or sources disagree (for example Berlin on one page, San Francisco on another) | do not apply; mark `unverified (entity)` and keep it as a lead only |
+> | 6 | Job in a country other than the HQ, and only the HQ entity is named (for example a Tokyo role whose posting names only the UK company) | do not apply; mark `unverified (local entity)`. The entity that employs in the job's country must be named (mono, 2026-11-17) |
 >
 > A label such as "Low-priority/unverified" is never enough to apply. Only a row whose
 > entity is confirmed by step 2 can be applied to. The 10-27 batch skipped this check
