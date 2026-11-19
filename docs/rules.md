@@ -143,10 +143,24 @@ word. The legend is on the About tab (rows 11-20).
 | Light yellow | New | proposed |
 | Light purple | Unverified | unverified |
 | Light red | Rejected | rejected |
+| Brown, bold white text | Strictly rejected | strictly rejected |
 | Grey, faded | Excluded | excluded, skipped, closed |
 
 A new status value must start with one of these words, or its row stays uncolored. Do not
 add manual fills over the conditional formatting.
+
+### Rejected Retry: re-applying under another identity
+
+**Rule (mono, 2026-11-19): a role mono was rejected from, and then applied to under another
+identity (for example Mahdi Cherakhloo, with his agreement), is "strictly rejected" and brown.**
+
+| Step | What to do |
+|---|---|
+| 1 | Track the new application in the `Rejected Retry` tab (`RR001`…, column B = mono's original `APP`/`IA` id), never in Applications. |
+| 2 | Set mono's original Applications row Status to start with `strictly rejected:` (keep the rejection date and reason after it). |
+| 3 | The conditional format on Applications and Rejected Retry colors `strictly rejected` rows brown; the legend is on the About tab. |
+| 4 | Use only the other person's own name, contact details and resume, never mono's identity. |
+
 
 ### Staging route
 
