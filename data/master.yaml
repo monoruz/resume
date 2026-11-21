@@ -445,12 +445,11 @@ experience:
           vLLM on NVIDIA GPUs) serving five production models up to 27B parameters
           (gpt-oss-20b, Gemma-3-27B, DeepSeek-Coder-V2, MedGemma-4B, Qwen3-Embedding-8B)
           with 32K context windows and autoscaling replicas, removing the dependency on
-          third-party LLM APIs and cutting inference cost by 70%.
+          third-party LLM APIs.
         group: llm-platform
         tags: [llm, vllm, kserve, kubernetes, gpu, inference, ml-infrastructure, self-hosted, ai]
         impact: high
-        verify: true
-        sample: "70% is INVENTED placeholder — real figure: inference cost reduction vs the third-party API baseline" 
+        needs_metric: "inference cost reduction vs the third-party API baseline (platform itself confirmed by mono 2026-11-21)"
       - text: >-
           Standardised model access behind a LiteLLM OpenAI-compatible gateway with
           Postgres-backed key and usage accounting and Redis response caching, giving six
